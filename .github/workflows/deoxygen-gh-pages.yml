@@ -14,4 +14,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Add Doxygen Awesome CSS submodule
-        run: git submodule add https://github.com/jothepro/doxygen-awesome-css.git -f
+        run: git submodule add -f https://github.com/jothepro/doxygen-awesome-css.git
