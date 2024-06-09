@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['position_0',['position',['../class_particle.html#aa163e6106a535a74bed445cc9d9ba3ef',1,'Particle']]]
+  ['mass_0',['mass',['../class_particle.html#ae6d46dc24a6666d526f211151fecca5f',1,'Particle']]],
+  ['maxpoint_1',['maxPoint',['../class_space.html#a094d227ed29ede0035f144ba33d30e43',1,'Space']]],
+  ['minpoint_2',['minPoint',['../class_space.html#ae777a49660fa715a49205acd2b6a8c48',1,'Space']]]
 ];
