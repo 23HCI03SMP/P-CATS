@@ -11,7 +11,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Add Doxygen Awesome CSS submodule
-        run: git submodule add https://github.com/jothepro/doxygen-awesome-css.git
+        run: git submodule add https://github.com/jothepro/doxygen-awesome-css.git -f
       - uses: DenverCoder1/doxygen-github-pages-action@v1.3.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
