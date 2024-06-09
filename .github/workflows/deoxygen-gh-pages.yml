@@ -16,6 +16,15 @@ jobs:
               run: doxygen Doxyfile
             - name: Create .nojekyll file
               run: touch docs/html/.nojekyll
+            - name: Add Doxygen Awesome CSS submodule
+              run: cd build && git submodule add -f https://github.com/jothepro/doxygen-awesome-css.git
+            - name: Deploy to GitHub Pages
+              uses: JamesIves/github-pages-deploy-action@4.1.4
+              with:
+                branch: gh-pages
+                folder: build
+                token: ${{ secrets.GITHUB_TOKEN }}
+                clean: true
 
 # jobs:
 #   deploy:
