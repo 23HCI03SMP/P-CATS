@@ -2,6 +2,11 @@
 \hypertarget{class_space}{}\label{class_space}\index{Space@{Space}}
 
 
+A structure to store a space node in the tree.  
+
+
+
+
 {\ttfamily \#include $<$p\+\_\+cats.\+h$>$}
 
 Inheritance diagram for Space\+:\begin{figure}[H]
@@ -13,38 +18,48 @@ Inheritance diagram for Space\+:\begin{figure}[H]
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_space_a6a42067f54228673779fd8f26b8843ca}{Space}} (\mbox{\hyperlink{struct_point}{Point}} \mbox{\hyperlink{class_space_ae777a49660fa715a49205acd2b6a8c48}{min\+Point}}, \mbox{\hyperlink{struct_point}{Point}} \mbox{\hyperlink{class_space_a094d227ed29ede0035f144ba33d30e43}{max\+Point}}, double mass, \mbox{\hyperlink{struct_charge}{Charge}} \mbox{\hyperlink{class_node_a05f699d0d2e504214fccb7775c80c8b5}{charge}})
-\item 
+\mbox{\hyperlink{class_space_a6a42067f54228673779fd8f26b8843ca}{Space}} (\mbox{\hyperlink{struct_point}{Point}} min\+Point, \mbox{\hyperlink{struct_point}{Point}} max\+Point, double mass, \mbox{\hyperlink{struct_charge}{Charge}} charge)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_space}{Space}. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_space_adfbb361f07d25805295873d716dc7b68}{insert}} (\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}node)
-\item 
+\begin{DoxyCompactList}\small\item\em Function to insert a node into the space. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{class_space_abf5c83b95ea1cca9c2a8cd57a8a6c02c}{find}} (\mbox{\hyperlink{struct_point}{Point}} point)
-\item 
+\begin{DoxyCompactList}\small\item\em Function to find a point in the space. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{class_space_a51e698378de4f7e987273287ca44a6ba}{is\+External\+Node}} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Function to check if the space is an external node. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_node}{Node}}}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_node_a99337c9a3417124810c0afe045337c5f}{Node}} (double mass, \mbox{\hyperlink{struct_charge}{Charge}} \mbox{\hyperlink{class_node_a05f699d0d2e504214fccb7775c80c8b5}{charge}})
+{\bfseries Node} (double mass, \mbox{\hyperlink{struct_charge}{Charge}} charge)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{struct_point}{Point}} \mbox{\hyperlink{class_space_ae777a49660fa715a49205acd2b6a8c48}{min\+Point}}
+\Hypertarget{class_space_ae777a49660fa715a49205acd2b6a8c48}\label{class_space_ae777a49660fa715a49205acd2b6a8c48} 
+\mbox{\hyperlink{struct_point}{Point}} {\bfseries min\+Point}
 \item 
-\mbox{\hyperlink{struct_point}{Point}} \mbox{\hyperlink{class_space_a094d227ed29ede0035f144ba33d30e43}{max\+Point}}
+\Hypertarget{class_space_a094d227ed29ede0035f144ba33d30e43}\label{class_space_a094d227ed29ede0035f144ba33d30e43} 
+\mbox{\hyperlink{struct_point}{Point}} {\bfseries max\+Point}
 \item 
-\mbox{\hyperlink{struct_point}{Point}} \mbox{\hyperlink{class_space_a6c24172c7f2e34637d98ed00e9046f18}{centre\+Of\+Positive\+Charge}}
+\Hypertarget{class_space_a6c24172c7f2e34637d98ed00e9046f18}\label{class_space_a6c24172c7f2e34637d98ed00e9046f18} 
+\mbox{\hyperlink{struct_point}{Point}} {\bfseries centre\+Of\+Positive\+Charge}
 \item 
-\mbox{\hyperlink{struct_point}{Point}} \mbox{\hyperlink{class_space_ad1168c7535f6347d6edf321d6b093ecb}{centre\+Of\+Negative\+Charge}}
+\Hypertarget{class_space_ad1168c7535f6347d6edf321d6b093ecb}\label{class_space_ad1168c7535f6347d6edf321d6b093ecb} 
+\mbox{\hyperlink{struct_point}{Point}} {\bfseries centre\+Of\+Negative\+Charge}
 \item 
-std\+::vector$<$ \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{class_space_abb644990b5e298aea2e5c6226405ddbf}{children}}
+\Hypertarget{class_space_abb644990b5e298aea2e5c6226405ddbf}\label{class_space_abb644990b5e298aea2e5c6226405ddbf} 
+std\+::vector$<$ \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries children}
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{class_node}{Node}}}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{struct_charge}{Charge}} \mbox{\hyperlink{class_node_a05f699d0d2e504214fccb7775c80c8b5}{charge}}
+\mbox{\hyperlink{struct_charge}{Charge}} {\bfseries charge}
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+A structure to store a space node in the tree. 
+
+A structure that stores a space node in the tree. This node has a minimum and maximum point, as well as a centre of positive and negative charge. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \Hypertarget{class_space_a6a42067f54228673779fd8f26b8843ca}\index{Space@{Space}!Space@{Space}}
@@ -55,6 +70,21 @@ Space\+::\+Space (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_point}{
 
 
 
+Constructor for \doxylink{class_space}{Space}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min\+Point} & minimum point of the space. \\
+\hline
+{\em max\+Point} & maximum point of the space. \\
+\hline
+{\em mass} & total mass of the space. \\
+\hline
+{\em charge} & total charge of the space. \\
+\hline
+\end{DoxyParams}
+
+
 \doxysubsection{Member Function Documentation}
 \Hypertarget{class_space_abf5c83b95ea1cca9c2a8cd57a8a6c02c}\index{Space@{Space}!find@{find}}
 \index{find@{find}!Space@{Space}}
@@ -62,12 +92,33 @@ Space\+::\+Space (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_point}{
 {\footnotesize\ttfamily \label{class_space_abf5c83b95ea1cca9c2a8cd57a8a6c02c} 
 bool Space\+::find (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_point}{Point}}}]{point}{}\end{DoxyParamCaption})}
 
+
+
+Function to find a point in the space. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em point} & \doxylink{struct_point}{Point} to find. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the point is in the space, false otherwise. 
+\end{DoxyReturn}
 \Hypertarget{class_space_adfbb361f07d25805295873d716dc7b68}\index{Space@{Space}!insert@{insert}}
 \index{insert@{insert}!Space@{Space}}
 \doxysubsubsection{\texorpdfstring{insert()}{insert()}}
 {\footnotesize\ttfamily \label{class_space_adfbb361f07d25805295873d716dc7b68} 
 void Space\+::insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
 
+
+
+Function to insert a node into the space. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & \doxylink{class_node}{Node} to be inserted. \\
+\hline
+\end{DoxyParams}
 \Hypertarget{class_space_a51e698378de4f7e987273287ca44a6ba}\index{Space@{Space}!isExternalNode@{isExternalNode}}
 \index{isExternalNode@{isExternalNode}!Space@{Space}}
 \doxysubsubsection{\texorpdfstring{isExternalNode()}{isExternalNode()}}
@@ -76,39 +127,13 @@ bool Space\+::is\+External\+Node (\begin{DoxyParamCaption}{}{}\end{DoxyParamCapt
 
 
 
-\doxysubsection{Member Data Documentation}
-\Hypertarget{class_space_ad1168c7535f6347d6edf321d6b093ecb}\index{Space@{Space}!centreOfNegativeCharge@{centreOfNegativeCharge}}
-\index{centreOfNegativeCharge@{centreOfNegativeCharge}!Space@{Space}}
-\doxysubsubsection{\texorpdfstring{centreOfNegativeCharge}{centreOfNegativeCharge}}
-{\footnotesize\ttfamily \label{class_space_ad1168c7535f6347d6edf321d6b093ecb} 
-\mbox{\hyperlink{struct_point}{Point}} Space\+::centre\+Of\+Negative\+Charge}
+Function to check if the space is an external node. 
 
-\Hypertarget{class_space_a6c24172c7f2e34637d98ed00e9046f18}\index{Space@{Space}!centreOfPositiveCharge@{centreOfPositiveCharge}}
-\index{centreOfPositiveCharge@{centreOfPositiveCharge}!Space@{Space}}
-\doxysubsubsection{\texorpdfstring{centreOfPositiveCharge}{centreOfPositiveCharge}}
-{\footnotesize\ttfamily \label{class_space_a6c24172c7f2e34637d98ed00e9046f18} 
-\mbox{\hyperlink{struct_point}{Point}} Space\+::centre\+Of\+Positive\+Charge}
-
-\Hypertarget{class_space_abb644990b5e298aea2e5c6226405ddbf}\index{Space@{Space}!children@{children}}
-\index{children@{children}!Space@{Space}}
-\doxysubsubsection{\texorpdfstring{children}{children}}
-{\footnotesize\ttfamily \label{class_space_abb644990b5e298aea2e5c6226405ddbf} 
-std\+::vector$<$\mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}$>$ Space\+::children}
-
-\Hypertarget{class_space_a094d227ed29ede0035f144ba33d30e43}\index{Space@{Space}!maxPoint@{maxPoint}}
-\index{maxPoint@{maxPoint}!Space@{Space}}
-\doxysubsubsection{\texorpdfstring{maxPoint}{maxPoint}}
-{\footnotesize\ttfamily \label{class_space_a094d227ed29ede0035f144ba33d30e43} 
-\mbox{\hyperlink{struct_point}{Point}} Space\+::max\+Point}
-
-\Hypertarget{class_space_ae777a49660fa715a49205acd2b6a8c48}\index{Space@{Space}!minPoint@{minPoint}}
-\index{minPoint@{minPoint}!Space@{Space}}
-\doxysubsubsection{\texorpdfstring{minPoint}{minPoint}}
-{\footnotesize\ttfamily \label{class_space_ae777a49660fa715a49205acd2b6a8c48} 
-\mbox{\hyperlink{struct_point}{Point}} Space\+::min\+Point}
-
+\begin{DoxyReturn}{Returns}
+True if the space is an external node, false otherwise. 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-src/include/\mbox{\hyperlink{p__cats_8h}{p\+\_\+cats.\+h}}\end{DoxyCompactItemize}
+src/include/p\+\_\+cats.\+h\end{DoxyCompactItemize}
