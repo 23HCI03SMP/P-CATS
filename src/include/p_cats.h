@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 
+/// A structure to store force components (in Newtons).
 struct Force
 {
     double x, y, z;
@@ -20,6 +21,8 @@ struct Force
         this->z = z;
     }
 };
+
+/*! A structure to store velocity components (in m/s)*/
 
 struct Velocity
 {
@@ -40,6 +43,7 @@ struct Velocity
     }
 };
 
+/*! A structure to store position components (in m)*/
 struct Point
 {
     double x, y, z;
@@ -59,6 +63,7 @@ struct Point
     }
 };
 
+/*! A structure to store charge components (in Coulombs)*/
 struct Charge
 {
     double positive, negative;

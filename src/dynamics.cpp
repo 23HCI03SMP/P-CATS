@@ -1,5 +1,5 @@
-/* 
-Helper functions for dynamics
+/** 
+* Helper functions for dynamics
 */
 
 #include "include/p_cats.h"
