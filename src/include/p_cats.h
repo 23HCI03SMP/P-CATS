@@ -105,20 +105,8 @@ class Node
 public:
     Charge charge;
 
-    Node(double mass, Charge charge);
-};
-
-class Space : public Node
-{
-public:
-    Point minPoint, maxPoint;
-    Point centreOfPositiveCharge, centreOfNegativeCharge;
-    std::vector<Node *> children;
-
-    Space(Point minPoint, Point maxPoint, double mass, Charge charge);
-    void insert(Node *node);
-    bool find(Point point);
-    bool isExternalNode();
+    virtual ~Node() {}
+    Node(Charge charge);
 };
 
 class Particle : public Node
@@ -134,4 +122,18 @@ public:
     Particle(std::string alias, Point position, Velocity velocity, Force bForce, Force eForce, double mass, Charge charge);
     void updatePosition(double dt);
     void addForce(Node *node);
+};
+
+class Space : public Node
+{
+public:
+    Point minPoint, maxPoint;
+    Point centreOfPositiveCharge, centreOfNegativeCharge;
+    std::vector<Node *> children;
+
+    Space(Point minPoint, Point maxPoint, Charge charge = Charge(0, 0));
+    void insert(Particle *particle);
+    bool find(Point point);
+    bool isExternalNode();
+    std::string toString(int depth = 0, bool isLastBranch = false);
 };
