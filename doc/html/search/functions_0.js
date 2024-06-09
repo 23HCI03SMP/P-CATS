@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['addforce_0',['addForce',['../class_particle.html#a475ea6be49c696c52788a68272fa455d',1,'Particle']]]
+  ['charge_0',['Charge',['../struct_charge.html#a65b4a872b16e6311aecf11ce31c9a94d',1,'Charge']]]
 ];

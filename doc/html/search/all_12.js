@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['z_0',['z',['../struct_force.html#a7543be66bef428ee9cad1ddf23425528',1,'Force::z'],['../struct_velocity.html#aaebcd198674f7adcb61f9bb981dab465',1,'Velocity::z'],['../struct_point.html#a05ba3b1dfcb19430582ae953cbbfbded',1,'Point::z']]]
+  ['wide_0',['System-wide',['../md_doxygen-awesome-css_2_r_e_a_d_m_e.html#autotoc_md36',1,'']]],
+  ['width_1',['Width',['../md_doxygen-awesome-css_2docs_2tricks.html#tricks-sidebar',1,'Choosing Sidebar Width'],['../md_doxygen-awesome-css_2docs_2tricks.html#autotoc_md21',1,'Full Width']]],
+  ['with_20graphviz_2',['Diagrams with Graphviz',['../md_doxygen-awesome-css_2docs_2tricks.html#tricks-graphviz',1,'']]]
 ];

@@ -18,7 +18,9 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript" src="darkmode_toggle.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -103,17 +105,16 @@ $(function(){initNavTree('class_particle.html',''); initResizable(true); });
 
 <p>This is the complete list of members for <a class="el" href="class_particle.html">Particle</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="class_particle.html#a475ea6be49c696c52788a68272fa455d">addForce</a>(Node *node)</td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_particle.html#ada123d16e4550e5a256d57d113c88594">alias</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_particle.html#ac93c0a0fa6f61b454872f8180a5228b3">bForce</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_node.html#a05f699d0d2e504214fccb7775c80c8b5">charge</a></td><td class="entry"><a class="el" href="class_node.html">Node</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_particle.html#a04ce213e03fec0626c6cb280240e73aa">eForce</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_particle.html#ae6d46dc24a6666d526f211151fecca5f">mass</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_node.html#a99337c9a3417124810c0afe045337c5f">Node</a>(double mass, Charge charge)</td><td class="entry"><a class="el" href="class_node.html">Node</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_particle.html#a54fb6eb88a10d062973b66e044f8ff12">Particle</a>(std::string alias, Point position, Velocity velocity, Force bForce, Force eForce, double mass, Charge charge)</td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_particle.html#aa163e6106a535a74bed445cc9d9ba3ef">position</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_particle.html#a9fe4ac339a466a1c1b0a78c49c292bbc">updatePosition</a>(double dt)</td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_particle.html#ac3d05d8ac4feeabf0ae71948760b5387">velocity</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_particle.html#ada123d16e4550e5a256d57d113c88594">alias</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_particle.html#ac93c0a0fa6f61b454872f8180a5228b3">bForce</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>charge</b> (defined in <a class="el" href="class_node.html">Node</a>)</td><td class="entry"><a class="el" href="class_node.html">Node</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_particle.html#a04ce213e03fec0626c6cb280240e73aa">eForce</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_particle.html#ae6d46dc24a6666d526f211151fecca5f">mass</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>Node</b>(double mass, Charge charge) (defined in <a class="el" href="class_node.html">Node</a>)</td><td class="entry"><a class="el" href="class_node.html">Node</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_particle.html#a54fb6eb88a10d062973b66e044f8ff12">Particle</a>(std::string alias, Point position, Velocity velocity, Force bForce, Force eForce, double mass, Charge charge)</td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_particle.html#aa163e6106a535a74bed445cc9d9ba3ef">position</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_particle.html#a9fe4ac339a466a1c1b0a78c49c292bbc">updatePosition</a>(double dt)</td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_particle.html#ac3d05d8ac4feeabf0ae71948760b5387">velocity</a></td><td class="entry"><a class="el" href="class_particle.html">Particle</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
