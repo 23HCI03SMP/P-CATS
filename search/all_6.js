@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['magnitude_11',['magnitude',['../structPoint.html#ae061fb2b6e0125058250aa2f80d1136f',1,'Point']]],
-  ['mass_12',['mass',['../classParticle.html#ae6d46dc24a6666d526f211151fecca5f',1,'Particle']]]
+  ['insert_16',['insert',['../classSpace.html#adfbb361f07d25805295873d716dc7b68',1,'Space']]],
+  ['isexternalnode_17',['isExternalNode',['../classSpace.html#a51e698378de4f7e987273287ca44a6ba',1,'Space']]]
 ];
