@@ -10,6 +10,7 @@ int main() {
     Particle *p6 = new Particle("f", Point(0.75, 0.75, 0.75), Velocity(), Force(), Force(), 1, Charge()); // centre
     Particle *p7 = new Particle("g", Point(0.5, 0.5, 0.5), Velocity(), Force(), Force(), 1, Charge()); // centre
     Particle *p8 = new Particle("h", Point(0.1, 0.2, 0.8), Velocity(), Force(), Force(), 1, Charge()); // centre
+    Particle *p9 = new Particle("i", Point(0.3, 0.3, 0.3), Velocity(), Force(), Force(), 1, Charge()); // centre
 
     Space *baseSpace = new Space(Point(0, 0, 0), Point(1, 1, 1));
 
@@ -21,6 +22,7 @@ int main() {
     baseSpace->insert(p6);
     baseSpace->insert(p7);
     baseSpace->insert(p8);
+    baseSpace->insert(p9);
 
     std::cout << baseSpace->toString() << std::endl;
     

@@ -152,6 +152,14 @@ void Space::insert(Particle *particle)
             dynamic_cast<Space *>(this->children[octet])->insert(oldParticle);
             dynamic_cast<Space *>(this->children[octet])->insert(particle);
         }
+        else if (dynamic_cast<Space *>(this->children[octet]) != nullptr)
+        {
+            dynamic_cast<Space *>(this->children[octet])->insert(particle);
+        }
+        else
+        {
+            throw std::runtime_error("This shouldn't happen lmao.");
+        }
     }
 }
 
@@ -169,7 +177,7 @@ std::string GetIndentString(int depth)
 
 std::string Space::toString(int depth, bool isLastBranch)
 {
-    std::string out = "Space (" 
+    std::string out = "\033[34mSpace (" 
                     + std::to_string(minPoint.x) 
                     + ", " + std::to_string(minPoint.y) 
                     + ", " + std::to_string(minPoint.z) 
@@ -178,7 +186,7 @@ std::string Space::toString(int depth, bool isLastBranch)
                     + ", " + std::to_string(maxPoint.y) 
                     + ", " 
                     + std::to_string(maxPoint.z) 
-                    + ")\n";
+                    + ")\033[0m\n";
     std::string branchSymbol = "├── ";
     std::string lastBranchSymbol = "└── ";
 
@@ -199,7 +207,7 @@ std::string Space::toString(int depth, bool isLastBranch)
         {
             out += (isLastBranch && depth != 0 ? std::string(depth * 4, ' ') : GetIndentString(depth))
                 + currentBranchSymbol
-                + "Empty\n";
+                + "\033[35mEmpty\033[0m\n";
         }
         else
         {
@@ -209,6 +217,7 @@ std::string Space::toString(int depth, bool isLastBranch)
 
                 out += (isLastBranch && depth != 0 ? std::string(depth * 4, ' ') : GetIndentString(depth))
                     + currentBranchSymbol
+                    + "\033[32m"
                     + particle->alias 
                     + " (" 
                     + std::to_string(particle->position.x) 
@@ -217,7 +226,7 @@ std::string Space::toString(int depth, bool isLastBranch)
                     + ", "
                     + std::to_string(particle->position.z)
                     + ")"
-                    + "\n";
+                    + "\033[0m\n";
             }
             else if (dynamic_cast<Space *>(children[i])) // If its a space, then we need to run recursively over its children
             {
