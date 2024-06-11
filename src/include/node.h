@@ -8,5 +8,7 @@ class Node
 {
 public:
     Charge charge;
-    Node(double mass, Charge charge);
+
+    virtual ~Node() {}
+    Node(Charge charge);
 };

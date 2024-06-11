@@ -1,5 +1,8 @@
 #include "include/p_cats.h"
+#include "include/space.h"
+#include "include/node.h"
 #include <iostream>
+#include <vector>
 
 #define o1 0 // top left back
 #define o2 1 // top right back
