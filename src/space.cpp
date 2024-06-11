@@ -163,6 +163,19 @@ void Space::insert(Particle *particle)
     }
 }
 
+
+// std::vector<Particle> Space::generateParticles(double density, double temperature, std::vector<Particle> particles)
+// {
+//     for (int i = 0; i < particles.size(); i++)
+//     {
+//         Particle particle = particles[i];
+//         double mass = particle.mass;
+//         Charge charge = particle.charge;
+
+//         std::cout << std::to_string(mass) << " " << charge.positive << " " << charge.negative << std::endl;
+//     }
+// }
+
 std::string GetIndentString(int depth)
 {
     std::string out = "";

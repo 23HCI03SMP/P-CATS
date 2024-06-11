@@ -2,15 +2,15 @@
 #include "include/p_cats.h"
 
 int main() {
-    Particle *p1 = new Particle("a", Point(0, 0, 0), Velocity(), Force(), Force(), 1, Charge()); // bottom left front
-    Particle *p2 = new Particle("b", Point(1, 1, 1), Velocity(), Force(), Force(), 1, Charge()); // top right back
-    Particle *p3 = new Particle("c", Point(0.2, 0.2, 0.2), Velocity(), Force(), Force(), 1, Charge()); // centre
-    Particle *p4 = new Particle("d", Point(0.8, 0.8, 0.8), Velocity(), Force(), Force(), 1, Charge()); // centre
-    Particle *p5 = new Particle("e", Point(0.25, 0.25, 0.25), Velocity(), Force(), Force(), 1, Charge()); // centre
-    Particle *p6 = new Particle("f", Point(0.75, 0.75, 0.75), Velocity(), Force(), Force(), 1, Charge()); // centre
-    Particle *p7 = new Particle("g", Point(0.5, 0.5, 0.5), Velocity(), Force(), Force(), 1, Charge()); // centre
-    Particle *p8 = new Particle("h", Point(0.1, 0.2, 0.8), Velocity(), Force(), Force(), 1, Charge()); // centre
-    Particle *p9 = new Particle("i", Point(0.3, 0.3, 0.3), Velocity(), Force(), Force(), 1, Charge()); // centre
+    Particle *p1 = new Particle("a", 1, Charge(), Point(0, 0, 0), Velocity(), Force(), Force()); // bottom left front
+    Particle *p2 = new Particle("b", 1, Charge(), Point(1, 1, 1), Velocity(), Force(), Force()); // top right back
+    Particle *p3 = new Particle("c", 1, Charge(), Point(0.2, 0.2, 0.2), Velocity(), Force(), Force()); // centre
+    Particle *p4 = new Particle("d", 1, Charge(), Point(0.8, 0.8, 0.8), Velocity(), Force(), Force()); // centre
+    Particle *p5 = new Particle("e", 1, Charge(), Point(0.25, 0.25, 0.25), Velocity(), Force(), Force()); // centre
+    Particle *p6 = new Particle("f", 1, Charge(), Point(0.75, 0.75, 0.75), Velocity(), Force(), Force()); // centre
+    Particle *p7 = new Particle("g", 1, Charge(), Point(0.5, 0.5, 0.5), Velocity(), Force(), Force()); // centre
+    Particle *p8 = new Particle("h", 1, Charge(), Point(0.1, 0.2, 0.8), Velocity(), Force(), Force()); // centre
+    Particle *p9 = new Particle("i", 1, Charge(), Point(0.3, 0.3, 0.3), Velocity(), Force(), Force()); // centre
 
     Space *baseSpace = new Space(Point(0, 0, 0), Point(1, 1, 1));
 

@@ -1,6 +1,6 @@
 #include "include/p_cats.h"
 
-Particle::Particle(std::string alias, Point position, Velocity velocity, Force bForce, Force eForce, double mass, Charge charge) : Node(charge)
+Particle::Particle(std::string alias, double mass, Charge charge, Point position, Velocity velocity, Force bForce, Force eForce) : Node(charge)
 {
     this->alias = alias;
     this->position = position;
