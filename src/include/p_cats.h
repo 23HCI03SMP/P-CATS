@@ -125,6 +125,9 @@ struct Point
     }
 };
 
+/// @brief A structure to store field components (in N/C).
+///
+/// A structure that stores the x, y, and z components of a field. Units are in Newtons per Coulomb.
 struct Field
 {
     double x, y, z;
