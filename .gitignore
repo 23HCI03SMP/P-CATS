@@ -1,7 +1,7 @@
 doxy_config
 
-#.vscode
-.vscode
+# .vscode
+.vscode/*
 
 # Prerequisites
 *.d
