@@ -1,6 +1,8 @@
 #include "p_cats.h"
 #include "node.h"
 
+#pragma once
+
 /// @brief A structure to store a particle node in the tree.
 ///
 /// A structure that stores a particle node in the tree. This node has a position, velocity, and forces acting on it.
@@ -28,7 +30,13 @@ public:
     /// @param eForce Electric force acting on the particle in N.
     /// @param mass Mass of the particle in kg.
     /// @param charge Charge of the particle in C.
-    Particle(std::string alias, Point position, Velocity velocity, Force bForce, Force eForce, double mass, Charge charge);
+    Particle(std::string alias, 
+        double mass, 
+        Charge charge,
+        Point position = Point(), 
+        Velocity velocity = Velocity(), 
+        Force bForce = Force(), 
+        Force eForce = Force());
 
     /// @brief Function to calculate the position and velocity of the particle in the next time step.
     /// @param alias Alias/Name of the particle.
