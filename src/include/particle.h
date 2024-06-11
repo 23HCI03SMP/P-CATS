@@ -1,6 +1,8 @@
 #include "p_cats.h"
 #include "node.h"
 
+#pragma once
+
 /// @brief A structure to store a particle node in the tree.
 ///
 /// A structure that stores a particle node in the tree. This node has a position, velocity, and forces acting on it.

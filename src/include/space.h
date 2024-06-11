@@ -1,5 +1,4 @@
 #include "p_cats.h"
-#include "node.h"
 #include "particle.h"
 #include <vector>
 
@@ -30,6 +29,4 @@ public:
 
     // std::vector<Particle *> generateParticles(double density, double temperature, std::vector<Particle> particles);
     std::string toString(int depth = 0, bool isLastBranch = false);
-
-    virtual ~Space();
 };
