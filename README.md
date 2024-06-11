@@ -15,8 +15,9 @@
 
 <p align="center">
     <a href="https://img.shields.io/badge/Build_Status-never_built-blue?style=flat-square" style="text-decoration:none"><img src="https://img.shields.io/badge/Build_Status-never_built-blue?style=flat-square"/></a>
-    <a href="https://github.com/23HCI03SMP/P_CATS/labels/bugs" style="text-decoration:none"><img src="https://img.shields.io/github/issues/23HCI03SMP/P-CATS/bugs?style=flat-square&color=%232EA043&label=Bugs"/></a>
-    <a href="https://img.shields.io/github/license/23HCI03SMP/P-CATS.svg?style=flat-square" style="text-decoration:none"><img src="https://img.shields.io/github/license/23HCI03SMP/P-CATS.svg?style=flat-square"/></a>
+    <a href="https://github.com/23HCI03SMP/P_CATS/labels/bugs" style="text-decoration:none"><img src="https://img.shields.io/github/issues/23HCI03SMP/P-CATS/bugs?style=flat-square&color=red&label=Bugs"/></a>
+    <a href="https://github.com/23HCI03SMP/P_CATS/labels/help%20wanted" style="text-decoration:none"><img src="https://img.shields.io/github/issues/23HCI03SMP/P-CATS/help%20wanted?style=flat-square&color=yellow&label=Help%20Wanted"/></a>
+    <a href="https://img.shields.io/github/license/23HCI03SMP/P-CATS.svg?style=flat-square" style="text-decoration:none"><img src="https://img.shields.io/github/license/23HCI03SMP/P-CATS.svg?style=flat-square&label=License"/></a>
 </p>
 
 ## About
