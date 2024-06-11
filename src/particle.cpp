@@ -42,3 +42,9 @@ Velocity updateVelocity(Point pa, Charge qa, Velocity va, double massa, Point pb
 
     return v_new + dV;
 }
+
+Point updatePosition(Point pa, Charge qa, Velocity va, double massa, Point pb, Charge qb, Velocity vb, double dt) {
+    Velocity new_velocity = updateVelocity(pa, qa, va, massa, pb, qb, vb, dt);
+    Point new_position = Point(pa.x + new_velocity.x * dt, pa.y + new_velocity.y * dt, pa.z + new_velocity.z * dt);
+    return new_position;
+}
