@@ -30,9 +30,18 @@ public:
     /// @param charge Charge of the particle in C.
     Particle(std::string alias, Point position, Velocity velocity, Force bForce, Force eForce, double mass, Charge charge);
 
-    /// @brief Function to update the position of the particle.
+    /// @brief Function to calculate the position and velocity of the particle in the next time step.
+    /// @param alias Alias/Name of the particle.
+    /// @param pa Position of particle a.
+    /// @param qa Charge of particle a.
+    /// @param va Velocity of particle a.
+    /// @param massa Mass of particle
+    /// @param pb Position of particle b.
+    /// @param qb Charge of particle b.
+    /// @param vb Velocity of particle b.
     /// @param dt Time step in seconds.
-    void updatePosition(double dt);
+    /// @return The particle in the next time step.
+    Particle particleInNextTimeStep(std::string alias, Point pa, Charge qa, Velocity va, double massa, Point pb, Charge qb, Velocity vb, double dt);
 
     /// @brief Function to calculate the electric force between two particles.
     /// @param pa Position of particle a.

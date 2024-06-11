@@ -1,6 +1,9 @@
 #include <iostream>
 #include "include/p_cats.h"
 
+/// A structure to store force components (in Newtons).
+///
+/// This structure is used to store the components of a force in Newtons.
 int main() {
     Particle *p1 = new Particle("a", 1, Charge(), Point(0, 0, 0), Velocity(), Force(), Force()); // bottom left front
     Particle *p2 = new Particle("b", 1, Charge(), Point(1, 1, 1), Velocity(), Force(), Force()); // top right back
