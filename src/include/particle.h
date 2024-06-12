@@ -3,6 +3,9 @@
 
 #include "p_cats.h"
 #include "node.h"
+#include "space.h"
+
+class Space;
 
 /// @brief A structure to store a particle node in the tree.
 ///
@@ -22,6 +25,7 @@ public:
     Force bForce;
     /// @brief Electric force acting on the particle in N.
     Force eForce;
+    Space *parent;
 
     /// @brief Constructor for Particle.
     /// @param alias Alias/Name of the particle.

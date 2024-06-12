@@ -1,6 +1,7 @@
 #include "include/p_cats.h"
 #include "include/space.h"
 #include "include/node.h"
+#include "include/particle.h"
 #include <iostream>
 #include <vector>
 
@@ -102,6 +103,7 @@ void Space::insert(Particle *particle)
 
     if (this->children[octet] == nullptr)
     {
+        particle->parent = this;
         this->children[octet] = particle;
     }
     else

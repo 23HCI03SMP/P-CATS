@@ -5,6 +5,8 @@
 #include "particle.h"
 #include <vector>
 
+class Particle;
+
 /// @brief A structure to store a space node in the tree.
 ///
 /// A structure that stores a space node in the tree. This node has a minimum and maximum point, as well as a centre of positive and negative charge.
