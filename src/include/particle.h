@@ -27,6 +27,16 @@ public:
     Force eForce;
     Space *parent;
 
+    std::vector<Node *> getChildren() override;
+
+    /// @brief Function to check if the space is an external node.
+    /// @return True if the space is an external node, false otherwise.
+    bool isExternalNode() override;
+
+    /// @brief Polymporphic function to calculate the midpoint of the particle.
+    /// @return Midpoint of the particle.
+    Point midpoint() override;
+
     /// @brief Constructor for Particle.
     /// @param alias Alias/Name of the particle.
     /// @param position Position of the particle in m.
@@ -42,6 +52,8 @@ public:
         Velocity velocity = Velocity(), 
         Force bForce = Force(), 
         Force eForce = Force());
+    
+    Particle();
 
     /// @brief Function to calculate the position and velocity of the particle in the next time step.
     /// @param alias Alias/Name of the particle.
@@ -54,7 +66,7 @@ public:
     /// @param vb Velocity of particle b.
     /// @param dt Time step in seconds.
     /// @return The particle in the next time step.
-    Particle particleInNextTimeStep(std::string alias, Point pa, Charge qa, Velocity va, double massa, Point pb, Charge qb, Velocity vb, double dt);
+    Particle particleInNextTimeStep(std::string alias, Point pa, Charge qa, Velocity va, double massa, Points pb, Charge qb, double dt, Velocity vb = Velocity(0, 0, 0)); // add velocity qb in the future
 
     /// @brief Function to calculate the electric force between two particles.
     /// @param pa Position of particle a.
@@ -62,7 +74,7 @@ public:
     /// @param pb Position of particle b.
     /// @param qb Charge of particle b.
     /// @return The electric force acting on particle a.
-    Force coulombLaw(Point pa, Charge qa, Point pb, Charge qb);
+    Force coulombLaw(Point pa, Charge qa, Points pb, Charge qb);
 
     /// @brief Function to calculate the magnetic field between two particles.
     /// @param pa Position of particle a.
@@ -71,7 +83,7 @@ public:
     /// @param qb Charge of particle b.
     /// @param vb Velocity of particle b.
     /// @return The magnetic field acting on particle a.
-    Field biotSavart(Point pa, Velocity va, Point pb, Charge qb, Velocity vb);
+    Field biotSavart(Point pa, Velocity va, Points pb, Charge qb, Velocity vb);
 
     /// @brief Function to update the velocity of the particle.
     /// @param pa Position of particle a.
@@ -83,7 +95,7 @@ public:
     /// @param vb Velocity of particle b.
     /// @param dt Time step in seconds.
     /// @return The new velocity of the particle.
-    Velocity updateVelocity(Point pa, Charge qa, Velocity va, double massa, Point pb, Charge qb, Velocity vb, double dt);
+    Velocity updateVelocity(Point pa, Charge qa, Velocity va, double massa, Points pb, Charge qb, Velocity vb, double dt);
 };
 
 #endif

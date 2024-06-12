@@ -222,4 +222,24 @@ struct Charge
     }
 };
 
+/// @brief A structure to store positive and negative average charge positions (in C).
+struct Points {
+    Point positive, negative;
+
+    Points()
+    {
+        positive = Point();
+        negative = Point();
+    }
+
+    /// @brief Constructor for Points.
+    /// @param p Positive charge position in meters.
+    /// @param n Negative charge position in meters.
+    Points(Point p, Point n)
+    {
+        positive = p;
+        negative = n;
+    }
+};
+
 #endif

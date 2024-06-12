@@ -12,8 +12,19 @@ class Node
 public:
     Charge charge;
 
-    virtual ~Node() {}
+    /// @brief Constructor for Node.
+    /// @param charge Charge of the node.
     Node(Charge charge);
+
+    /// @brief Polymporphic function to calculate the midpoint of the node.
+    /// @return Midpoint of the node.
+    virtual Point midpoint();
+
+    /// @brief Function to check if the space is an external node.
+    /// @return True if the space is an external node, false otherwise.
+    virtual bool isExternalNode();
+
+    virtual std::vector<Node *> getChildren();
 };
 
 #endif
