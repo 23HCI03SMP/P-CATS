@@ -1,11 +1,15 @@
+#ifndef P_CATS_H
+#define P_CATS_H
+
 #include <limits>
 #include <vector>
 #include <string>
+#include <cmath>
 
 /// Global Variables
-constexpr double M_PI = 3.14159265358979323846; 
+constexpr double PI = 3.14159265358979323846; 
 constexpr double epsilon0 = 8.8541878188e-12; // Permittivity of free space in C^2/(N m^2)
-constexpr double mu0 = 4 * M_PI * 1e-7; // Permeability of free space in N/[(C/s)^2]
+constexpr double mu0 = 4 * PI * 1e-7; // Permeability of free space in N/[(C/s)^2]
 
 
 /// @brief structure to store force components (in N).
@@ -125,6 +129,9 @@ struct Point
     }
 };
 
+/// @brief A structure to store field components (in N/C).
+///
+/// A structure that stores the x, y, and z components of a field. Units are in Newtons per Coulomb.
 struct Field
 {
     double x, y, z;
@@ -215,47 +222,4 @@ struct Charge
     }
 };
 
-class Node
-{
-public:
-    Charge charge;
-
-    virtual ~Node() {}
-    Node(Charge charge);
-};
-
-class Particle : public Node
-{
-public:
-    std::string alias;
-    double mass;
-    Point position;
-    Velocity velocity;
-    Force bForce;
-    Force eForce;
-
-    Particle(std::string alias, 
-        double mass, 
-        Charge charge,
-        Point position = Point(), 
-        Velocity velocity = Velocity(), 
-        Force bForce = Force(), 
-        Force eForce = Force());
-    void updatePosition(double dt);
-    void addForce(Node *node);
-};
-
-class Space : public Node
-{
-public:
-    Point minPoint, maxPoint;
-    Point centreOfPositiveCharge, centreOfNegativeCharge;
-    std::vector<Node *> children;
-
-    Space(Point minPoint, Point maxPoint, Charge charge = Charge(0, 0));
-    void insert(Particle *particle);
-    bool find(Point point);
-    bool isExternalNode();
-    // std::vector<Particle *> generateParticles(double density, double temperature, std::vector<Particle> particles);
-    std::string toString(int depth = 0, bool isLastBranch = false);
-};
+#endif

@@ -1,5 +1,11 @@
+#ifndef PARTICLE_H
+#define PARTICLE_H
+
 #include "p_cats.h"
 #include "node.h"
+#include "space.h"
+
+class Space;
 
 /// @brief A structure to store a particle node in the tree.
 ///
@@ -19,6 +25,7 @@ public:
     Force bForce;
     /// @brief Electric force acting on the particle in N.
     Force eForce;
+    Space *parent;
 
     /// @brief Constructor for Particle.
     /// @param alias Alias/Name of the particle.
@@ -28,11 +35,26 @@ public:
     /// @param eForce Electric force acting on the particle in N.
     /// @param mass Mass of the particle in kg.
     /// @param charge Charge of the particle in C.
-    Particle(std::string alias, Point position, Velocity velocity, Force bForce, Force eForce, double mass, Charge charge);
+    Particle(std::string alias, 
+        double mass, 
+        Charge charge,
+        Point position = Point(), 
+        Velocity velocity = Velocity(), 
+        Force bForce = Force(), 
+        Force eForce = Force());
 
-    /// @brief Function to update the position of the particle.
+    /// @brief Function to calculate the position and velocity of the particle in the next time step.
+    /// @param alias Alias/Name of the particle.
+    /// @param pa Position of particle a.
+    /// @param qa Charge of particle a.
+    /// @param va Velocity of particle a.
+    /// @param massa Mass of particle
+    /// @param pb Position of particle b.
+    /// @param qb Charge of particle b.
+    /// @param vb Velocity of particle b.
     /// @param dt Time step in seconds.
-    void updatePosition(double dt);
+    /// @return The particle in the next time step.
+    Particle particleInNextTimeStep(std::string alias, Point pa, Charge qa, Velocity va, double massa, Point pb, Charge qb, Velocity vb, double dt);
 
     /// @brief Function to calculate the electric force between two particles.
     /// @param pa Position of particle a.
@@ -63,3 +85,5 @@ public:
     /// @return The new velocity of the particle.
     Velocity updateVelocity(Point pa, Charge qa, Velocity va, double massa, Point pb, Charge qb, Velocity vb, double dt);
 };
+
+#endif
