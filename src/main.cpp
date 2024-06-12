@@ -16,6 +16,10 @@ int main() {
     Particle *p7 = new Particle("g", 1, Charge(), Point(0.5, 0.5, 0.5)); // centre
     Particle *p8 = new Particle("h", 1, Charge(), Point(0.1, 0.2, 0.8)); // centre
     Particle *p9 = new Particle("i", 1, Charge(), Point(0.3, 0.3, 0.3)); // centre
+    Particle *p10 = new Particle("j", 1, Charge(), Point(0.9, 0.9, 0.9)); // centre
+    Particle *p11 = new Particle("k", 1, Charge(), Point(0.4, 0.4, 0.4)); // centre
+    Particle *p12 = new Particle("l", 1, Charge(), Point(0.45, 0.45, 0.45)); // centre
+    Particle *p13 = new Particle("m", 1, Charge(), Point(0.42, 0.42, 0.42)); // centre
 
     Space *baseSpace = new Space(Point(0, 0, 0), Point(1, 1, 1));
 
@@ -28,6 +32,10 @@ int main() {
     baseSpace->insert(p7);
     baseSpace->insert(p8);
     baseSpace->insert(p9);
+    baseSpace->insert(p10);
+    baseSpace->insert(p11);
+    baseSpace->insert(p12);
+    baseSpace->insert(p13);
 
     std::cout << baseSpace->toString() << std::endl;
     

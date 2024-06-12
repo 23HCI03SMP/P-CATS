@@ -33,7 +33,7 @@ public:
     bool isExternalNode();
 
     // std::vector<Particle *> generateParticles(double density, double temperature, std::vector<Particle> particles);
-    std::string toString(int depth = 0, bool isLastBranch = false);
+    std::string toString(int depth = 0, int lastNonLastBranchDepth = 0, bool isLastBranch = false);
 };
 
 #endif

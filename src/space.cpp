@@ -181,19 +181,23 @@ void Space::insert(Particle *particle)
 //     }
 // }
 
-std::string GetIndentString(int depth)
+std::string GetIndentString(int depth, int lastNonLastBranchDepth, bool isLastBranch)
 {
+    if (isLastBranch) std::cout << depth << lastNonLastBranchDepth << std::endl;
+    
     std::string out = "";
 
-    for (int i = 0; i < depth; i++)
+    for (int i = 0; i < lastNonLastBranchDepth; i++)
     {
         out += "│   ";
     }
 
+    out += depth - lastNonLastBranchDepth == 0 ? "" : std::string(4 * (depth - lastNonLastBranchDepth), ' ');
+
     return out;
 }
 
-std::string Space::toString(int depth, bool isLastBranch)
+std::string Space::toString(int depth, int lastNonLastBranchDepth, bool isLastBranch)
 {
     std::string out = "\033[34mSpace (" 
                     + std::to_string(minPoint.x) 
@@ -223,7 +227,7 @@ std::string Space::toString(int depth, bool isLastBranch)
 
         if (children[i] == nullptr)
         {
-            out += (isLastBranch && depth != 0 ? std::string(depth * 4, ' ') : GetIndentString(depth))
+            out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch)
                 + currentBranchSymbol
                 + "\033[35mEmpty\033[0m\n";
         }
@@ -233,7 +237,7 @@ std::string Space::toString(int depth, bool isLastBranch)
             {
                 Particle *particle = dynamic_cast<Particle *>(children[i]);
 
-                out += (isLastBranch && depth != 0 ? std::string(depth * 4, ' ') : GetIndentString(depth))
+                out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch)
                     + currentBranchSymbol
                     + "\033[32m"
                     + particle->alias 
@@ -250,9 +254,11 @@ std::string Space::toString(int depth, bool isLastBranch)
             {
                 Space *space = dynamic_cast<Space *>(children[i]);
 
-                out += (isLastBranch ? std::string(depth * 4, ' ') : GetIndentString(depth))
+                if (isLastBranch) lastNonLastBranchDepth = depth;
+
+                out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch)
                     + currentBranchSymbol
-                    + space->toString(depth + 1, isLastBranch);
+                    + space->toString(depth + 1, (lastNonLastBranchDepth + (i != o8)), isLastBranch);
             }
             else
             {
