@@ -4,6 +4,8 @@
 #include "include/particle.h"
 #include <iostream>
 #include <vector>
+#include <gsl/gsl_rng.h>
+#include <gsl/gsl_randist.h>
 
 #define o1 0 // top left back
 #define o2 1 // top right back
@@ -25,7 +27,7 @@ Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
     this->maxPoint = maxPoint;
     this->centreOfPositiveCharge = Point();
     this->centreOfNegativeCharge = Point();
-    
+
     for (int i = 0; i <= o8; i++)
     {
         children.push_back(nullptr);
@@ -113,6 +115,17 @@ void Space::insert(Particle *particle)
         if (dynamic_cast<Particle *>(this->children[octet]) != nullptr)
         {
             Particle *oldParticle = dynamic_cast<Particle *>(this->children[octet]);
+
+            // if the particle is at the same position as the old particle, ignore it
+            if (oldParticle->position.x == particle->position.x &&
+                oldParticle->position.y == particle->position.y &&
+                oldParticle->position.z == particle->position.z)
+            {
+                // std::cout << "Particle already exists in this position. Ignoring...\n"
+                //           << std::endl;
+                return;
+            }
+
             Point subspaceMinPoint, subspaceMaxPoint;
 
             switch (octet)
@@ -145,7 +158,7 @@ void Space::insert(Particle *particle)
                 subspaceMinPoint = Point(xMid, this->minPoint.y, this->minPoint.z);
                 subspaceMaxPoint = Point(this->maxPoint.x, yMid, zMid);
                 break;
-            case o8: // bottom left front             
+            case o8: // bottom left front
                 subspaceMinPoint = Point(this->minPoint.x, this->minPoint.y, this->minPoint.z);
                 subspaceMaxPoint = Point(xMid, yMid, zMid);
                 break;
@@ -168,23 +181,69 @@ void Space::insert(Particle *particle)
     }
 }
 
+std::vector<Particle *> Space::generateParticles(double density,
+                                                 double temperature,
+                                                 std::vector<std::tuple<Particle, double>> &particles,
+                                                 HotspotShape hotspotShape,
+                                                 std::initializer_list<double> params)
+{
+    /// @todo Ensure that percentage sums to 1
 
-// std::vector<Particle> Space::generateParticles(double density, double temperature, std::vector<Particle> particles)
-// {
-//     for (int i = 0; i < particles.size(); i++)
-//     {
-//         Particle particle = particles[i];
-//         double mass = particle.mass;
-//         Charge charge = particle.charge;
+    std::vector<Particle *> generatedParticles;
 
-//         std::cout << std::to_string(mass) << " " << charge.positive << " " << charge.negative << std::endl;
-//     }
-// }
+    for (int i = 0; i < particles.size(); i++)
+    {
+        Particle particle = std::get<0>(particles[i]);
+        double percentage = std::get<1>(particles[i]);
+        double mass = particle.mass;
+        Charge charge = particle.charge;
+        double xMid = (this->minPoint.x + this->maxPoint.x) / 2;
+        double yMid = (this->minPoint.y + this->maxPoint.y) / 2;
+        double zMid = (this->minPoint.z + this->maxPoint.z) / 2;
+
+        gsl_rng *rng = gsl_rng_alloc(gsl_rng_mt19937);
+        gsl_rng_set(rng, time(NULL));
+
+        switch (hotspotShape)
+        {
+        case HotspotShape::SPHERE:
+        {
+            double radius = params.begin()[0];
+            int n = density * (4.0 / 3.0) * M_PI * pow(radius, 3) * percentage;
+
+            std::cout << n << std::endl;
+
+            // generate n particles in the sphere
+            for (int j = 0; j < n; j++)
+            {
+                double x = gsl_ran_flat(rng, -radius, radius) + xMid;
+                double y = gsl_ran_flat(rng, -radius, radius) + yMid;
+                double z = gsl_ran_flat(rng, -radius, radius) + zMid;
+
+                double vx = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
+                double vy = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
+                double vz = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
+
+                Particle *newParticle = new Particle(particle.alias, mass, charge, Point(x, y, z), Velocity(vx, vy, vz));
+
+                this->insert(newParticle);
+                generatedParticles.push_back(newParticle);
+            }
+            break;
+        }
+        default:
+            break;
+        }
+    }
+
+    return generatedParticles;
+}
 
 std::string GetIndentString(int depth, int lastNonLastBranchDepth, bool isLastBranch)
 {
-    if (isLastBranch) std::cout << depth << lastNonLastBranchDepth << std::endl;
-    
+    if (isLastBranch)
+        std::cout << depth << lastNonLastBranchDepth << std::endl;
+
     std::string out = "";
 
     for (int i = 0; i < lastNonLastBranchDepth; i++)
@@ -199,16 +258,7 @@ std::string GetIndentString(int depth, int lastNonLastBranchDepth, bool isLastBr
 
 std::string Space::toString(int depth, int lastNonLastBranchDepth, bool isLastBranch)
 {
-    std::string out = "\033[34mSpace (" 
-                    + std::to_string(minPoint.x) 
-                    + ", " + std::to_string(minPoint.y) 
-                    + ", " + std::to_string(minPoint.z) 
-                    + ") to (" 
-                    + std::to_string(maxPoint.x) 
-                    + ", " + std::to_string(maxPoint.y) 
-                    + ", " 
-                    + std::to_string(maxPoint.z) 
-                    + ")\033[0m\n";
+    std::string out = "\033[34mSpace (" + std::to_string(minPoint.x) + ", " + std::to_string(minPoint.y) + ", " + std::to_string(minPoint.z) + ") to (" + std::to_string(maxPoint.x) + ", " + std::to_string(maxPoint.y) + ", " + std::to_string(maxPoint.z) + ")\033[0m\n";
     std::string branchSymbol = "├── ";
     std::string lastBranchSymbol = "└── ";
 
@@ -227,9 +277,7 @@ std::string Space::toString(int depth, int lastNonLastBranchDepth, bool isLastBr
 
         if (children[i] == nullptr)
         {
-            out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch)
-                + currentBranchSymbol
-                + "\033[35mEmpty\033[0m\n";
+            out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch) + currentBranchSymbol + "\033[35mEmpty\033[0m\n";
         }
         else
         {
@@ -237,28 +285,16 @@ std::string Space::toString(int depth, int lastNonLastBranchDepth, bool isLastBr
             {
                 Particle *particle = dynamic_cast<Particle *>(children[i]);
 
-                out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch)
-                    + currentBranchSymbol
-                    + "\033[32m"
-                    + particle->alias 
-                    + " (" 
-                    + std::to_string(particle->position.x) 
-                    + ", " 
-                    + std::to_string(particle->position.y)
-                    + ", "
-                    + std::to_string(particle->position.z)
-                    + ")"
-                    + "\033[0m\n";
+                out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch) + currentBranchSymbol + "\033[32m" + particle->alias + " (" + std::to_string(particle->position.x) + ", " + std::to_string(particle->position.y) + ", " + std::to_string(particle->position.z) + ")" + "\033[0m\n";
             }
             else if (dynamic_cast<Space *>(children[i])) // If its a space, then we need to run recursively over its children
             {
                 Space *space = dynamic_cast<Space *>(children[i]);
 
-                if (isLastBranch) lastNonLastBranchDepth = depth;
+                if (isLastBranch)
+                    lastNonLastBranchDepth = depth;
 
-                out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch)
-                    + currentBranchSymbol
-                    + space->toString(depth + 1, (lastNonLastBranchDepth + (i != o8)), isLastBranch);
+                out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch) + currentBranchSymbol + space->toString(depth + 1, (lastNonLastBranchDepth + (i != o8)), isLastBranch);
             }
             else
             {
