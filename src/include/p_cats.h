@@ -1,9 +1,10 @@
+#ifndef P_CATS_H
+#define P_CATS_H
+
 #include <limits>
 #include <vector>
 #include <string>
 #include <cmath>
-
-#pragma once
 
 /// Global Variables
 constexpr double PI = 3.14159265358979323846; 
@@ -221,16 +222,4 @@ struct Charge
     }
 };
 
-// class Particle : public Node
-// {
-// public:
-//     std::string alias;
-//     double mass;
-//     Point position;
-//     Velocity velocity;
-//     Force bForce;
-//     Force eForce;
-
-//     void updatePosition(double dt);
-//     void addForce(Node *node);
-// };
+#endif

@@ -1,6 +1,7 @@
-#include "p_cats.h"
+#ifndef NODE_H
+#define NODE_H
 
-#pragma once
+#include "p_cats.h"
 
 /// @brief A structure to store a node in the tree.
 ///
@@ -14,3 +15,5 @@ public:
     virtual ~Node() {}
     Node(Charge charge);
 };
+
+#endif

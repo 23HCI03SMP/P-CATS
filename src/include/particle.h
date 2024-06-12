@@ -1,7 +1,8 @@
+#ifndef PARTICLE_H
+#define PARTICLE_H
+
 #include "p_cats.h"
 #include "node.h"
-
-#pragma once
 
 /// @brief A structure to store a particle node in the tree.
 ///
@@ -80,3 +81,5 @@ public:
     /// @return The new velocity of the particle.
     Velocity updateVelocity(Point pa, Charge qa, Velocity va, double massa, Point pb, Charge qb, Velocity vb, double dt);
 };
+
+#endif
