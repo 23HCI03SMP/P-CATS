@@ -25,11 +25,7 @@
 var NAVTREE =
 [
   [ "P-CATS", "index.html", [
-    [ "P-CATS: Particle-Cluster Approximation Tree Simulation", "md_README.html", [
-      [ "About", "md_README.html#autotoc_md1", null ],
-      [ "Installation", "md_README.html#autotoc_md2", null ],
-      [ "Usage/Examples", "md_README.html#autotoc_md3", null ]
-    ] ],
+    [ "P-CATS: Particle-Cluster Approximation Tree Simulation", "md_README.html", null ],
     [ "Todo List", "todo.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
