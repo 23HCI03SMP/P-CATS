@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['magnitude_19',['magnitude',['../structPoint.html#ae061fb2b6e0125058250aa2f80d1136f',1,'Point']]],
-  ['mass_20',['mass',['../classParticle.html#ae6d46dc24a6666d526f211151fecca5f',1,'Particle']]]
+  ['node_16',['Node',['../classNode.html',1,'Node'],['../classNode.html#a7361885463844ef82eb8866b18429074',1,'Node::Node()']]]
 ];

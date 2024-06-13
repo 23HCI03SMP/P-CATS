@@ -1,11 +1,15 @@
 var classSpace =
 [
-    [ "Space", "classSpace.html#a6a42067f54228673779fd8f26b8843ca", null ],
-    [ "find", "classSpace.html#abf5c83b95ea1cca9c2a8cd57a8a6c02c", null ],
-    [ "insert", "classSpace.html#adfbb361f07d25805295873d716dc7b68", null ],
-    [ "isExternalNode", "classSpace.html#a51e698378de4f7e987273287ca44a6ba", null ],
-    [ "centreOfNegativeCharge", "classSpace.html#ad1168c7535f6347d6edf321d6b093ecb", null ],
-    [ "centreOfPositiveCharge", "classSpace.html#a6c24172c7f2e34637d98ed00e9046f18", null ],
+    [ "Space", "classSpace.html#aabb74930064f046afdad3093730e47c3", null ],
+    [ "generateParticles", "classSpace.html#a02530e16933924349e26b1fe1be24617", null ],
+    [ "getCentreOfCharge", "classSpace.html#af2c2a02dcb32e225c617c625bdb0e509", null ],
+    [ "getChildren", "classSpace.html#a831f16c09115089d56e6b2d8f93716be", null ],
+    [ "insert", "classSpace.html#a326a877b9b90cec83682097a6e11b59f", null ],
+    [ "isExternalNode", "classSpace.html#a074f2eb24bccb836bc0f12168d9e03e9", null ],
+    [ "midpoint", "classSpace.html#a73d924b6960a412b2807d503675f0a3e", null ],
+    [ "recalculateCentreOfCharge", "classSpace.html#a137b1640e545e1c8f95f57f7da342bd1", null ],
+    [ "toString", "classSpace.html#a3338c1032402627c381d5322511c4f91", null ],
+    [ "centreOfCharge", "classSpace.html#a6bd1cb771e6ea9123426f95105801ec1", null ],
     [ "children", "classSpace.html#abb644990b5e298aea2e5c6226405ddbf", null ],
     [ "maxPoint", "classSpace.html#a094d227ed29ede0035f144ba33d30e43", null ],
     [ "minPoint", "classSpace.html#ae777a49660fa715a49205acd2b6a8c48", null ]

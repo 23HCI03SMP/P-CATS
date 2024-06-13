@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['operator_2b_22',['operator+',['../structForce.html#a3829753ecbd29dbdc2380ae908f067c9',1,'Force::operator+()'],['../structVelocity.html#a376b555040fd35f13f157cfe8c374ca3',1,'Velocity::operator+()'],['../structField.html#ad4714d97f0ae00a1c9717a9471e1c911',1,'Field::operator+()'],['../structCharge.html#ad6937228abc23469c52dd1471d854cb6',1,'Charge::operator+(const Charge &amp;c) const']]],
-  ['operator_2b_3d_23',['operator+=',['../structCharge.html#af6bf041c9bfef59cd4fe044ea679838b',1,'Charge']]],
-  ['operator_2d_24',['operator-',['../structForce.html#a593a122ccb68c7fd9593d4ae4ecfaee1',1,'Force::operator-()'],['../structPoint.html#ae4ec92b14e766b962f09000aff318f48',1,'Point::operator-()'],['../structCharge.html#ad99914a62b19a1622477b5ee9abc52fd',1,'Charge::operator-(const Charge &amp;c) const']]],
-  ['operator_2d_3d_25',['operator-=',['../structCharge.html#a618447840f90bf6e52044c8edafa2832',1,'Charge']]]
+  ['p_2dcats_3a_20particle_2dcluster_20approximation_20tree_20simulation_22',['P-CATS: Particle-Cluster Approximation Tree Simulation',['../md_README.html',1,'']]],
+  ['particle_23',['Particle',['../classParticle.html',1,'Particle'],['../classParticle.html#a0054c2e45a4757ec7380ec7d22872657',1,'Particle::Particle(std::string alias, double mass, Charge charge, Point position=Point(), Velocity velocity=Velocity(), Force bForce=Force(), Force eForce=Force())']]],
+  ['particleinnexttimestep_24',['particleInNextTimeStep',['../classParticle.html#a940610373a3f4e931dc411942b08c160',1,'Particle']]],
+  ['point_25',['Point',['../structPoint.html',1,'Point'],['../structPoint.html#a4d43f5247afe8c85c6da1aa39dbcc738',1,'Point::Point()']]],
+  ['points_26',['Points',['../structPoints.html',1,'Points'],['../structPoints.html#aaa28feaac2a422388e0e15307c02633a',1,'Points::Points()']]],
+  ['position_27',['position',['../classParticle.html#aa163e6106a535a74bed445cc9d9ba3ef',1,'Particle']]]
 ];

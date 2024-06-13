@@ -17,6 +17,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -105,6 +106,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae4ec92b14e766b962f09000aff318f48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPoint.html">Point</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPoint.html#ae4ec92b14e766b962f09000aff318f48">operator-</a> (const <a class="el" href="structPoint.html">Point</a> &amp;p) const</td></tr>
 <tr class="memdesc:ae4ec92b14e766b962f09000aff318f48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtraction operator for <a class="el" href="structPoint.html" title="A structure to store position components (in m).">Point</a>.  <a href="structPoint.html#ae4ec92b14e766b962f09000aff318f48">More...</a><br /></td></tr>
 <tr class="separator:ae4ec92b14e766b962f09000aff318f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4218ebbe1cc5d02a823c49e3fc9c0703"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPoint.html">Point</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPoint.html#a4218ebbe1cc5d02a823c49e3fc9c0703">operator+</a> (const <a class="el" href="structPoint.html">Point</a> &amp;p) const</td></tr>
+<tr class="memdesc:a4218ebbe1cc5d02a823c49e3fc9c0703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addition operator for <a class="el" href="structPoint.html" title="A structure to store position components (in m).">Point</a>.  <a href="structPoint.html#a4218ebbe1cc5d02a823c49e3fc9c0703">More...</a><br /></td></tr>
+<tr class="separator:a4218ebbe1cc5d02a823c49e3fc9c0703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3618cc973762afde2e8df59bff4a86ca"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPoint.html#a3618cc973762afde2e8df59bff4a86ca">operator==</a> (const <a class="el" href="structPoint.html">Point</a> &amp;p) const</td></tr>
+<tr class="memdesc:a3618cc973762afde2e8df59bff4a86ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equals operator for <a class="el" href="structPoint.html" title="A structure to store position components (in m).">Point</a>.  <a href="structPoint.html#a3618cc973762afde2e8df59bff4a86ca">More...</a><br /></td></tr>
+<tr class="separator:a3618cc973762afde2e8df59bff4a86ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae061fb2b6e0125058250aa2f80d1136f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPoint.html#ae061fb2b6e0125058250aa2f80d1136f">magnitude</a> ()</td></tr>
 <tr class="memdesc:ae061fb2b6e0125058250aa2f80d1136f"><td class="mdescLeft">&#160;</td><td class="mdescRight">magnitude of the position vector  <a href="structPoint.html#ae061fb2b6e0125058250aa2f80d1136f">More...</a><br /></td></tr>
 <tr class="separator:ae061fb2b6e0125058250aa2f80d1136f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -206,6 +213,41 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
 
 </div>
 </div>
+<a id="a4218ebbe1cc5d02a823c49e3fc9c0703"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4218ebbe1cc5d02a823c49e3fc9c0703">&#9670;&nbsp;</a></span>operator+()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structPoint.html">Point</a> Point::operator+ </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structPoint.html">Point</a> &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Addition operator for <a class="el" href="structPoint.html" title="A structure to store position components (in m).">Point</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td><a class="el" href="structPoint.html" title="A structure to store position components (in m).">Point</a> to add. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The sum of the two points. </dd></dl>
+
+</div>
+</div>
 <a id="ae4ec92b14e766b962f09000aff318f48"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae4ec92b14e766b962f09000aff318f48">&#9670;&nbsp;</a></span>operator-()</h2>
 
@@ -238,6 +280,41 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The difference of the two points. </dd></dl>
+
+</div>
+</div>
+<a id="a3618cc973762afde2e8df59bff4a86ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3618cc973762afde2e8df59bff4a86ca">&#9670;&nbsp;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Point::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structPoint.html">Point</a> &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Equals operator for <a class="el" href="structPoint.html" title="A structure to store position components (in m).">Point</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td><a class="el" href="structPoint.html" title="A structure to store position components (in m).">Point</a> to compare. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the two points are equal, false otherwise. </dd></dl>
 
 </div>
 </div>

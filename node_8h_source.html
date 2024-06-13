@@ -17,6 +17,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -87,16 +88,35 @@ $(document).ready(function(){initNavTree('node_8h_source.html',''); initResizabl
 <div class="title">node.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;p_cats.h&quot;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classNode.html">    7</a></span>&#160;<span class="keyword">class </span><a class="code" href="classNode.html">Node</a></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <a class="code" href="structCharge.html">Charge</a> charge;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <a class="code" href="classNode.html">Node</a>(<span class="keywordtype">double</span> mass, <a class="code" href="structCharge.html">Charge</a> charge);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;};</div>
-<div class="ttc" id="aclassNode_html"><div class="ttname"><a href="classNode.html">Node</a></div><div class="ttdoc">A structure to store a node in the tree.</div><div class="ttdef"><b>Definition:</b> node.h:8</div></div>
-<div class="ttc" id="astructCharge_html"><div class="ttname"><a href="structCharge.html">Charge</a></div><div class="ttdoc">A structure to store charge components (in C).</div><div class="ttdef"><b>Definition:</b> p_cats.h:163</div></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef NODE_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define NODE_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;p_cats.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classNode.html">   10</a></span>&#160;<span class="keyword">class </span><a class="code" href="classNode.html">Node</a></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <a class="code" href="structCharge.html">Charge</a> charge;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="classNode.html#a7361885463844ef82eb8866b18429074">Node</a>(<a class="code" href="structCharge.html">Charge</a> charge);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="structPoint.html">Point</a> <a class="code" href="classNode.html#a73edb1b75b7e74da5834272c0b003a10">midpoint</a>();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classNode.html#a4b3c5066770b79482133d84a5810bc4c">isExternalNode</a>();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">virtual</span> std::vector&lt;Node *&gt; getChildren();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="structPoints.html">Points</a> getCentreOfCharge();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassNode_html"><div class="ttname"><a href="classNode.html">Node</a></div><div class="ttdoc">A structure to store a node in the tree.</div><div class="ttdef"><b>Definition:</b> node.h:11</div></div>
+<div class="ttc" id="aclassNode_html_a4b3c5066770b79482133d84a5810bc4c"><div class="ttname"><a href="classNode.html#a4b3c5066770b79482133d84a5810bc4c">Node::isExternalNode</a></div><div class="ttdeci">virtual bool isExternalNode()</div><div class="ttdoc">Function to check if the space is an external node.</div><div class="ttdef"><b>Definition:</b> node.cpp:14</div></div>
+<div class="ttc" id="aclassNode_html_a7361885463844ef82eb8866b18429074"><div class="ttname"><a href="classNode.html#a7361885463844ef82eb8866b18429074">Node::Node</a></div><div class="ttdeci">Node(Charge charge)</div><div class="ttdoc">Constructor for Node.</div><div class="ttdef"><b>Definition:</b> node.cpp:5</div></div>
+<div class="ttc" id="aclassNode_html_a73edb1b75b7e74da5834272c0b003a10"><div class="ttname"><a href="classNode.html#a73edb1b75b7e74da5834272c0b003a10">Node::midpoint</a></div><div class="ttdeci">virtual Point midpoint()</div><div class="ttdoc">Polymporphic function to calculate the midpoint of the node.</div><div class="ttdef"><b>Definition:</b> node.cpp:10</div></div>
+<div class="ttc" id="astructCharge_html"><div class="ttname"><a href="structCharge.html">Charge</a></div><div class="ttdoc">A structure to store charge components (in C).</div><div class="ttdef"><b>Definition:</b> p_cats.h:232</div></div>
+<div class="ttc" id="astructPoint_html"><div class="ttname"><a href="structPoint.html">Point</a></div><div class="ttdoc">A structure to store position components (in m).</div><div class="ttdef"><b>Definition:</b> p_cats.h:125</div></div>
+<div class="ttc" id="astructPoints_html"><div class="ttname"><a href="structPoints.html">Points</a></div><div class="ttdoc">A structure to store positive and negative average charge positions (in C).</div><div class="ttdef"><b>Definition:</b> p_cats.h:296</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

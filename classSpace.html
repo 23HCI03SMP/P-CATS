@@ -17,6 +17,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -108,22 +109,37 @@ Inheritance diagram for Space:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6a42067f54228673779fd8f26b8843ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#a6a42067f54228673779fd8f26b8843ca">Space</a> (<a class="el" href="structPoint.html">Point</a> minPoint, <a class="el" href="structPoint.html">Point</a> maxPoint, double mass, <a class="el" href="structCharge.html">Charge</a> charge)</td></tr>
-<tr class="memdesc:a6a42067f54228673779fd8f26b8843ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classSpace.html" title="A structure to store a space node in the tree.">Space</a>.  <a href="classSpace.html#a6a42067f54228673779fd8f26b8843ca">More...</a><br /></td></tr>
-<tr class="separator:a6a42067f54228673779fd8f26b8843ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfbb361f07d25805295873d716dc7b68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#adfbb361f07d25805295873d716dc7b68">insert</a> (<a class="el" href="classNode.html">Node</a> *node)</td></tr>
-<tr class="memdesc:adfbb361f07d25805295873d716dc7b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to insert a node into the space.  <a href="classSpace.html#adfbb361f07d25805295873d716dc7b68">More...</a><br /></td></tr>
-<tr class="separator:adfbb361f07d25805295873d716dc7b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf5c83b95ea1cca9c2a8cd57a8a6c02c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#abf5c83b95ea1cca9c2a8cd57a8a6c02c">find</a> (<a class="el" href="structPoint.html">Point</a> point)</td></tr>
-<tr class="memdesc:abf5c83b95ea1cca9c2a8cd57a8a6c02c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to find a point in the space.  <a href="classSpace.html#abf5c83b95ea1cca9c2a8cd57a8a6c02c">More...</a><br /></td></tr>
-<tr class="separator:abf5c83b95ea1cca9c2a8cd57a8a6c02c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51e698378de4f7e987273287ca44a6ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#a51e698378de4f7e987273287ca44a6ba">isExternalNode</a> ()</td></tr>
-<tr class="memdesc:a51e698378de4f7e987273287ca44a6ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to check if the space is an external node.  <a href="classSpace.html#a51e698378de4f7e987273287ca44a6ba">More...</a><br /></td></tr>
-<tr class="separator:a51e698378de4f7e987273287ca44a6ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2c2a02dcb32e225c617c625bdb0e509"><td class="memItemLeft" align="right" valign="top"><a id="af2c2a02dcb32e225c617c625bdb0e509"></a>
+<a class="el" href="structPoints.html">Points</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getCentreOfCharge</b> () override</td></tr>
+<tr class="separator:af2c2a02dcb32e225c617c625bdb0e509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a831f16c09115089d56e6b2d8f93716be"><td class="memItemLeft" align="right" valign="top"><a id="a831f16c09115089d56e6b2d8f93716be"></a>
+std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getChildren</b> () override</td></tr>
+<tr class="separator:a831f16c09115089d56e6b2d8f93716be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabb74930064f046afdad3093730e47c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#aabb74930064f046afdad3093730e47c3">Space</a> (<a class="el" href="structPoint.html">Point</a> minPoint, <a class="el" href="structPoint.html">Point</a> maxPoint, <a class="el" href="structCharge.html">Charge</a> charge=<a class="el" href="structCharge.html">Charge</a>())</td></tr>
+<tr class="memdesc:aabb74930064f046afdad3093730e47c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classSpace.html" title="A structure to store a space node in the tree.">Space</a>.  <a href="classSpace.html#aabb74930064f046afdad3093730e47c3">More...</a><br /></td></tr>
+<tr class="separator:aabb74930064f046afdad3093730e47c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73d924b6960a412b2807d503675f0a3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPoint.html">Point</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#a73d924b6960a412b2807d503675f0a3e">midpoint</a> () override</td></tr>
+<tr class="memdesc:a73d924b6960a412b2807d503675f0a3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polymporphic function to calculate the midpoint of the space.  <a href="classSpace.html#a73d924b6960a412b2807d503675f0a3e">More...</a><br /></td></tr>
+<tr class="separator:a73d924b6960a412b2807d503675f0a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a326a877b9b90cec83682097a6e11b59f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#a326a877b9b90cec83682097a6e11b59f">insert</a> (<a class="el" href="classParticle.html">Particle</a> *particle)</td></tr>
+<tr class="memdesc:a326a877b9b90cec83682097a6e11b59f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to insert a node into the space.  <a href="classSpace.html#a326a877b9b90cec83682097a6e11b59f">More...</a><br /></td></tr>
+<tr class="separator:a326a877b9b90cec83682097a6e11b59f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a074f2eb24bccb836bc0f12168d9e03e9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#a074f2eb24bccb836bc0f12168d9e03e9">isExternalNode</a> () override</td></tr>
+<tr class="memdesc:a074f2eb24bccb836bc0f12168d9e03e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to check if the space is an external node.  <a href="classSpace.html#a074f2eb24bccb836bc0f12168d9e03e9">More...</a><br /></td></tr>
+<tr class="separator:a074f2eb24bccb836bc0f12168d9e03e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02530e16933924349e26b1fe1be24617"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#a02530e16933924349e26b1fe1be24617">generateParticles</a> (double density, double temperature, std::vector&lt; std::tuple&lt; <a class="el" href="classParticle.html">Particle</a>, double &gt;&gt; &amp;particles, HotspotShape hotspotShape, std::initializer_list&lt; double &gt; params)</td></tr>
+<tr class="memdesc:a02530e16933924349e26b1fe1be24617"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to generate particles in the space.  <a href="classSpace.html#a02530e16933924349e26b1fe1be24617">More...</a><br /></td></tr>
+<tr class="separator:a02530e16933924349e26b1fe1be24617"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a137b1640e545e1c8f95f57f7da342bd1"><td class="memItemLeft" align="right" valign="top"><a id="a137b1640e545e1c8f95f57f7da342bd1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>recalculateCentreOfCharge</b> ()</td></tr>
+<tr class="separator:a137b1640e545e1c8f95f57f7da342bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3338c1032402627c381d5322511c4f91"><td class="memItemLeft" align="right" valign="top"><a id="a3338c1032402627c381d5322511c4f91"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> (int depth=0, int lastNonLastBranchDepth=0, bool isLastBranch=false)</td></tr>
+<tr class="separator:a3338c1032402627c381d5322511c4f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classNode"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classNode')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classNode.html">Node</a></td></tr>
-<tr class="memitem:a99337c9a3417124810c0afe045337c5f inherit pub_methods_classNode"><td class="memItemLeft" align="right" valign="top"><a id="a99337c9a3417124810c0afe045337c5f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Node</b> (double mass, <a class="el" href="structCharge.html">Charge</a> charge)</td></tr>
-<tr class="separator:a99337c9a3417124810c0afe045337c5f inherit pub_methods_classNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7361885463844ef82eb8866b18429074 inherit pub_methods_classNode"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a7361885463844ef82eb8866b18429074">Node</a> (<a class="el" href="structCharge.html">Charge</a> charge)</td></tr>
+<tr class="memdesc:a7361885463844ef82eb8866b18429074 inherit pub_methods_classNode"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classNode.html" title="A structure to store a node in the tree.">Node</a>.  <a href="classNode.html#a7361885463844ef82eb8866b18429074">More...</a><br /></td></tr>
+<tr class="separator:a7361885463844ef82eb8866b18429074 inherit pub_methods_classNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -133,12 +149,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a094d227ed29ede0035f144ba33d30e43"><td class="memItemLeft" align="right" valign="top"><a id="a094d227ed29ede0035f144ba33d30e43"></a>
 <a class="el" href="structPoint.html">Point</a>&#160;</td><td class="memItemRight" valign="bottom"><b>maxPoint</b></td></tr>
 <tr class="separator:a094d227ed29ede0035f144ba33d30e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c24172c7f2e34637d98ed00e9046f18"><td class="memItemLeft" align="right" valign="top"><a id="a6c24172c7f2e34637d98ed00e9046f18"></a>
-<a class="el" href="structPoint.html">Point</a>&#160;</td><td class="memItemRight" valign="bottom"><b>centreOfPositiveCharge</b></td></tr>
-<tr class="separator:a6c24172c7f2e34637d98ed00e9046f18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1168c7535f6347d6edf321d6b093ecb"><td class="memItemLeft" align="right" valign="top"><a id="ad1168c7535f6347d6edf321d6b093ecb"></a>
-<a class="el" href="structPoint.html">Point</a>&#160;</td><td class="memItemRight" valign="bottom"><b>centreOfNegativeCharge</b></td></tr>
-<tr class="separator:ad1168c7535f6347d6edf321d6b093ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bd1cb771e6ea9123426f95105801ec1"><td class="memItemLeft" align="right" valign="top"><a id="a6bd1cb771e6ea9123426f95105801ec1"></a>
+<a class="el" href="structPoints.html">Points</a>&#160;</td><td class="memItemRight" valign="bottom"><b>centreOfCharge</b></td></tr>
+<tr class="separator:a6bd1cb771e6ea9123426f95105801ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb644990b5e298aea2e5c6226405ddbf"><td class="memItemLeft" align="right" valign="top"><a id="abb644990b5e298aea2e5c6226405ddbf"></a>
 std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>children</b></td></tr>
 <tr class="separator:abb644990b5e298aea2e5c6226405ddbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,8 +164,8 @@ std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><t
 <div class="textblock"><p>A structure to store a space node in the tree. </p>
 <p>A structure that stores a space node in the tree. This node has a minimum and maximum point, as well as a centre of positive and negative charge. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6a42067f54228673779fd8f26b8843ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a42067f54228673779fd8f26b8843ca">&#9670;&nbsp;</a></span>Space()</h2>
+<a id="aabb74930064f046afdad3093730e47c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabb74930064f046afdad3093730e47c3">&#9670;&nbsp;</a></span>Space()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,14 +185,8 @@ std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><t
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>mass</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"><a class="el" href="structCharge.html">Charge</a>&#160;</td>
-          <td class="paramname"><em>charge</em>&#160;</td>
+          <td class="paramname"><em>charge</em> = <code><a class="el" href="structCharge.html">Charge</a>()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -203,35 +210,68 @@ std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><t
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="abf5c83b95ea1cca9c2a8cd57a8a6c02c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf5c83b95ea1cca9c2a8cd57a8a6c02c">&#9670;&nbsp;</a></span>find()</h2>
+<a id="a02530e16933924349e26b1fe1be24617"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02530e16933924349e26b1fe1be24617">&#9670;&nbsp;</a></span>generateParticles()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool Space::find </td>
+          <td class="memname">std::vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt; Space::generateParticles </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structPoint.html">Point</a>&#160;</td>
-          <td class="paramname"><em>point</em></td><td>)</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>density</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>temperature</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::tuple&lt; <a class="el" href="classParticle.html">Particle</a>, double &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>particles</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">HotspotShape&#160;</td>
+          <td class="paramname"><em>hotspotShape</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::initializer_list&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function to find a point in the space. </p>
+<p>Function to generate particles in the space. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">point</td><td><a class="el" href="structPoint.html" title="A structure to store position components (in m).">Point</a> to find. </td></tr>
+    <tr><td class="paramname">density</td><td>Density of the particles, in &lt;@UnidentifiedX do later&gt;. </td></tr>
+    <tr><td class="paramname">temperature</td><td>Temperature of the particles, in Kelvin. </td></tr>
+    <tr><td class="paramname">particles</td><td>Vector of particles to be generated. Takes in a tuple of a particle and a double. <a class="el" href="classParticle.html" title="A structure to store a particle node in the tree.">Particle</a> is the particle to be generated, and the double is the percentage of the particle being generated. </td></tr>
+    <tr><td class="paramname">hotspotShape</td><td>Shape of the hotspot. </td></tr>
+    <tr><td class="paramname">params</td><td>Parameters for the hotspot shape. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the point is in the space, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of particles generated. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Ensure that percentage sums to 1 </dd></dl>
 
 </div>
 </div>
-<a id="adfbb361f07d25805295873d716dc7b68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfbb361f07d25805295873d716dc7b68">&#9670;&nbsp;</a></span>insert()</h2>
+<a id="a326a877b9b90cec83682097a6e11b59f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a326a877b9b90cec83682097a6e11b59f">&#9670;&nbsp;</a></span>insert()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -239,8 +279,8 @@ std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><t
         <tr>
           <td class="memname">void Space::insert </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classNode.html">Node</a> *&#160;</td>
-          <td class="paramname"><em>node</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classParticle.html">Particle</a> *&#160;</td>
+          <td class="paramname"><em>particle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -256,11 +296,14 @@ std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><t
 
 </div>
 </div>
-<a id="a51e698378de4f7e987273287ca44a6ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51e698378de4f7e987273287ca44a6ba">&#9670;&nbsp;</a></span>isExternalNode()</h2>
+<a id="a074f2eb24bccb836bc0f12168d9e03e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a074f2eb24bccb836bc0f12168d9e03e9">&#9670;&nbsp;</a></span>isExternalNode()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool Space::isExternalNode </td>
@@ -269,15 +312,53 @@ std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><t
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Function to check if the space is an external node. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if the space is an external node, false otherwise. </dd></dl>
 
+<p>Reimplemented from <a class="el" href="classNode.html#a4b3c5066770b79482133d84a5810bc4c">Node</a>.</p>
+
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a id="a73d924b6960a412b2807d503675f0a3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73d924b6960a412b2807d503675f0a3e">&#9670;&nbsp;</a></span>midpoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structPoint.html">Point</a> Space::midpoint </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Polymporphic function to calculate the midpoint of the space. </p>
+<dl class="section return"><dt>Returns</dt><dd>Midpoint of the space. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classNode.html#a73edb1b75b7e74da5834272c0b003a10">Node</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/include/<a class="el" href="space_8h_source.html">space.h</a></li>
+<li>src/space.cpp</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
