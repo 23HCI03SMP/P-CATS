@@ -17,6 +17,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -90,18 +91,21 @@ $(document).ready(function(){initNavTree('classSpace.html',''); initResizable();
 
 <p>This is the complete list of members for <a class="el" href="classSpace.html">Space</a>, including all inherited members.</p>
 <table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>centreOfNegativeCharge</b> (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>centreOfPositiveCharge</b> (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>charge</b> (defined in <a class="el" href="classNode.html">Node</a>)</td><td class="entry"><a class="el" href="classNode.html">Node</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>children</b> (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>centreOfCharge</b> (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>charge</b> (defined in <a class="el" href="classNode.html">Node</a>)</td><td class="entry"><a class="el" href="classNode.html">Node</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>children</b> (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classSpace.html#a02530e16933924349e26b1fe1be24617">generateParticles</a>(double density, double temperature, std::vector&lt; std::tuple&lt; Particle, double &gt;&gt; &amp;particles, HotspotShape hotspotShape, std::initializer_list&lt; double &gt; params)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>getCentreOfCharge</b>() override (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>getChildren</b>() override (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classSpace.html#a326a877b9b90cec83682097a6e11b59f">insert</a>(Particle *particle)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classSpace.html#a51e698378de4f7e987273287ca44a6ba">isExternalNode</a>()</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classSpace.html#a074f2eb24bccb836bc0f12168d9e03e9">isExternalNode</a>() override</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>maxPoint</b> (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>minPoint</b> (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>Node</b>(Charge charge) (defined in <a class="el" href="classNode.html">Node</a>)</td><td class="entry"><a class="el" href="classNode.html">Node</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classSpace.html#a73d924b6960a412b2807d503675f0a3e">midpoint</a>() override</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>minPoint</b> (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classNode.html#a7361885463844ef82eb8866b18429074">Node</a>(Charge charge)</td><td class="entry"><a class="el" href="classNode.html">Node</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>recalculateCentreOfCharge</b>() (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classSpace.html#aabb74930064f046afdad3093730e47c3">Space</a>(Point minPoint, Point maxPoint, Charge charge=Charge())</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>toString</b>(int depth=0, bool isLastBranch=false) (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>~Node</b>() (defined in <a class="el" href="classNode.html">Node</a>)</td><td class="entry"><a class="el" href="classNode.html">Node</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>toString</b>(int depth=0, int lastNonLastBranchDepth=0, bool isLastBranch=false) (defined in <a class="el" href="classSpace.html">Space</a>)</td><td class="entry"><a class="el" href="classSpace.html">Space</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -17,6 +17,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -87,34 +88,56 @@ $(document).ready(function(){initNavTree('space_8h_source.html',''); initResizab
 <div class="title">space.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;p_cats.h&quot;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;particle.h&quot;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classSpace.html">    8</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSpace.html">Space</a> : <span class="keyword">public</span> <a class="code" href="classNode.html">Node</a></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <a class="code" href="structPoint.html">Point</a> minPoint, maxPoint;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <a class="code" href="structPoint.html">Point</a> centreOfPositiveCharge, centreOfNegativeCharge;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    std::vector&lt;Node *&gt; children;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="classSpace.html#aabb74930064f046afdad3093730e47c3">Space</a>(<a class="code" href="structPoint.html">Point</a> minPoint, <a class="code" href="structPoint.html">Point</a> maxPoint, <a class="code" href="structCharge.html">Charge</a> charge = <a class="code" href="structCharge.html">Charge</a>());</div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef SPACE_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define SPACE_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;p_cats.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;particle.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">class </span><a class="code" href="classParticle.html">Particle</a>;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classSpace.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSpace.html">Space</a> : <span class="keyword">public</span> <a class="code" href="classNode.html">Node</a></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;{</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="structPoint.html">Point</a> minPoint, maxPoint;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="structPoints.html">Points</a> centreOfCharge;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="structPoints.html">Points</a> getCentreOfCharge() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    std::vector&lt;Node *&gt; children;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    std::vector&lt;Node *&gt; getChildren() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classSpace.html#a326a877b9b90cec83682097a6e11b59f">insert</a>(<a class="code" href="classParticle.html">Particle</a> *particle);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classSpace.html#a51e698378de4f7e987273287ca44a6ba">isExternalNode</a>();</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="comment">// std::vector&lt;Particle *&gt; generateParticles(double density, double temperature, std::vector&lt;Particle&gt; particles);</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    std::string toString(<span class="keywordtype">int</span> depth = 0, <span class="keywordtype">bool</span> isLastBranch = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
-<div class="ttc" id="aclassNode_html"><div class="ttname"><a href="classNode.html">Node</a></div><div class="ttdoc">A structure to store a node in the tree.</div><div class="ttdef"><b>Definition:</b> node.h:10</div></div>
-<div class="ttc" id="aclassParticle_html"><div class="ttname"><a href="classParticle.html">Particle</a></div><div class="ttdoc">A structure to store a particle node in the tree.</div><div class="ttdef"><b>Definition:</b> particle.h:10</div></div>
-<div class="ttc" id="aclassSpace_html"><div class="ttname"><a href="classSpace.html">Space</a></div><div class="ttdoc">A structure to store a space node in the tree.</div><div class="ttdef"><b>Definition:</b> space.h:9</div></div>
-<div class="ttc" id="aclassSpace_html_a326a877b9b90cec83682097a6e11b59f"><div class="ttname"><a href="classSpace.html#a326a877b9b90cec83682097a6e11b59f">Space::insert</a></div><div class="ttdeci">void insert(Particle *particle)</div><div class="ttdoc">Function to insert a node into the space.</div><div class="ttdef"><b>Definition:</b> space.cpp:39</div></div>
-<div class="ttc" id="aclassSpace_html_a51e698378de4f7e987273287ca44a6ba"><div class="ttname"><a href="classSpace.html#a51e698378de4f7e987273287ca44a6ba">Space::isExternalNode</a></div><div class="ttdeci">bool isExternalNode()</div><div class="ttdoc">Function to check if the space is an external node.</div><div class="ttdef"><b>Definition:</b> space.cpp:16</div></div>
-<div class="ttc" id="aclassSpace_html_aabb74930064f046afdad3093730e47c3"><div class="ttname"><a href="classSpace.html#aabb74930064f046afdad3093730e47c3">Space::Space</a></div><div class="ttdeci">Space(Point minPoint, Point maxPoint, Charge charge=Charge())</div><div class="ttdoc">Constructor for Space.</div><div class="ttdef"><b>Definition:</b> space.cpp:21</div></div>
-<div class="ttc" id="astructCharge_html"><div class="ttname"><a href="structCharge.html">Charge</a></div><div class="ttdoc">A structure to store charge components (in C).</div><div class="ttdef"><b>Definition:</b> p_cats.h:169</div></div>
-<div class="ttc" id="astructPoint_html"><div class="ttname"><a href="structPoint.html">Point</a></div><div class="ttdoc">A structure to store position components (in m).</div><div class="ttdef"><b>Definition:</b> p_cats.h:94</div></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="classSpace.html#aabb74930064f046afdad3093730e47c3">Space</a>(<a class="code" href="structPoint.html">Point</a> minPoint, <a class="code" href="structPoint.html">Point</a> maxPoint, <a class="code" href="structCharge.html">Charge</a> charge = <a class="code" href="structCharge.html">Charge</a>());</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="structPoint.html">Point</a> <a class="code" href="classSpace.html#a73d924b6960a412b2807d503675f0a3e">midpoint</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classSpace.html#a326a877b9b90cec83682097a6e11b59f">insert</a>(<a class="code" href="classParticle.html">Particle</a> *particle);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classSpace.html#a074f2eb24bccb836bc0f12168d9e03e9">isExternalNode</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    std::vector&lt;Particle *&gt; <a class="code" href="classSpace.html#a02530e16933924349e26b1fe1be24617">generateParticles</a>(<span class="keywordtype">double</span> density,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                                                   <span class="keywordtype">double</span> temperature,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                                                   std::vector&lt;std::tuple&lt;Particle, double&gt;&gt; &amp;particles,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                                                   HotspotShape hotspotShape,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                                                   std::initializer_list&lt;double&gt; params);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> recalculateCentreOfCharge();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">// std::vector&lt;Particle *&gt; generateParticles(double density, double temperature, std::vector&lt;Particle&gt; particles);</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    std::string toString(<span class="keywordtype">int</span> depth = 0, <span class="keywordtype">int</span> lastNonLastBranchDepth = 0, <span class="keywordtype">bool</span> isLastBranch = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;};</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassNode_html"><div class="ttname"><a href="classNode.html">Node</a></div><div class="ttdoc">A structure to store a node in the tree.</div><div class="ttdef"><b>Definition:</b> node.h:11</div></div>
+<div class="ttc" id="aclassParticle_html"><div class="ttname"><a href="classParticle.html">Particle</a></div><div class="ttdoc">A structure to store a particle node in the tree.</div><div class="ttdef"><b>Definition:</b> particle.h:14</div></div>
+<div class="ttc" id="aclassSpace_html"><div class="ttname"><a href="classSpace.html">Space</a></div><div class="ttdoc">A structure to store a space node in the tree.</div><div class="ttdef"><b>Definition:</b> space.h:14</div></div>
+<div class="ttc" id="aclassSpace_html_a02530e16933924349e26b1fe1be24617"><div class="ttname"><a href="classSpace.html#a02530e16933924349e26b1fe1be24617">Space::generateParticles</a></div><div class="ttdeci">std::vector&lt; Particle * &gt; generateParticles(double density, double temperature, std::vector&lt; std::tuple&lt; Particle, double &gt;&gt; &amp;particles, HotspotShape hotspotShape, std::initializer_list&lt; double &gt; params)</div><div class="ttdoc">Function to generate particles in the space.</div><div class="ttdef"><b>Definition:</b> space.cpp:198</div></div>
+<div class="ttc" id="aclassSpace_html_a074f2eb24bccb836bc0f12168d9e03e9"><div class="ttname"><a href="classSpace.html#a074f2eb24bccb836bc0f12168d9e03e9">Space::isExternalNode</a></div><div class="ttdeci">bool isExternalNode() override</div><div class="ttdoc">Function to check if the space is an external node.</div><div class="ttdef"><b>Definition:</b> space.cpp:19</div></div>
+<div class="ttc" id="aclassSpace_html_a326a877b9b90cec83682097a6e11b59f"><div class="ttname"><a href="classSpace.html#a326a877b9b90cec83682097a6e11b59f">Space::insert</a></div><div class="ttdeci">void insert(Particle *particle)</div><div class="ttdoc">Function to insert a node into the space.</div><div class="ttdef"><b>Definition:</b> space.cpp:56</div></div>
+<div class="ttc" id="aclassSpace_html_a73d924b6960a412b2807d503675f0a3e"><div class="ttname"><a href="classSpace.html#a73d924b6960a412b2807d503675f0a3e">Space::midpoint</a></div><div class="ttdeci">Point midpoint() override</div><div class="ttdoc">Polymporphic function to calculate the midpoint of the space.</div><div class="ttdef"><b>Definition:</b> space.cpp:46</div></div>
+<div class="ttc" id="aclassSpace_html_aabb74930064f046afdad3093730e47c3"><div class="ttname"><a href="classSpace.html#aabb74930064f046afdad3093730e47c3">Space::Space</a></div><div class="ttdeci">Space(Point minPoint, Point maxPoint, Charge charge=Charge())</div><div class="ttdoc">Constructor for Space.</div><div class="ttdef"><b>Definition:</b> space.cpp:34</div></div>
+<div class="ttc" id="astructCharge_html"><div class="ttname"><a href="structCharge.html">Charge</a></div><div class="ttdoc">A structure to store charge components (in C).</div><div class="ttdef"><b>Definition:</b> p_cats.h:232</div></div>
+<div class="ttc" id="astructPoint_html"><div class="ttname"><a href="structPoint.html">Point</a></div><div class="ttdoc">A structure to store position components (in m).</div><div class="ttdef"><b>Definition:</b> p_cats.h:125</div></div>
+<div class="ttc" id="astructPoints_html"><div class="ttname"><a href="structPoints.html">Points</a></div><div class="ttdoc">A structure to store positive and negative average charge positions (in C).</div><div class="ttdef"><b>Definition:</b> p_cats.h:296</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
