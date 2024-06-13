@@ -1,17 +1,12 @@
 # P-CATS: Particle-Cluster Approximation Tree Simulation
 
-<pre align="center">
-    ____          ______ ___   ______ _____
-   / __ \        / ____//   | /_  __// ___/
-  / /_/ /______ / /    / /| |  / /   \__ \ 
- / ____//_____// /___ / ___ | / /   ___/ / 
-/_/            \____//_/  |_|/_/   /____/  
+<picture align="center">
+    <source media="(prefers-color-scheme: dark)" srcset="design/pcats_white.png">
+    <source media="(prefers-color-scheme: light)" srcset="design/pcats_black.png">
+    <img alt="P-CATS Logo" src="./design/pcats_white.png">
+</picture>
 
-　／|、     
-（ﾟ､ ｡ ７ 　
-　|、~ ヽ   
-　ししと ）ノ
-</pre>
+<br>
 
 <p align="center">
     <a href="https://img.shields.io/badge/Build_Status-never_built-blue?style=flat-square" style="text-decoration:none"><img src="https://img.shields.io/badge/Build_Status-never_built-blue?style=flat-square"/></a>
