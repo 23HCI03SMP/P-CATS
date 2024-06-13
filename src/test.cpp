@@ -6,7 +6,7 @@
 #include "include/p_cats.h"
 #include "include/node.h"
 #include "include/interactions.h"
-#include <catch2/catch_test_macros.hpp>
+#include "../usr/include/catch2/catch_test_macros.hpp"
 
 /**************
  * Test Cases *
