@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Catch2
-        run: sudo apt-get update && sudo apt-get install -y libcatch2-dev
+        run: sudo apt-get update && sudo apt-get install -y catch2
 
       - name: Compile Catch2 tests
         run: mkdir build && cd build && cmake .. && make
