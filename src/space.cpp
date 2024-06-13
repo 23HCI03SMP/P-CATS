@@ -21,6 +21,11 @@ bool Space::isExternalNode()
     return false;
 }
 
+Points Space::getCentreOfCharge()
+{
+    return centreOfCharge;
+}
+
 std::vector<Node *> Space::getChildren()
 {
     return children;
@@ -30,8 +35,7 @@ Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
 {
     this->minPoint = minPoint;
     this->maxPoint = maxPoint;
-    this->centreOfPositiveCharge = Point();
-    this->centreOfNegativeCharge = Point();
+    this->centreOfCharge = Points();
 
     for (int i = 0; i <= o8; i++)
     {
@@ -300,23 +304,23 @@ void Space::recalculateCentreOfCharge()
             space->recalculateCentreOfCharge();
 
             totalCharge += space->charge;
-            xPositiveChargePositionProductSum += space->charge.positive * space->centreOfPositiveCharge.x;
-            yPositiveChargePositionProductSum += space->charge.positive * space->centreOfPositiveCharge.y;
-            zPositiveChargePositionProductSum += space->charge.positive * space->centreOfPositiveCharge.z;
+            xPositiveChargePositionProductSum += space->charge.positive * space->centreOfCharge.positive.x;
+            yPositiveChargePositionProductSum += space->charge.positive * space->centreOfCharge.positive.y;
+            zPositiveChargePositionProductSum += space->charge.positive * space->centreOfCharge.positive.z;
 
-            xNegativeChargePositionProductSum += space->charge.negative * space->centreOfNegativeCharge.x;
-            yNegativeChargePositionProductSum += space->charge.negative * space->centreOfNegativeCharge.y;
-            zNegativeChargePositionProductSum += space->charge.negative * space->centreOfNegativeCharge.z;
+            xNegativeChargePositionProductSum += space->charge.negative * space->centreOfCharge.negative.x;
+            yNegativeChargePositionProductSum += space->charge.negative * space->centreOfCharge.negative.y;
+            zNegativeChargePositionProductSum += space->charge.negative * space->centreOfCharge.negative.z;
         }
     }
 
     this->charge = totalCharge;
-    this->centreOfPositiveCharge = Point(xPositiveChargePositionProductSum / totalCharge.positive,
+    this->centreOfCharge = Points(Point(xPositiveChargePositionProductSum / totalCharge.positive,
                                          yPositiveChargePositionProductSum / totalCharge.positive,
-                                         zPositiveChargePositionProductSum / totalCharge.positive);
-    this->centreOfNegativeCharge = Point(xNegativeChargePositionProductSum / totalCharge.negative,
+                                         zPositiveChargePositionProductSum / totalCharge.positive),
+                                  Point(xNegativeChargePositionProductSum / totalCharge.negative,
                                          yNegativeChargePositionProductSum / totalCharge.negative,
-                                         zNegativeChargePositionProductSum / totalCharge.negative);
+                                         zNegativeChargePositionProductSum / totalCharge.negative));
 }
 
 std::string Space::toString(int depth, int lastNonLastBranchDepth, bool isLastBranch)

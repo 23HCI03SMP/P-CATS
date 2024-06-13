@@ -18,3 +18,7 @@ bool Node::isExternalNode() {
 std::vector<Node *> Node::getChildren() {
     // This is a pure virtual function
 }
+
+Points Node::getCentreOfCharge() {
+    // This is a pure virtual function
+}

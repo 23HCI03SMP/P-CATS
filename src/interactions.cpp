@@ -13,16 +13,7 @@ void Interactions::Interact(Particle p, Node n, double theta, double dt, Space n
     if (calcTheta < theta || n.isExternalNode()) {
         // Node is sufficiently far away
         // Calculate the force on p from n
-        // check whether n is particle or space class
-        if (n.isExternalNode()) {
-            // n is a particle
-            newParticle = p.particleInNextTimeStep(p.alias, p.position, p.charge, p.velocity, p.mass, Points(n.midpoint(), n.midpoint()), n.charge, dt);
-        }
-
-        else {
-            // newParticle = p.particleInNextTimeStep(p.alias, p.position, p.charge, p.velocity, p.mass, ??? , n.charge, dt); // Centres of Charge
-        }
-
+        newParticle = p.particleInNextTimeStep(p.alias, p.position, p.charge, p.velocity, p.mass, n.getCentreOfCharge(), n.charge, dt);
         newTree.insert(&newParticle);
     }
 

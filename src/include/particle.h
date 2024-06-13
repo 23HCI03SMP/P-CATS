@@ -29,6 +29,8 @@ public:
 
     std::vector<Node *> getChildren() override;
 
+    Points getCentreOfCharge() override;
+
     /// @brief Function to check if the space is an external node.
     /// @return True if the space is an external node, false otherwise.
     bool isExternalNode() override;

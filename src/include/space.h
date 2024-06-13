@@ -14,7 +14,8 @@ class Space : public Node
 {
 public:
     Point minPoint, maxPoint;
-    Point centreOfPositiveCharge, centreOfNegativeCharge;
+    Points centreOfCharge;
+    Points getCentreOfCharge() override;
     std::vector<Node *> children;
     std::vector<Node *> getChildren() override;
 

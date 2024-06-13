@@ -34,6 +34,10 @@ bool Particle::isExternalNode() {
     return true;
 }
 
+Points Particle::getCentreOfCharge() {
+    return Points(position, position);
+}
+
 Force Particle::coulombLaw(Point pa, Charge qa, Points pb, Charge qb) {
     double k_e = 1/(4*PI*epsilon0);
     double q = qa.positive - qa.negative; // charge of a

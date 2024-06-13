@@ -25,6 +25,8 @@ public:
     virtual bool isExternalNode();
 
     virtual std::vector<Node *> getChildren();
+
+    virtual Points getCentreOfCharge();
 };
 
 #endif
