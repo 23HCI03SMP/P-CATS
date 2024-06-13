@@ -289,10 +289,28 @@ std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><t
 <p>Function to insert a node into the space. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">node</td><td><a class="el" href="classNode.html" title="A structure to store a node in the tree.">Node</a> to be inserted. </td></tr>
+    <tr><td class="paramname">node</td><td><a class="el" href="classNode.html" title="A structure to store a node in the tree.">Node</a> to be inserted.</td></tr>
+    <tr><td class="paramname">particle</td><td>The particle to be inserted.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Inserts a particle into the space.</p>
+<p>Logic for insertion:</p>
+<ol type="1">
+<li>If the particle is outside the bounds of the space, return.</li>
+</ol>
+<ol type="1">
+<li>Determine which octet the particle belongs to.</li>
+</ol>
+<ol type="1">
+<li>If the octet is a nullptr, replace it with the particle.</li>
+</ol>
+<ol type="1">
+<li>If the octet is a particle, create a new space and insert the old particle and the new particle into the space.</li>
+</ol>
+<ol type="1">
+<li>If the octet is a space, recursively insert the particle into the octet. </li>
+</ol>
 
 </div>
 </div>
