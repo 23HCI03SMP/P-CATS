@@ -209,7 +209,7 @@ std::vector<Particle *> Space::generateParticles(double density,
         case HotspotShape::SPHERE:
         {
             double radius = params.begin()[0];
-            int n = density * (4.0 / 3.0) * M_PI * pow(radius, 3) * percentage;
+            int n = density * (4.0 / 3.0) * PI * pow(radius, 3) * percentage;
 
             std::cout << n << std::endl;
 
