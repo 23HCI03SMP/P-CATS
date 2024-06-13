@@ -8,4 +8,4 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add executable target with source files
-add_executable(Tests test.cpp)
+add_executable(Tests ../src/test.cpp)
