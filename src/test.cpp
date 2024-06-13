@@ -1,3 +1,5 @@
+#define CATCH_CONFIG_MAIN
+
 #include <iostream>
 #include <cassert>
 #include "include/particle.h"
@@ -6,7 +8,8 @@
 #include "include/p_cats.h"
 #include "include/node.h"
 #include "include/interactions.h"
-#include "../usr/include/catch2/catch_test_macros.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_session.hpp>
 
 /**************
  * Test Cases *
