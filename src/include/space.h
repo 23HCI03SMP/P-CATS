@@ -1,5 +1,6 @@
 #include "p_cats.h"
-#include "node.h"
+#include "particle.h"
+#include <vector>
 
 /// @brief A structure to store a space node in the tree.
 ///
@@ -16,18 +17,16 @@ public:
     /// @param maxPoint maximum point of the space.
     /// @param mass total mass of the space.
     /// @param charge total charge of the space.
-    Space(Point minPoint, Point maxPoint, double mass, Charge charge);
+    Space(Point minPoint, Point maxPoint, Charge charge = Charge());
 
     /// @brief Function to insert a node into the space.
     /// @param node Node to be inserted.
-    void insert(Node *node);
-
-    /// @brief Function to find a point in the space.
-    /// @param point Point to find.
-    /// @return True if the point is in the space, false otherwise.
-    bool find(Point point);
+    void insert(Particle *particle);
 
     /// @brief Function to check if the space is an external node.
     /// @return True if the space is an external node, false otherwise.
     bool isExternalNode();
+
+    // std::vector<Particle *> generateParticles(double density, double temperature, std::vector<Particle> particles);
+    std::string toString(int depth = 0, bool isLastBranch = false);
 };
