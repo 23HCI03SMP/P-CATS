@@ -10,7 +10,7 @@
 </p>
 --->
 
-<p>
+<p align="center">
     <img src="design/pcats_grey.png">
 </p>
 
