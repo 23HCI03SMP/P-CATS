@@ -11,6 +11,7 @@ constexpr double PI = 3.14159265358979323846;
 constexpr double K_B = 1.380649e-23; // Boltzmann constant in J/K
 constexpr double epsilon0 = 8.8541878188e-12; // Permittivity of free space in C^2/(N m^2)
 constexpr double mu0 = 4 * PI * 1e-7; // Permeability of free space in N/[(C/s)^2]
+constexpr double e = 1.602176634e-19 ; // Elementary charge in C
 
 enum HotspotShape
 {
@@ -57,6 +58,14 @@ struct Force
     {
         return Force(x - f.x, y - f.y, z - f.z);
     }
+
+    /// @brief Equals operator for Force.
+    /// @param f Force to compare.
+    /// @return True if the two forces are equal, false otherwise.
+    bool operator==(const Force &f) const
+    {
+        return x == f.x && y == f.y && z == f.z;
+    }
 };
 
 /// @brief A structure to store velocity components (in m/s).
@@ -91,6 +100,22 @@ struct Velocity
     {
         return Velocity(x + v.x, y + v.y, z + v.z);
     }
+
+    /// @brief Subtraction operator for Velocity.
+    /// @param v Velocity to subtract.
+    /// @return The difference of the two velocities.
+    Velocity operator-(const Velocity &v) const
+    {
+        return Velocity(x - v.x, y - v.y, z - v.z);
+    }
+
+    /// @brief Equals operator for Velocity.
+    /// @param v Velocity to compare.
+    /// @return True if the two velocities are equal, false otherwise.
+    bool operator==(const Velocity &v) const
+    {
+        return x == v.x && y == v.y && z == v.z;
+    }
 };
 
 /// @brief A structure to store position components (in m).
@@ -124,6 +149,22 @@ struct Point
     Point operator-(const Point &p) const
     {
         return Point(x - p.x, y - p.y, z - p.z);
+    }
+
+    /// @brief Addition operator for Point.
+    /// @param p Point to add.
+    /// @return The sum of the two points.
+    Point operator+(const Point &p) const
+    {
+        return Point(x + p.x, y + p.y, z + p.z);
+    }
+
+    /// @brief Equals operator for Point.
+    /// @param p Point to compare.
+    /// @return True if the two points are equal, false otherwise.
+    bool operator==(const Point &p) const
+    {
+        return x == p.x && y == p.y && z == p.z;
     }
 
     /// @brief magnitude of the position vector
@@ -165,6 +206,22 @@ struct Field
     Field operator+(const Field &f) const
     {
         return Field(x + f.x, y + f.y, z + f.z);
+    }
+
+    /// @brief Subtraction operator for Field.
+    /// @param f Field to subtract.
+    /// @return The difference of the two fields.
+    Field operator-(const Field &f) const
+    {
+        return Field(x - f.x, y - f.y, z - f.z);
+    }
+
+    /// @brief Equals operator for Field.
+    /// @param f Field to compare.
+    /// @return True if the two fields are equal, false otherwise.
+    bool operator==(const Field &f) const
+    {
+        return x == f.x && y == f.y && z == f.z;
     }
 };
 
@@ -224,6 +281,42 @@ struct Charge
         positive -= c.positive;
         negative -= c.negative;
         return *this;
+    }
+
+    /// @brief equals operator for Charge.
+    /// @param c Charge to compare.
+    /// @return True if the two charges are equal, false otherwise.
+    bool operator==(const Charge &c) const
+    {
+        return positive == c.positive && negative == c.negative;
+    }
+};
+
+/// @brief A structure to store positive and negative average charge positions (in C).
+struct Points {
+    Point positive, negative;
+
+    Points()
+    {
+        positive = Point();
+        negative = Point();
+    }
+
+    /// @brief Constructor for Points.
+    /// @param p Positive charge position in meters.
+    /// @param n Negative charge position in meters.
+    Points(Point p, Point n)
+    {
+        positive = p;
+        negative = n;
+    }
+
+    /// @brief Equals operator for Points.
+    /// @param p Points to compare.
+    /// @return True if the two points are equal, false otherwise.
+    bool operator==(const Points &p) const
+    {
+        return positive == p.positive && negative == p.negative;
     }
 };
 

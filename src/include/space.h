@@ -16,6 +16,7 @@ public:
     Point minPoint, maxPoint;
     Point centreOfPositiveCharge, centreOfNegativeCharge;
     std::vector<Node *> children;
+    std::vector<Node *> getChildren() override;
 
     /// @brief Constructor for Space.
     /// @param minPoint minimum point of the space.
@@ -24,13 +25,17 @@ public:
     /// @param charge total charge of the space.
     Space(Point minPoint, Point maxPoint, Charge charge = Charge());
 
+    /// @brief Polymporphic function to calculate the midpoint of the space.
+    /// @return Midpoint of the space.
+    Point midpoint() override;
+
     /// @brief Function to insert a node into the space.
     /// @param node Node to be inserted.
     void insert(Particle *particle);
-
+    
     /// @brief Function to check if the space is an external node.
     /// @return True if the space is an external node, false otherwise.
-    bool isExternalNode();
+    bool isExternalNode() override;
 
     /// @brief Function to generate particles in the space.
     /// @param density Density of the particles, in <@UnidentifiedX do later>.

@@ -18,7 +18,12 @@
 
 bool Space::isExternalNode()
 {
-    return children.size() == 0;
+    return false;
+}
+
+std::vector<Node *> Space::getChildren()
+{
+    return children;
 }
 
 Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
@@ -32,6 +37,11 @@ Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
     {
         children.push_back(nullptr);
     }
+}
+
+Point Space::midpoint()
+{
+    return Point((minPoint.x + maxPoint.x) / 2, (minPoint.y + maxPoint.y) / 2, (minPoint.z + maxPoint.z) / 2);
 }
 
 // Logic for insertion:
