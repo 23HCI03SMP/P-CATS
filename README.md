@@ -1,11 +1,17 @@
 # P-CATS: Particle-Cluster Approximation Tree Simulation
 
+<!---
 <p align="center">
     <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="design/pcats_white.png">
-        <source media="(prefers-color-scheme: light)" srcset="design/pcats_black.png">
-        <img alt="P-CATS Logo" src="./design/pcats_white.png">
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/23HCI03SMP/P-CATS/main/design/pcats_white.png">
+        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/23HCI03SMP/P-CATS/main/design/pcats_black.png">
+        <img alt="P-CATS Logo" src="design/pcats_white.png">
     </picture>
+</p>
+--->
+
+<p>
+    <img src="design/pcats_grey.png">
 </p>
 
 <p align="center">
