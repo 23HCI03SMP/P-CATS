@@ -10,6 +10,7 @@
 constexpr double PI = 3.14159265358979323846; 
 constexpr double epsilon0 = 8.8541878188e-12; // Permittivity of free space in C^2/(N m^2)
 constexpr double mu0 = 4 * PI * 1e-7; // Permeability of free space in N/[(C/s)^2]
+constexpr double e = 1.602176634e-19 ; // Elementary charge in C
 
 
 /// @brief structure to store force components (in N).
