@@ -11,8 +11,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Catch2
-        run: sudo apt-get install -y catch2
+      - name: Checkout Catch2
+        run: git clone https://github.com/catchorg/Catch2.git
 
       - name: Compile Catch2 tests
         run: mkdir build && cd build && cmake .. && make
