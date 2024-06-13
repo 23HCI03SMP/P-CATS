@@ -45,6 +45,8 @@ public:
                                                    HotspotShape hotspotShape,
                                                    std::initializer_list<double> params);
 
+    void recalculateCentreOfCharge();
+
     // std::vector<Particle *> generateParticles(double density, double temperature, std::vector<Particle> particles);
     std::string toString(int depth = 0, int lastNonLastBranchDepth = 0, bool isLastBranch = false);
 };

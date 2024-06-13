@@ -236,6 +236,8 @@ std::vector<Particle *> Space::generateParticles(double density,
         }
     }
 
+    this->recalculateCentreOfCharge();
+
     return generatedParticles;
 }
 
@@ -254,6 +256,57 @@ std::string GetIndentString(int depth, int lastNonLastBranchDepth, bool isLastBr
     out += depth - lastNonLastBranchDepth == 0 ? "" : std::string(4 * (depth - lastNonLastBranchDepth), ' ');
 
     return out;
+}
+
+void Space::recalculateCentreOfCharge()
+{
+    Charge totalCharge = Charge(0, 0);
+    double xPositiveChargePositionProductSum = 0;
+    double yPositiveChargePositionProductSum = 0;
+    double zPositiveChargePositionProductSum = 0;
+
+    double xNegativeChargePositionProductSum = 0;
+    double yNegativeChargePositionProductSum = 0;
+    double zNegativeChargePositionProductSum = 0;
+
+    for (Node *child : this->children)
+    {
+        if (dynamic_cast<Particle *>(child))
+        {
+            Particle *particle = dynamic_cast<Particle *>(child);
+            totalCharge += particle->charge;
+
+            xPositiveChargePositionProductSum += particle->charge.positive * particle->position.x;
+            yPositiveChargePositionProductSum += particle->charge.positive * particle->position.y;
+            zPositiveChargePositionProductSum += particle->charge.positive * particle->position.z;
+
+            xNegativeChargePositionProductSum += particle->charge.negative * particle->position.x;
+            yNegativeChargePositionProductSum += particle->charge.negative * particle->position.y;
+            zNegativeChargePositionProductSum += particle->charge.negative * particle->position.z;
+        }
+        else if (dynamic_cast<Space *>(child))
+        {
+            Space *space = dynamic_cast<Space *>(child);
+            space->recalculateCentreOfCharge();
+
+            totalCharge += space->charge;
+            xPositiveChargePositionProductSum += space->charge.positive * space->centreOfPositiveCharge.x;
+            yPositiveChargePositionProductSum += space->charge.positive * space->centreOfPositiveCharge.y;
+            zPositiveChargePositionProductSum += space->charge.positive * space->centreOfPositiveCharge.z;
+
+            xNegativeChargePositionProductSum += space->charge.negative * space->centreOfNegativeCharge.x;
+            yNegativeChargePositionProductSum += space->charge.negative * space->centreOfNegativeCharge.y;
+            zNegativeChargePositionProductSum += space->charge.negative * space->centreOfNegativeCharge.z;
+        }
+    }
+
+    this->charge = totalCharge;
+    this->centreOfPositiveCharge = Point(xPositiveChargePositionProductSum / totalCharge.positive,
+                                         yPositiveChargePositionProductSum / totalCharge.positive,
+                                         zPositiveChargePositionProductSum / totalCharge.positive);
+    this->centreOfNegativeCharge = Point(xNegativeChargePositionProductSum / totalCharge.negative,
+                                         yNegativeChargePositionProductSum / totalCharge.negative,
+                                         zNegativeChargePositionProductSum / totalCharge.negative);
 }
 
 std::string Space::toString(int depth, int lastNonLastBranchDepth, bool isLastBranch)
