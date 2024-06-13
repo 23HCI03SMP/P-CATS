@@ -48,11 +48,14 @@ Point Space::midpoint()
     return Point((minPoint.x + maxPoint.x) / 2, (minPoint.y + maxPoint.y) / 2, (minPoint.z + maxPoint.z) / 2);
 }
 
-// Logic for insertion:
-// 1. If the particle is outside the bounds of the space, return.
-// 2. If the space is an external node, find the octet in which the particle belongs and insert it.
-// 3. If the octet is a nullptr, replace it with the particle.
-// 4. If the octet is a space, recursively insert the particle into the octet.
+/// @param particle The particle to be inserted.
+/// @details Inserts a particle into the space.
+/// @details Logic for insertion:
+/// @details 1. If the particle is outside the bounds of the space, return.
+/// @details 2. Determine which octet the particle belongs to.
+/// @details 3. If the octet is a nullptr, replace it with the particle.
+/// @details 4. If the octet is a particle, create a new space and insert the old particle and the new particle into the space.
+/// @details 5. If the octet is a space, recursively insert the particle into the octet.
 void Space::insert(Particle *particle)
 {
     if (particle->position.x < minPoint.x || particle->position.x > maxPoint.x ||
