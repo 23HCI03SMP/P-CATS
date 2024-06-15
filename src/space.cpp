@@ -255,23 +255,6 @@ std::vector<Particle *> Space::generateParticles(double density,
     return generatedParticles;
 }
 
-std::string GetIndentString(int depth, int lastNonLastBranchDepth, bool isLastBranch)
-{
-    if (isLastBranch)
-        std::cout << depth << lastNonLastBranchDepth << std::endl;
-
-    std::string out = "";
-
-    for (int i = 0; i < lastNonLastBranchDepth; i++)
-    {
-        out += "│   ";
-    }
-
-    out += depth - lastNonLastBranchDepth == 0 ? "" : std::string(4 * (depth - lastNonLastBranchDepth), ' ');
-
-    return out;
-}
-
 void Space::recalculateCentreOfCharge()
 {
     Charge totalCharge = Charge(0, 0);
@@ -323,7 +306,7 @@ void Space::recalculateCentreOfCharge()
                                          zNegativeChargePositionProductSum / totalCharge.negative));
 }
 
-std::string Space::toString(int depth, int lastNonLastBranchDepth, bool isLastBranch)
+std::string Space::toString(std::string indent)
 {
     std::string out = "\033[34mSpace (" + std::to_string(minPoint.x) + ", " + std::to_string(minPoint.y) + ", " + std::to_string(minPoint.z) + ") to (" + std::to_string(maxPoint.x) + ", " + std::to_string(maxPoint.y) + ", " + std::to_string(maxPoint.z) + ")\033[0m\n";
     std::string branchSymbol = "├── ";
@@ -331,42 +314,27 @@ std::string Space::toString(int depth, int lastNonLastBranchDepth, bool isLastBr
 
     for (int i = 0; i <= o8; i++)
     {
-        std::string currentBranchSymbol;
-        if (i == o8)
-        {
-            currentBranchSymbol = lastBranchSymbol;
-            isLastBranch = depth == 0 || isLastBranch;
-        }
-        else
-        {
-            currentBranchSymbol = branchSymbol;
-        }
+        bool isLast = i == o8;
 
         if (children[i] == nullptr)
         {
-            out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch) + currentBranchSymbol + "\033[35mEmpty\033[0m\n";
+            out += indent + (isLast ? lastBranchSymbol : branchSymbol) + "\033[35mEmpty\033[0m\n";
+        }
+        else if (dynamic_cast<Particle *>(children[i]))
+        {
+            Particle *particle = dynamic_cast<Particle *>(children[i]);
+
+            out += indent + (isLast ? lastBranchSymbol : branchSymbol) + "\033[32m" + particle->alias + " (" + std::to_string(particle->position.x) + ", " + std::to_string(particle->position.y) + ", " + std::to_string(particle->position.z) + ")" + "\033[0m\n";
+        }
+        else if (dynamic_cast<Space *>(children[i]))
+        {
+            Space *space = dynamic_cast<Space *>(children[i]);
+
+            out += indent + (isLast ? lastBranchSymbol : branchSymbol) + space->toString(indent + (isLast ? "    " : "│   "));
         }
         else
         {
-            if (dynamic_cast<Particle *>(children[i]))
-            {
-                Particle *particle = dynamic_cast<Particle *>(children[i]);
-
-                out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch) + currentBranchSymbol + "\033[32m" + particle->alias + " (" + std::to_string(particle->position.x) + ", " + std::to_string(particle->position.y) + ", " + std::to_string(particle->position.z) + ")" + "\033[0m\n";
-            }
-            else if (dynamic_cast<Space *>(children[i])) // If its a space, then we need to run recursively over its children
-            {
-                Space *space = dynamic_cast<Space *>(children[i]);
-
-                if (isLastBranch)
-                    lastNonLastBranchDepth = depth;
-
-                out += GetIndentString(depth, lastNonLastBranchDepth, isLastBranch) + currentBranchSymbol + space->toString(depth + 1, (lastNonLastBranchDepth + (i != o8)), isLastBranch);
-            }
-            else
-            {
-                throw std::runtime_error("Unknown type (this isn't even supposed to run lmao wtf)");
-            }
+            throw std::runtime_error("Unknown type (this isn't even supposed to run lmao wtf)");
         }
     }
 
