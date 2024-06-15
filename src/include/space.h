@@ -53,8 +53,8 @@ public:
 
     void recalculateCentreOfCharge();
 
-    // std::vector<Particle *> generateParticles(double density, double temperature, std::vector<Particle> particles);
-    std::string toString(int depth = 0, int lastNonLastBranchDepth = 0, bool isLastBranch = false);
+    /// @brief Function to convert the space to a string.
+    std::string toString(std::string indent = "");
 };
 
 #endif
