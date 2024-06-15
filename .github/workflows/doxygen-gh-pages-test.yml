@@ -4,6 +4,7 @@ on:
   push:
       branches-ignore:
         - main
+        - gh-pages
   pull_request:
 
 jobs:
@@ -32,6 +33,6 @@ jobs:
               with:
                 branch: gh-pages
                 folder: docs/html/
-                target-folder: test
+                target-folder: ${{ github.ref}}
                 token: ${{ secrets.GITHUB_TOKEN }}
                 clean: false
