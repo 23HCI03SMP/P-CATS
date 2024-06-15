@@ -1,6 +1,9 @@
-name: Doxygen GitHub Pages Deploy Action
+name: Doxygen GitHub Pages Deploy Action (main)
 
-on: [push, pull_request, workflow_dispatch]
+on: 
+  push:
+      branches:
+          - main
 
 jobs:
     deploy:
