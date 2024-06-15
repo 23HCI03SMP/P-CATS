@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['velocity_68',['Velocity',['../structVelocity.html#adb5f7fd7a3e1811b44c9b4020c31987c',1,'Velocity']]]
+  ['updatevelocity_72',['updateVelocity',['../classParticle.html#af1a9b8be04eb623ef3bd8c1442849b59',1,'Particle']]]
 ];
