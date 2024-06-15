@@ -275,6 +275,12 @@ std::string GetIndentString(int depth, int lastNonLastBranchDepth, bool isLastBr
     return out;
 }
 
+/// @details Logic for recalculateCentreOfCharge(): 
+/// @details 1. Iterate over all children of the space.
+/// @details 2. If the child is a particle, add the charge to the total charge and calculate the position product sum (q*P).
+/// @details 3. If the child is a space, recursively call recalculateCentreOfCharge() on the space.
+/// @details 4. Calculate the centre of charge of the space by dividing the position product sum by the total charge (q*P/q = P).
+/// @details 5. The centre of charge is a pair of points, one for positive charge and one for negative charge.
 void Space::recalculateCentreOfCharge()
 {
     Charge totalCharge = Charge(0, 0);
