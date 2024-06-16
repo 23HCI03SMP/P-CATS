@@ -1,0 +1,35 @@
+name: Doxygen GitHub Pages Deploy Action (main)
+
+on: 
+  push:
+      branches:
+          - main
+
+jobs:
+    deploy:
+        permissions:
+            contents: write
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+            - name: Install Doxygen and Graphviz
+              run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
+            - name: Add doxygen-awesome.css file to root directory and remove doxygen-awesome-css directory
+              run: |
+                git clone https://github.com/jothepro/doxygen-awesome-css.git
+                cd doxygen-awesome-css
+                mv doxygen-awesome.css ../
+                cd ..
+                rm -rf doxygen-awesome-css
+            - name: Generate Doxygen documentation
+              run: doxygen Doxyfile
+            - name: Create .nojekyll file
+              run: touch docs/html/.nojekyll
+            - name: Deploy to GitHub Pages
+              uses: JamesIves/github-pages-deploy-action@4.1.4
+              with:
+                branch: gh-pages
+                folder: docs/html/
+                token: ${{ secrets.GITHUB_TOKEN }}
+                clean: false
