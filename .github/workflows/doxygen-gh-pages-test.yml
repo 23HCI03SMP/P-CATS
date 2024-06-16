@@ -33,6 +33,6 @@ jobs:
               with:
                 branch: gh-pages
                 folder: docs/html/
-                target-folder: ${{ github.ref }}
+                target-folder: ${{ steps.extract_branch.outputs.branch }}
                 token: ${{ secrets.GITHUB_TOKEN }}
                 clean: false
