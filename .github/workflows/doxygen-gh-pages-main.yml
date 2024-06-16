@@ -32,4 +32,4 @@ jobs:
                 branch: gh-pages
                 folder: docs/html/
                 token: ${{ secrets.GITHUB_TOKEN }}
-                clean: true
+                clean: false
