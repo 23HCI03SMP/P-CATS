@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['space_28',['Space',['../classSpace.html',1,'Space'],['../classSpace.html#aabb74930064f046afdad3093730e47c3',1,'Space::Space()']]]
+  ['recalculatecentreofcharge_31',['recalculateCentreOfCharge',['../classSpace.html#a137b1640e545e1c8f95f57f7da342bd1',1,'Space']]]
 ];
