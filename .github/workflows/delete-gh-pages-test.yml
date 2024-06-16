@@ -1,0 +1,33 @@
+name: Delete directory on branch delete
+
+on:
+  delete:
+
+jobs:
+  delete-dir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: npm install rimraf -g
+      - name: Delete directory
+        run: rimraf ${{ github.event.ref }}
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Delete directory ${{ github.event.ref }}"
+            git push
+          fi
