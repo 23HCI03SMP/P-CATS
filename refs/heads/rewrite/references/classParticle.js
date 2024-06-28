@@ -5,7 +5,7 @@ var classParticle =
     [ "biotSavart", "classParticle.html#a51fa0eeb7e09f245089e8e7b05dd28b4", null ],
     [ "coulombLaw", "classParticle.html#a3db2e64f1cbe906a82bee31e109b735a", null ],
     [ "getCentreOfCharge", "classParticle.html#a3d9af15154598c70ce1b29dd2ce106ff", null ],
-    [ "getChildren", "classParticle.html#ae9bfa147ab1c9c4645947d609c6400b1", null ],
+    [ "getChildren", "classParticle.html#a5dcf7f7f6b3c1e409653d0ebf1673100", null ],
     [ "isExternalNode", "classParticle.html#a9037ecf85b7ca04c14de41b48ab6b583", null ],
     [ "midpoint", "classParticle.html#a928bd1f1110afd54d9c953324e61424f", null ],
     [ "particleInNextTimeStep", "classParticle.html#a940610373a3f4e931dc411942b08c160", null ],
