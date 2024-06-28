@@ -26,11 +26,20 @@ Points Space::getCentreOfCharge()
     return centreOfCharge;
 }
 
-std::vector<Node *> Space::getChildren()
+std::vector<Node> Space::getChildren()
 {
     return children;
 }
 
+Space::Space() : Node(Charge())
+{
+}
+
+/// @details Because we now use references instead of pointers,
+/// we can no longer use nullptr to check if the octet is empty.
+/// Instead, we push_back an empty Particle() into the children vector.
+/// Then, we just check if the particle is an external node,
+/// and if the position of the particle is a quiet NaN.
 Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
 {
     this->minPoint = minPoint;
@@ -39,7 +48,7 @@ Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
 
     for (int i = 0; i <= o8; i++)
     {
-        children.push_back(nullptr);
+        children.push_back(Particle());
     }
 }
 
@@ -53,11 +62,11 @@ Point Space::midpoint()
 // 2. If the space is an external node, find the octet in which the particle belongs and insert it.
 // 3. If the octet is a nullptr, replace it with the particle.
 // 4. If the octet is a space, recursively insert the particle into the octet.
-void Space::insert(Particle *particle)
+void Space::insert(Particle &particle)
 {
-    if (particle->position.x < minPoint.x || particle->position.x > maxPoint.x ||
-        particle->position.y < minPoint.y || particle->position.y > maxPoint.y ||
-        particle->position.z < minPoint.z || particle->position.z > maxPoint.z)
+    if (particle.position.x < minPoint.x || particle.position.x > maxPoint.x ||
+        particle.position.y < minPoint.y || particle.position.y > maxPoint.y ||
+        particle.position.z < minPoint.z || particle.position.z > maxPoint.z)
     {
         return;
     }
@@ -66,11 +75,11 @@ void Space::insert(Particle *particle)
     double xMid = (this->minPoint.x + this->maxPoint.x) / 2;
     double yMid = (this->minPoint.y + this->maxPoint.y) / 2;
     double zMid = (this->minPoint.z + this->maxPoint.z) / 2;
-    if (particle->position.y >= yMid) // top
+    if (particle.position.y >= yMid) // top
     {
-        if (particle->position.x >= xMid) // right
+        if (particle.position.x >= xMid) // right
         {
-            if (particle->position.z >= zMid) // back
+            if (particle.position.z >= zMid) // back
             {
                 octet = o2; // top right back
             }
@@ -81,7 +90,7 @@ void Space::insert(Particle *particle)
         }
         else // left
         {
-            if (particle->position.z >= zMid) // back
+            if (particle.position.z >= zMid) // back
             {
                 octet = o1; // top left back
             }
@@ -93,9 +102,9 @@ void Space::insert(Particle *particle)
     }
     else // bottom
     {
-        if (particle->position.x >= xMid) // right
+        if (particle.position.x >= xMid) // right
         {
-            if (particle->position.z >= zMid) // back
+            if (particle.position.z >= zMid) // back
             {
                 octet = o6; // bottom right back
             }
@@ -106,7 +115,7 @@ void Space::insert(Particle *particle)
         }
         else // left
         {
-            if (particle->position.z >= zMid) // back
+            if (particle.position.z >= zMid) // back
             {
                 octet = o5; // bottom left back
             }
@@ -117,23 +126,24 @@ void Space::insert(Particle *particle)
         }
     }
 
-    if (this->children[octet] == nullptr)
+    // this->children[octet] is a particle if it is an external node
+    if (this->children[octet].isExternalNode())
     {
-        particle->parent = this;
-        this->children[octet] = particle;
-    }
-    else
-    {
-        // print type of children[octet]
-        // std::cout << "Type: " << typeid(this->children[octet]).name() << std::endl;
-        if (dynamic_cast<Particle *>(this->children[octet]) != nullptr)
+        // Since we are using references, we can no longer use nullptrs to check if the octet is empty
+        // Now we just check if the position of the particle is a quiet NaN
+        if (std::isnan(dynamic_cast<Particle &>(this->children[octet]).position.x))
         {
-            Particle *oldParticle = dynamic_cast<Particle *>(this->children[octet]);
+            particle.parent = this;
+            this->children[octet] = particle;
+        }
+        else
+        {
+            Particle oldParticle = dynamic_cast<Particle &>(this->children[octet]);
 
             // if the particle is at the same position as the old particle, ignore it
-            if (oldParticle->position.x == particle->position.x &&
-                oldParticle->position.y == particle->position.y &&
-                oldParticle->position.z == particle->position.z)
+            if (oldParticle.position.x == particle.position.x &&
+                oldParticle.position.y == particle.position.y &&
+                oldParticle.position.z == particle.position.z)
             {
                 // std::cout << "Particle already exists in this position. Ignoring...\n"
                 //           << std::endl;
@@ -180,22 +190,26 @@ void Space::insert(Particle *particle)
                 break;
             }
 
-            this->children[octet] = new Space(subspaceMinPoint, subspaceMaxPoint);
-            dynamic_cast<Space *>(this->children[octet])->insert(oldParticle);
-            dynamic_cast<Space *>(this->children[octet])->insert(particle);
+            this->children[octet] = Space(subspaceMinPoint, subspaceMaxPoint);
+            static_cast<Space &>(this->children[octet]).insert(oldParticle);
+            static_cast<Space &>(this->children[octet]).insert(particle);
+
+            // this->children[octet] = new Space(subspaceMinPoint, subspaceMaxPoint);
+            // dynamic_cast<Space *>(this->children[octet]).insert(oldParticle);
+            // dynamic_cast<Space *>(this->children[octet]).insert(particle);
         }
-        else if (dynamic_cast<Space *>(this->children[octet]) != nullptr)
-        {
-            dynamic_cast<Space *>(this->children[octet])->insert(particle);
-        }
-        else
-        {
-            throw std::runtime_error("This shouldn't happen lmao.");
-        }
+    }
+    else if (!this->children[octet].isExternalNode()) // this->children[octet] is a space since it is not an external node
+    {
+        static_cast<Space &>(this->children[octet]).insert(particle);
+    }
+    else
+    {
+        throw std::runtime_error("This shouldn't happen lmao.");
     }
 }
 
-std::vector<Particle *> Space::generateParticles(double density,
+std::vector<Particle> Space::generateParticles(double density,
                                                  double temperature,
                                                  std::vector<std::tuple<Particle, double>> &particles,
                                                  HotspotShape hotspotShape,
@@ -203,7 +217,7 @@ std::vector<Particle *> Space::generateParticles(double density,
 {
     /// @todo Ensure that percentage sums to 1
 
-    std::vector<Particle *> generatedParticles;
+    std::vector<Particle> generatedParticles;
 
     for (int i = 0; i < particles.size(); i++)
     {
@@ -238,7 +252,7 @@ std::vector<Particle *> Space::generateParticles(double density,
                 double vy = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
                 double vz = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
 
-                Particle *newParticle = new Particle(particle.alias, mass, charge, Point(x, y, z), Velocity(vx, vy, vz));
+                Particle newParticle = Particle(particle.alias, mass, charge, Point(x, y, z), Velocity(vx, vy, vz));
 
                 this->insert(newParticle);
                 generatedParticles.push_back(newParticle);
@@ -266,48 +280,50 @@ void Space::recalculateCentreOfCharge()
     double yNegativeChargePositionProductSum = 0;
     double zNegativeChargePositionProductSum = 0;
 
-    for (Node *child : this->children)
+    for (Node &child : this->children)
     {
-        if (dynamic_cast<Particle *>(child))
+        if (child.isExternalNode()) // if the child is a particle
         {
-            Particle *particle = dynamic_cast<Particle *>(child);
-            totalCharge += particle->charge;
+            Particle &particle = static_cast<Particle &>(child);
+            totalCharge += particle.charge;
 
-            xPositiveChargePositionProductSum += particle->charge.positive * particle->position.x;
-            yPositiveChargePositionProductSum += particle->charge.positive * particle->position.y;
-            zPositiveChargePositionProductSum += particle->charge.positive * particle->position.z;
+            xPositiveChargePositionProductSum += particle.charge.positive * particle.position.x;
+            yPositiveChargePositionProductSum += particle.charge.positive * particle.position.y;
+            zPositiveChargePositionProductSum += particle.charge.positive * particle.position.z;
 
-            xNegativeChargePositionProductSum += particle->charge.negative * particle->position.x;
-            yNegativeChargePositionProductSum += particle->charge.negative * particle->position.y;
-            zNegativeChargePositionProductSum += particle->charge.negative * particle->position.z;
+            xNegativeChargePositionProductSum += particle.charge.negative * particle.position.x;
+            yNegativeChargePositionProductSum += particle.charge.negative * particle.position.y;
+            zNegativeChargePositionProductSum += particle.charge.negative * particle.position.z;
         }
-        else if (dynamic_cast<Space *>(child))
+        else if (!child.isExternalNode()) // if the child is a space
         {
-            Space *space = dynamic_cast<Space *>(child);
-            space->recalculateCentreOfCharge();
+            Space &space = static_cast<Space &>(child);
+            space.recalculateCentreOfCharge();
 
-            totalCharge += space->charge;
-            xPositiveChargePositionProductSum += space->charge.positive * space->centreOfCharge.positive.x;
-            yPositiveChargePositionProductSum += space->charge.positive * space->centreOfCharge.positive.y;
-            zPositiveChargePositionProductSum += space->charge.positive * space->centreOfCharge.positive.z;
+            totalCharge += space.charge;
+            xPositiveChargePositionProductSum += space.charge.positive * space.centreOfCharge.positive.x;
+            yPositiveChargePositionProductSum += space.charge.positive * space.centreOfCharge.positive.y;
+            zPositiveChargePositionProductSum += space.charge.positive * space.centreOfCharge.positive.z;
 
-            xNegativeChargePositionProductSum += space->charge.negative * space->centreOfCharge.negative.x;
-            yNegativeChargePositionProductSum += space->charge.negative * space->centreOfCharge.negative.y;
-            zNegativeChargePositionProductSum += space->charge.negative * space->centreOfCharge.negative.z;
+            xNegativeChargePositionProductSum += space.charge.negative * space.centreOfCharge.negative.x;
+            yNegativeChargePositionProductSum += space.charge.negative * space.centreOfCharge.negative.y;
+            zNegativeChargePositionProductSum += space.charge.negative * space.centreOfCharge.negative.z;
         }
     }
 
     this->charge = totalCharge;
     this->centreOfCharge = Points(Point(xPositiveChargePositionProductSum / totalCharge.positive,
-                                         yPositiveChargePositionProductSum / totalCharge.positive,
-                                         zPositiveChargePositionProductSum / totalCharge.positive),
+                                        yPositiveChargePositionProductSum / totalCharge.positive,
+                                        zPositiveChargePositionProductSum / totalCharge.positive),
                                   Point(xNegativeChargePositionProductSum / totalCharge.negative,
-                                         yNegativeChargePositionProductSum / totalCharge.negative,
-                                         zNegativeChargePositionProductSum / totalCharge.negative));
+                                        yNegativeChargePositionProductSum / totalCharge.negative,
+                                        zNegativeChargePositionProductSum / totalCharge.negative));
 }
 
 std::string Space::toString(std::string indent)
 {
+    return "";
+
     std::string out = "\033[34mSpace (" + std::to_string(minPoint.x) + ", " + std::to_string(minPoint.y) + ", " + std::to_string(minPoint.z) + ") to (" + std::to_string(maxPoint.x) + ", " + std::to_string(maxPoint.y) + ", " + std::to_string(maxPoint.z) + ")\033[0m\n";
     std::string branchSymbol = "├── ";
     std::string lastBranchSymbol = "└── ";
@@ -316,21 +332,21 @@ std::string Space::toString(std::string indent)
     {
         bool isLast = i == o8;
 
-        if (children[i] == nullptr)
+        if (this->children[i].isExternalNode() && static_cast<Particle &>(this->children[i]).position.x == std::numeric_limits<double>::quiet_NaN()) // if the child is a nullptr
         {
             out += indent + (isLast ? lastBranchSymbol : branchSymbol) + "\033[35mEmpty\033[0m\n";
         }
-        else if (dynamic_cast<Particle *>(children[i]))
+        else if (this->children[i].isExternalNode()) // if the child is a particle
         {
-            Particle *particle = dynamic_cast<Particle *>(children[i]);
+            Particle &particle = static_cast<Particle &>(this->children[i]);
 
-            out += indent + (isLast ? lastBranchSymbol : branchSymbol) + "\033[32m" + particle->alias + " (" + std::to_string(particle->position.x) + ", " + std::to_string(particle->position.y) + ", " + std::to_string(particle->position.z) + ")" + "\033[0m\n";
+            out += indent + (isLast ? lastBranchSymbol : branchSymbol) + "\033[32m" + particle.alias + " (" + std::to_string(particle.position.x) + ", " + std::to_string(particle.position.y) + ", " + std::to_string(particle.position.z) + ")" + "\033[0m\n";
         }
-        else if (dynamic_cast<Space *>(children[i]))
+        else if (!this->children[i].isExternalNode()) // if the child is a space
         {
-            Space *space = dynamic_cast<Space *>(children[i]);
+            Space &space = static_cast<Space &>(this->children[i]);
 
-            out += indent + (isLast ? lastBranchSymbol : branchSymbol) + space->toString(indent + (isLast ? "    " : "│   "));
+            out += indent + (isLast ? lastBranchSymbol : branchSymbol) + space.toString(indent + (isLast ? "    " : "│   "));
         }
         else
         {

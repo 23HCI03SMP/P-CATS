@@ -16,8 +16,10 @@ public:
     Point minPoint, maxPoint;
     Points centreOfCharge;
     Points getCentreOfCharge() override;
-    std::vector<Node *> children;
-    std::vector<Node *> getChildren() override;
+    std::vector<Node> children;
+    std::vector<Node> getChildren() override;
+
+    Space();
 
     /// @brief Constructor for Space.
     /// @param minPoint minimum point of the space.
@@ -32,7 +34,7 @@ public:
 
     /// @brief Function to insert a node into the space.
     /// @param node Node to be inserted.
-    void insert(Particle *particle);
+    void insert(Particle &particle);
     
     /// @brief Function to check if the space is an external node.
     /// @return True if the space is an external node, false otherwise.
@@ -45,7 +47,7 @@ public:
     /// @param hotspotShape Shape of the hotspot.
     /// @param params Parameters for the hotspot shape. 
     /// @return Vector of particles generated.
-    std::vector<Particle *> generateParticles(double density,
+    std::vector<Particle> generateParticles(double density,
                                                    double temperature,
                                                    std::vector<std::tuple<Particle, double>> &particles,
                                                    HotspotShape hotspotShape,

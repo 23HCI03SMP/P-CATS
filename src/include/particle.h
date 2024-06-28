@@ -4,6 +4,7 @@
 #include "p_cats.h"
 #include "node.h"
 #include "space.h"
+#include <memory>
 
 class Space;
 
@@ -27,7 +28,7 @@ public:
     Force eForce;
     Space *parent;
 
-    std::vector<Node *> getChildren() override;
+    std::vector<Node> getChildren() override;
 
     Points getCentreOfCharge() override;
 
@@ -47,14 +48,14 @@ public:
     /// @param eForce Electric force acting on the particle in N.
     /// @param mass Mass of the particle in kg.
     /// @param charge Charge of the particle in C.
-    Particle(std::string alias, 
-        double mass, 
-        Charge charge,
-        Point position = Point(), 
-        Velocity velocity = Velocity(), 
-        Force bForce = Force(), 
-        Force eForce = Force());
-    
+    Particle(std::string alias,
+             double mass,
+             Charge charge,
+             Point position = Point(),
+             Velocity velocity = Velocity(),
+             Force bForce = Force(),
+             Force eForce = Force());
+
     Particle();
 
     /// @brief Function to calculate the position and velocity of the particle in the next time step.

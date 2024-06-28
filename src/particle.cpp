@@ -22,7 +22,7 @@ Particle::Particle() : Node(Charge())
     this->mass = 0;
 }
 
-std::vector<Node *> Particle::getChildren() {
+std::vector<Node> Particle::getChildren() {
     // There should be no children for a particle
 }
 

@@ -24,7 +24,7 @@ public:
     /// @return True if the space is an external node, false otherwise.
     virtual bool isExternalNode();
 
-    virtual std::vector<Node *> getChildren();
+    virtual std::vector<Node> getChildren();
 
     virtual Points getCentreOfCharge();
 };

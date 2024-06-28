@@ -11,11 +11,12 @@ Point Node::midpoint() {
     // This is a pure virtual function
 }
 
+/// @todo Illegal instruction for some reason
 bool Node::isExternalNode() {
     // This is a pure virtual function
 }
 
-std::vector<Node *> Node::getChildren() {
+std::vector<Node> Node::getChildren() {
     // This is a pure virtual function
 }
 
