@@ -4,6 +4,7 @@
 #include "p_cats.h"
 #include "particle.h"
 #include <vector>
+#include <fstream>
 
 class Particle;
 
@@ -18,6 +19,8 @@ public:
     Points getCentreOfCharge() override;
     std::vector<Node *> children;
     std::vector<Node *> getChildren() override;
+
+    std::vector<Particle *> getAllParticles();
 
     /// @brief Constructor for Space.
     /// @param minPoint minimum point of the space.
@@ -55,6 +58,11 @@ public:
 
     /// @brief Function to convert the space to a string.
     std::string toString(std::string indent = "");
+
+    /// @brief Function to outpout the space to a file.
+    /// @param path Path to the file.
+    /// @param mode Mode to open the file in. Defaults to std::ios_base::app (append).
+    void toFile(int timeStep, std::string path, std::ios_base::openmode mode = std::ios_base::app);
 };
 
 #endif
