@@ -115,6 +115,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a831f16c09115089d56e6b2d8f93716be"><td class="memItemLeft" align="right" valign="top"><a id="a831f16c09115089d56e6b2d8f93716be"></a>
 std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getChildren</b> () override</td></tr>
 <tr class="separator:a831f16c09115089d56e6b2d8f93716be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17178174b6dbea32f118e1f4b76d807a"><td class="memItemLeft" align="right" valign="top"><a id="a17178174b6dbea32f118e1f4b76d807a"></a>
+std::vector&lt; <a class="el" href="classParticle.html">Particle</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getAllParticles</b> ()</td></tr>
+<tr class="separator:a17178174b6dbea32f118e1f4b76d807a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabb74930064f046afdad3093730e47c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#aabb74930064f046afdad3093730e47c3">Space</a> (<a class="el" href="structPoint.html">Point</a> minPoint, <a class="el" href="structPoint.html">Point</a> maxPoint, <a class="el" href="structCharge.html">Charge</a> charge=<a class="el" href="structCharge.html">Charge</a>())</td></tr>
 <tr class="memdesc:aabb74930064f046afdad3093730e47c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classSpace.html" title="A structure to store a space node in the tree.">Space</a>.  <a href="classSpace.html#aabb74930064f046afdad3093730e47c3">More...</a><br /></td></tr>
 <tr class="separator:aabb74930064f046afdad3093730e47c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,6 +140,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>recalculateCentreOfCh
 std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#abc45afc23875a6b8e95b7d90912109be">toString</a> (std::string indent=&quot;&quot;)</td></tr>
 <tr class="memdesc:abc45afc23875a6b8e95b7d90912109be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to convert the space to a string. <br /></td></tr>
 <tr class="separator:abc45afc23875a6b8e95b7d90912109be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a406a7eef4ae024d2cbb1bca3d90bef99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html#a406a7eef4ae024d2cbb1bca3d90bef99">toFile</a> (int timeStep, std::string path, std::ios_base::openmode mode=std::ios_base::app)</td></tr>
+<tr class="memdesc:a406a7eef4ae024d2cbb1bca3d90bef99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to outpout the space to a file.  <a href="classSpace.html#a406a7eef4ae024d2cbb1bca3d90bef99">More...</a><br /></td></tr>
+<tr class="separator:a406a7eef4ae024d2cbb1bca3d90bef99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classNode"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classNode')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classNode.html">Node</a></td></tr>
 <tr class="memitem:a7361885463844ef82eb8866b18429074 inherit pub_methods_classNode"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a7361885463844ef82eb8866b18429074">Node</a> (<a class="el" href="structCharge.html">Charge</a> charge)</td></tr>
 <tr class="memdesc:a7361885463844ef82eb8866b18429074 inherit pub_methods_classNode"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classNode.html" title="A structure to store a node in the tree.">Node</a>.  <a href="classNode.html#a7361885463844ef82eb8866b18429074">More...</a><br /></td></tr>
@@ -354,6 +360,49 @@ std::vector&lt; <a class="el" href="classNode.html">Node</a> * &gt;&#160;</td><t
 <dl class="section return"><dt>Returns</dt><dd>Midpoint of the space. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classNode.html#a73edb1b75b7e74da5834272c0b003a10">Node</a>.</p>
+
+</div>
+</div>
+<a id="a406a7eef4ae024d2cbb1bca3d90bef99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a406a7eef4ae024d2cbb1bca3d90bef99">&#9670;&nbsp;</a></span>toFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Space::toFile </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timeStep</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ios_base::openmode&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>std::ios_base::app</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to outpout the space to a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>Path to the file. </td></tr>
+    <tr><td class="paramname">mode</td><td>Mode to open the file in. Defaults to std::ios_base::app (append). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
