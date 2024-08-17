@@ -6,6 +6,7 @@
 #include <vector>
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_randist.h>
+#include <fstream>
 
 #define o1 0 // top left back
 #define o2 1 // top right back
@@ -29,6 +30,28 @@ Points Space::getCentreOfCharge()
 std::vector<Node *> Space::getChildren()
 {
     return children;
+}
+
+std::vector<Particle *> Space::getAllParticles()
+{
+    std::vector<Particle *> particles;
+
+    for (auto child : children)
+    {
+        if (dynamic_cast<Particle *>(child))
+        {
+            Particle *particle = dynamic_cast<Particle *>(child);
+            particles.push_back(particle);
+        }
+        else if (dynamic_cast<Space *>(child))
+        {
+            Space *space = dynamic_cast<Space *>(child);
+            std::vector<Particle *> childParticles = space->getAllParticles();
+            particles.insert(particles.end(), childParticles.begin(), childParticles.end());
+        }
+    }
+
+    return particles;
 }
 
 Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
@@ -339,4 +362,21 @@ std::string Space::toString(std::string indent)
     }
 
     return out;
+}
+
+void Space::toFile(int timeStep, std::string path, std::ios_base::openmode openMode)
+{
+    std::ofstream file;
+    file.open(path, openMode);
+
+    auto particles = this->getAllParticles();
+    for(auto particle : particles)
+    {
+        file <<
+        timeStep << "," <<
+        particle->alias << "," <<
+        particle->position.x << "," <<
+        particle->position.y << "," <<
+        particle->position.z << ",";
+    }
 }
