@@ -65,5 +65,7 @@ int main()
     // baseSpace->insert(p13);
 
     std::cout << baseSpace->toString() << std::endl;
+    baseSpace->toFile(0, "./viewer/positions.csv");
+    system("cd viewer && python viewer.py");
     return 0;
 }
