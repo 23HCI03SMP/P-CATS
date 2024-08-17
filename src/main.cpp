@@ -1,4 +1,6 @@
 #include <iostream>
+#include <format>
+#include <sstream>
 #include "include/p_cats.h"
 #include "include/particle.h"
 #include "include/space.h"
@@ -49,5 +51,9 @@ int main()
     // baseSpace->insert(p13);
 
     std::cout << baseSpace->toString() << std::endl;
+    baseSpace->toFile(0, "./plotter/positions.csv");
+
+    // run runner.exe in plotter folder to plot the graph
+    system((std::ostringstream() << "cd plotter && runner.exe" << " 10" << " 10" << " 10").str().c_str());
     return 0;
 }
