@@ -39,3 +39,7 @@ doxy_config
 *.exe
 *.out
 *.app
+
+# Output files
+*.csv
+*.html
