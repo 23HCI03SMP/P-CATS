@@ -32,6 +32,8 @@ int main()
     std::vector<std::tuple<Particle, double>> particles = {p1, p2};
     baseSpace->generateParticles(20, 300, particles, HotspotShape::SPHERE, {4});
 
+    Simulation(baseSpace, 2, 1e-5, 0.5);
+
     // Particle *p1 = new Particle("a", 1, Charge(), Point(0, 0, 0)); // bottom left front
     // Particle *p2 = new Particle("b", 1, Charge(), Point(1, 1, 1)); // top right back
     // Particle *p3 = new Particle("c", 1, Charge(), Point(0.2, 0.2, 0.2)); // centre
