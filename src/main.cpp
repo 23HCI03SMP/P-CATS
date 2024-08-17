@@ -6,6 +6,20 @@
 #include "include/interactions.h"
 #include "include/tests.h"
 
+void Simulation(Space *space, int iterations, int dt, double theta) 
+{
+    Interactions interactions = Interactions();
+    for (int i = 0; i < iterations; i++) {
+        Space newSpace = Space(space->minPoint, space->maxPoint);
+        for (Particle *p : space->getAllParticles()) {
+            interactions.Interact(p, space, theta, dt, newSpace);
+        }
+        space = &newSpace;
+    }
+
+    return;
+}
+
 /// A structure to store force components (in Newtons).
 ///
 /// This structure is used to store the components of a force in Newtons.
