@@ -374,9 +374,9 @@ void Space::toFile(int timeStep, std::string path, std::ios_base::openmode openM
     {
         file <<
         timeStep << "," <<
-        particle->alias << "," <<
         particle->position.x << "," <<
         particle->position.y << "," <<
-        particle->position.z << ",";
+        particle->position.z << "," <<
+        particle->alias << "\n";
     }
 }
