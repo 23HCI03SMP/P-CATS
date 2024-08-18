@@ -6,15 +6,16 @@
 #include "include/interactions.h"
 #include "include/tests.h"
 
-void Simulation(Space *space, int iterations, int dt, double theta) 
+void Simulation(Space space, int iterations, double dt, double theta) 
 {
     Interactions interactions = Interactions();
     for (int i = 0; i < iterations; i++) {
-        Space newSpace = Space(space->minPoint, space->maxPoint);
-        for (Particle *p : space->getAllParticles()) {
-            interactions.Interact(p, space, theta, dt, newSpace);
+        Space newSpace = Space(space.minPoint, space.maxPoint);
+        for (Particle *p : space.getAllParticles()) {
+            interactions.Interact(*p, space, theta, dt, newSpace); // Dereference the pointer
         }
-        space = &newSpace;
+        space = newSpace;
+        space.toFile(i, "./viewer/positions.csv");
     }
 
     return;
@@ -31,8 +32,9 @@ int main()
 
     std::vector<std::tuple<Particle, double>> particles = {p1, p2};
     baseSpace->generateParticles(20, 300, particles, HotspotShape::SPHERE, {4});
-
-    Simulation(baseSpace, 2, 1e-5, 0.5);
+    remove("./viewer/positions.csv");
+    baseSpace->toFile(0, "./viewer/positions.csv");
+    Simulation(*baseSpace, 2, 0, 0.5);
 
     // Particle *p1 = new Particle("a", 1, Charge(), Point(0, 0, 0)); // bottom left front
     // Particle *p2 = new Particle("b", 1, Charge(), Point(1, 1, 1)); // top right back
@@ -64,8 +66,7 @@ int main()
     // baseSpace->insert(p12);
     // baseSpace->insert(p13);
 
-    std::cout << baseSpace->toString() << std::endl;
-    baseSpace->toFile(0, "./viewer/positions.csv");
+    // std::cout << baseSpace->toString() << std::endl;
     system("cd viewer && python viewer.py");
     return 0;
 }
