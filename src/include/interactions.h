@@ -11,5 +11,5 @@ public:
     /// @param theta The Barnes-Hut criterion.
     /// @param dt Time step.
     /// @param newTree The new tree to store the interactions.
-    void Interact(Particle p, Node n, double theta, double dt, Space newTree);
+    Particle* Interact(Particle p, Node *n, double theta, double dt);
 };

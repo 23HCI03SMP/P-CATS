@@ -11,12 +11,12 @@
 /// This structure is used to store the components of a force in Newtons.
 int main()
 {
-    Space *baseSpace = new Space(Point(0, 0, 0), Point(10, 10, 10));
+    Space *space = new Space(Point(0, 0, 0), Point(10, 10, 10));
     std::tuple<Particle, double> p1 = std::make_tuple(Particle("Proton", 1.67e-27, Charge(1.602e-19, 0)), 0.1);
     std::tuple<Particle, double> p2 = std::make_tuple(Particle("Electron", 9.11e-31, Charge(0, -1.602e-19)), 0.1);
 
     std::vector<std::tuple<Particle, double>> particles = {p1, p2};
-    baseSpace->generateParticles(20, 300, particles, HotspotShape::SPHERE, {4});
+    space->generateParticles(4, 300, particles, HotspotShape::SPHERE, {4});
 
     // Particle *p1 = new Particle("a", 1, Charge(), Point(0, 0, 0)); // bottom left front
     // Particle *p2 = new Particle("b", 1, Charge(), Point(1, 1, 1)); // top right back
@@ -48,8 +48,44 @@ int main()
     // baseSpace->insert(p12);
     // baseSpace->insert(p13);
 
-    std::cout << baseSpace->toString() << std::endl;
-    baseSpace->toFile(0, "./viewer/positions.csv");
+    // Create main loop
+
+    Force force = Force(0, 0, 0);
+
+    Interactions interactions;
+
+    int timeSteps = 5;
+
+
+    for (int i = 0; i < timeSteps; i++) {
+        space->toFile(i, "./viewer/positions.csv");
+        std::cout << space->getAllParticles().size() << std::endl;
+        Space *newSpace = new Space(Point(0, 0, 0), Point(10, 10, 10));
+        for (auto part : space->getAllParticles())
+        {
+            newSpace->insert(interactions.Interact(*part, space, 0.5, 100));
+        }
+        newSpace->recalculateCentreOfCharge();
+        std::cout << newSpace->getAllParticles().size() << std::endl;
+        std::cout << "Time step: " << i << std::endl;
+        // std::cout << "======================================================================================================" << std::endl;
+        // std::cout << newSpace->toString() << std::endl;
+        delete space;
+        space = newSpace;
+    }
+    space->toFile(timeSteps, "./viewer/positions.csv");
+    // delete baseSpace;
+    // baseSpace = newTree;
+    // delete newTree;
+
+    // delete baseSpace;
+    
+
+    Space *newTree = new Space(Point(0, 0, 0), Point(10, 10, 10));
+    newTree->insert(new Particle("Proton", 1.67e-27, Charge(1.602e-19, 0), Point(0, 0, 0)));
+
+    // std::cout << baseSpace->toString() << std::endl;
+    // baseSpace->toFile(0, "./viewer/positions.csv");
     system("cd viewer && python viewer.py");
     return 0;
 }

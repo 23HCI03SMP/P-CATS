@@ -370,6 +370,7 @@ void Space::toFile(int timeStep, std::string path, std::ios_base::openmode openM
     file.open(path, openMode);
 
     auto particles = this->getAllParticles();
+    std::cout << "Writing ~" << particles.size() << " particles to file..." << std::endl;
     for(auto particle : particles)
     {
         file <<
