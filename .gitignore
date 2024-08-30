@@ -40,6 +40,6 @@ doxy_config
 *.out
 *.app
 
-# Output Files
+# Output files
 *.csv
 *.html
