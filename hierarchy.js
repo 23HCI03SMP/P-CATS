@@ -11,5 +11,6 @@ var hierarchy =
     [ "Point", "structPoint.html", null ],
     [ "Points", "structPoints.html", null ],
     [ "Tests", "classTests.html", null ],
+    [ "Timer", "classTimer.html", null ],
     [ "Velocity", "structVelocity.html", null ]
 ];

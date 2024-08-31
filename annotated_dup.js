@@ -10,5 +10,6 @@ var annotated_dup =
     [ "Points", "structPoints.html", "structPoints" ],
     [ "Space", "classSpace.html", "classSpace" ],
     [ "Tests", "classTests.html", "classTests" ],
+    [ "Timer", "classTimer.html", "classTimer" ],
     [ "Velocity", "structVelocity.html", "structVelocity" ]
 ];
