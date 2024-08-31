@@ -14,7 +14,6 @@ def plot_data(max_x, max_y, max_z):
         data = f.read().split("\n")
     timestep = [[], [], [], [], []]  # timeStep, x, y, z, alias
 
-    i = 0
     for line in data[:-1]:
         line_str = line.split(",")
         timestep[0].append(int(line_str[0]))
