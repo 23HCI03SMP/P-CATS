@@ -43,3 +43,6 @@ doxy_config
 # Output files
 *.csv
 *.html
+
+# libraries
+eigen3/
