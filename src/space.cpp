@@ -9,7 +9,6 @@
 #include <fstream>
 #include <tuple>
 
-
 #define o1 0 // top left back
 #define o2 1 // top right back
 #define o3 2 // top right front
@@ -165,7 +164,7 @@ void Space::insert(Particle *particle)
     if (this->children[octet] == nullptr)
     {
         particle->parent = this;
-        this->children[octet] = particle;
+        this->children[octet] = std::move(particle);
     }
     else
     {
@@ -241,10 +240,10 @@ void Space::insert(Particle *particle)
 }
 
 void Space::generateParticles(double density,
-                                                 double temperature,
-                                                 std::vector<std::tuple<Particle, double>> &particles,
-                                                 HotspotShape hotspotShape,
-                                                 std::initializer_list<double> params)
+                              double temperature,
+                              std::vector<std::tuple<Particle, double>> &particles,
+                              HotspotShape hotspotShape,
+                              std::initializer_list<double> params)
 {
     /// @todo Ensure that percentage sums to 1
 
@@ -341,11 +340,11 @@ void Space::recalculateCentreOfCharge()
 
     this->charge = totalCharge;
     this->centreOfCharge = Points(Point(xPositiveChargePositionProductSum / totalCharge.positive,
-                                         yPositiveChargePositionProductSum / totalCharge.positive,
-                                         zPositiveChargePositionProductSum / totalCharge.positive),
+                                        yPositiveChargePositionProductSum / totalCharge.positive,
+                                        zPositiveChargePositionProductSum / totalCharge.positive),
                                   Point(xNegativeChargePositionProductSum / totalCharge.negative,
-                                         yNegativeChargePositionProductSum / totalCharge.negative,
-                                         zNegativeChargePositionProductSum / totalCharge.negative));
+                                        yNegativeChargePositionProductSum / totalCharge.negative,
+                                        zNegativeChargePositionProductSum / totalCharge.negative));
 }
 
 std::string Space::toString(std::string indent)
@@ -390,13 +389,8 @@ void Space::toFile(int timeStep, std::string path, std::ios_base::openmode openM
 
     auto particles = this->getAllParticles();
     std::cout << "Writing ~" << particles.size() << " particles to file..." << std::endl;
-    for(auto particle : particles)
+    for (auto particle : particles)
     {
-        file <<
-        timeStep << "," <<
-        particle->position.x << "," <<
-        particle->position.y << "," <<
-        particle->position.z << "," <<
-        particle->alias << "\n";
+        file << timeStep << "," << particle->position.x << "," << particle->position.y << "," << particle->position.z << "," << particle->alias << "\n";
     }
 }
