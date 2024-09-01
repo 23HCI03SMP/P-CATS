@@ -25,7 +25,7 @@ jobs:
             run: sudo apt-get install -y libgsl-dev
         
         -   name: Compile code
-            run: g++ main.cpp particle.cpp interactions.cpp node.cpp space.cpp -o output -I/usr/include -lgsl 
+            run: g++ src/main.cpp src/particle.cpp src/interactions.cpp src/node.cpp src/space.cpp -o output -I/usr/include -lgsl 
 
         -   name: Run Valgrind tests
             run: valgrind --leak-check=full ./output
