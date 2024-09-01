@@ -14,9 +14,13 @@ class Particle;
 class Space : public Node
 {
 public:
-    Point minPoint, maxPoint;
+    /// @brief Minimum point of the space.
+    Point minPoint;
+    /// @brief Maximum point of the space.
+    Point maxPoint;
     Points centreOfCharge;
     Points getCentreOfCharge() override;
+    /// @brief Children of the space.
     std::vector<Node *> children;
     std::vector<Node *> getChildren() override;
 
@@ -54,6 +58,7 @@ public:
                                                    HotspotShape hotspotShape,
                                                    std::initializer_list<double> params);
 
+    /// @brief Recalculates the centre of charge of the space and its children.
     void recalculateCentreOfCharge();
 
     /// @brief Function to convert the space to a string.
