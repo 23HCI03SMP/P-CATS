@@ -29,6 +29,9 @@ public:
     /// @param charge total charge of the space.
     Space(Point minPoint, Point maxPoint, Charge charge = Charge());
 
+    /// @brief Function to delete all the children of the space.
+    void clear();
+
     /// @brief Polymporphic function to calculate the midpoint of the space.
     /// @return Midpoint of the space.
     Point midpoint() override;
@@ -48,7 +51,7 @@ public:
     /// @param hotspotShape Shape of the hotspot.
     /// @param params Parameters for the hotspot shape. 
     /// @return Vector of particles generated.
-    std::vector<Particle *> generateParticles(double density,
+    void generateParticles(double density,
                                                    double temperature,
                                                    std::vector<std::tuple<Particle, double>> &particles,
                                                    HotspotShape hotspotShape,

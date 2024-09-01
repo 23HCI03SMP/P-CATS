@@ -19,6 +19,26 @@
 #define o7 6 // bottom right front
 #define o8 7 // bottom left front
 
+void Space::clear()
+{
+    for (auto child : children)
+    {
+        if (dynamic_cast<Particle *>(child))
+        {
+            Particle *particle = dynamic_cast<Particle *>(child);
+            delete particle;
+        }
+        else if (dynamic_cast<Space *>(child))
+        {
+            Space *space = dynamic_cast<Space *>(child);
+            space->clear();
+            delete space;
+        }
+    }
+
+    children.clear();
+}
+
 bool Space::isExternalNode()
 {
     return false;
@@ -220,15 +240,13 @@ void Space::insert(Particle *particle)
     }
 }
 
-std::vector<Particle *> Space::generateParticles(double density,
+void Space::generateParticles(double density,
                                                  double temperature,
                                                  std::vector<std::tuple<Particle, double>> &particles,
                                                  HotspotShape hotspotShape,
                                                  std::initializer_list<double> params)
 {
     /// @todo Ensure that percentage sums to 1
-
-    std::vector<Particle *> generatedParticles;
 
     for (int i = 0; i < particles.size(); i++)
     {
@@ -266,18 +284,17 @@ std::vector<Particle *> Space::generateParticles(double density,
                 Particle *newParticle = new Particle(particle.alias, mass, charge, Point(x, y, z), Velocity(vx, vy, vz));
 
                 this->insert(newParticle);
-                generatedParticles.push_back(newParticle);
             }
             break;
         }
         default:
             break;
         }
+
+        gsl_rng_free(rng);
     }
 
     this->recalculateCentreOfCharge();
-
-    return generatedParticles;
 }
 
 void Space::recalculateCentreOfCharge()

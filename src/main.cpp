@@ -72,10 +72,14 @@ int main()
             newSpace->insert(interactions.Interact(*part, space, theta, dt));
         }
         newSpace->recalculateCentreOfCharge();
+        space->clear();
         delete space;
-        space = newSpace;
+        space = std::move(newSpace);
         space->toFile(i, "./viewer/positions.csv");
     }
+
+    space->clear();
+    delete space;
 
     std::cout << "Simulation complete." << std::endl;
     overallTimer.end();
