@@ -1,7 +1,8 @@
 var classSpace =
 [
     [ "Space", "classSpace.html#aabb74930064f046afdad3093730e47c3", null ],
-    [ "generateParticles", "classSpace.html#a02530e16933924349e26b1fe1be24617", null ],
+    [ "clear", "classSpace.html#a428b572916477990fdb12675c934d066", null ],
+    [ "generateParticles", "classSpace.html#a17a84c45780bc120fb1a0270e82571b6", null ],
     [ "getAllParticles", "classSpace.html#a17178174b6dbea32f118e1f4b76d807a", null ],
     [ "getCentreOfCharge", "classSpace.html#af2c2a02dcb32e225c617c625bdb0e509", null ],
     [ "getChildren", "classSpace.html#a831f16c09115089d56e6b2d8f93716be", null ],
