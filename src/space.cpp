@@ -7,6 +7,8 @@
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_randist.h>
 #include <fstream>
+#include <tuple>
+
 
 #define o1 0 // top left back
 #define o2 1 // top right back
@@ -248,7 +250,7 @@ std::vector<Particle *> Space::generateParticles(double density,
             double radius = params.begin()[0];
             int n = density * (4.0 / 3.0) * PI * pow(radius, 3) * percentage;
 
-            std::cout << n << std::endl;
+            // std::cout << n << std::endl;
 
             // generate n particles in the sphere
             for (int j = 0; j < n; j++)
