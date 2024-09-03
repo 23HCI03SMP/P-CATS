@@ -51,12 +51,22 @@ int main()
     std::tuple<Particle, double> p2 = std::make_tuple(Particle("Electron", 9.11e-31, Charge(0, -1.602e-19)), 0.1);
 
     std::vector<std::tuple<Particle, double>> particles = {p1, p2};
-    space->generateParticles(4, 300, particles, HotspotShape::SPHERE, {4});
+    // space->generateParticles(4, 300, particles, HotspotShape::SPHERE, {4});
+
+    // space->insert(new Particle("Electron", 1/1840 * amu, Charge(0, 1.602e-19), Point(4, 4, 4), Velocity(0, 0, 0), Force(0, 0, 0), Force(0, 0, 0)));
+    // space->insert(new Particle("Electron", 1/1840 * amu, Charge(0, 1.602e-19), Point(6, 6, 6), Velocity(0, 0, 0), Force(0, 0, 0), Force(0, 0, 0)));
+    // space->insert(new Particle("Electron", 9.11e-31, Charge(0, 1.602e-19), Point(6, 6, 6), Velocity(2, 0, 0), Force(0, 0, 0), Force(0, 0, 0)));
+    // space->insert(new Particle("Positron", 9.11e-31, Charge(1.602e-19, 0), Point(4, 4, 4), Velocity(0, 0, 0), Force(0, 0, 0), Force(0, 0, 0)));
+    space->insert(new Particle("Proton", 1.67e-27, Charge(1.602e-19, 0), Point(4, 4, 4), Velocity(0, 2.2e6, 0), Force(0, 0, 0), Force(0, 0, 0)));
+    space->insert(new Particle("Electron", 9.11e-31, Charge(0, -1.602e-19), Point(6, 6, 6), Velocity(0, 0, 0), Force(0, 0, 0), Force(0, 0, 0)));
+    space->recalculateCentreOfCharge();
 
     // Create main loop
-    double dt = 1e-5;
-    int timeSteps = 10;
+    double dt = 1e-13;
+    int timeSteps = 1e5;
     double theta = 0.5;
+
+    std::cout << "p: " << (1.602e-19 * 1000 * dt)/amu << std::endl;
 
     std::cout << "Generating Particles..." << std::endl;
     space->toFile(0, "./viewer/positions.csv");

@@ -52,8 +52,7 @@ Force Particle::coulombLaw(Point pa, Charge qa, Points pb, Charge qb) {
     Force negative_force = (qb.negative != 0) ? Force(k_e * q * qb.negative / pow((pb.negative - pa).magnitude(), 3) * (pb.negative.x - pa.x), k_e * q * qb.negative / pow((pb.negative - pa).magnitude(), 3) * (pb.negative.y - pa.y), k_e * q * qb.negative / pow((pb.negative - pa).magnitude(), 3) * (pb.negative.z - pa.z)) : Force(0, 0, 0);
     Force positive_force = (qb.positive != 0) ? Force(k_e * q * qb.positive / pow((pb.positive - pa).magnitude(), 3) * (pb.positive.x - pa.x), k_e * q * qb.positive / pow((pb.positive - pa).magnitude(), 3) * (pb.positive.y - pa.y), k_e * q * qb.positive / pow((pb.positive - pa).magnitude(), 3) * (pb.positive.z - pa.z)) : Force(0, 0, 0);
 
-    Force electric_force = negative_force + positive_force;
-
+    Force electric_force = negative_force - positive_force;
     return electric_force;
 }
 
@@ -76,9 +75,12 @@ Velocity Particle::updateVelocity(Point pa, Charge qa, Velocity va, double massa
     
     Force electric_force = coulombLaw(pa, qa, pb, qb);
     Field magnetic_field = biotSavart(pa, va, pb, qb, vb);
+    magnetic_field = magnetic_field + Field(0, 0, 1000); // add external magnetic field
     // a will always be a particle, therefore charge is positive - negative
-    Field p = Field(((qa.positive - qa.negative) * dt/massa)*magnetic_field.x, (qa.positive - qa.negative)*magnetic_field.y, (qa.positive - qa.negative)*magnetic_field.z);
-
+    Field p = Field(
+        ((qa.positive - qa.negative) * dt * magnetic_field.x)/(massa*2), 
+        ((qa.positive - qa.negative) * dt * magnetic_field.y)/(massa*2), 
+        ((qa.positive - qa.negative) * dt * magnetic_field.z)/(massa*2));
     Eigen::Matrix3d A{
         {0, -p.z, p.y},
         {p.z, 0, -p.x},

@@ -13,6 +13,8 @@ constexpr double epsilon0 = 8.8541878188e-12; // Permittivity of free space in C
 constexpr double mu0 = 4 * PI * 1e-7; // Permeability of free space in N/[(C/s)^2]
 constexpr double e = 1.602176634e-19 ; // Elementary charge in C
 
+constexpr double amu = 1.66053906660e-27; // Atomic mass unit in kg
+
 enum HotspotShape
 {
     SPHERE,
