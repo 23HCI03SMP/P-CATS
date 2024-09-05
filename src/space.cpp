@@ -8,6 +8,7 @@
 #include <gsl/gsl_randist.h>
 #include <fstream>
 #include <tuple>
+#include <iomanip>
 
 
 #define o1 0 // top left back
@@ -375,11 +376,8 @@ void Space::toFile(int timeStep, std::string path, std::ios_base::openmode openM
     std::cout << "Writing ~" << particles.size() << " particles to file..." << std::endl;
     for(auto particle : particles)
     {
-        file <<
-        timeStep << "," <<
-        particle->position.x << "," <<
-        particle->position.y << "," <<
-        particle->position.z << "," <<
+        file << std::fixed <<
+        timeStep << "," << particle->position.x << "," << particle->position.y << "," << particle->position.z << "," <<
         particle->alias << "\n";
     }
 }

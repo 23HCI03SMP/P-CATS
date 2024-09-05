@@ -75,7 +75,7 @@ Velocity Particle::updateVelocity(Point pa, Charge qa, Velocity va, double massa
     
     Force electric_force = coulombLaw(pa, qa, pb, qb);
     Field magnetic_field = biotSavart(pa, va, pb, qb, vb);
-    magnetic_field = magnetic_field + Field(0, 0, 1000); // add external magnetic field
+    magnetic_field = magnetic_field + Field(0, 0, 0); // add external magnetic field
     // a will always be a particle, therefore charge is positive - negative
     Field p = Field(
         ((qa.positive - qa.negative) * dt * magnetic_field.x)/(massa*2), 
@@ -105,6 +105,7 @@ Particle Particle::particleInNextTimeStep(std::string alias, Point pa, Charge qa
     // std::cout << "Vel * dt: " << new_velocity.x * dt << " " << new_velocity.y * dt << " " << new_velocity.z * dt << std::endl;
     // std::cout << "Old Position: " << pa.x << " " << pa.y << " " << pa.z << std::endl;
     // std::cout << "New Position: " << pa.x + new_velocity.x * dt << " " << pa.y + new_velocity.y * dt << " " << pa.z + new_velocity.z * dt << std::endl;
+    std::cout << "Change in position: " << new_velocity.x * dt << " " << new_velocity.y * dt << " " << new_velocity.z * dt << std::endl;
     Point new_position = Point(pa.x + new_velocity.x * dt, pa.y + new_velocity.y * dt, pa.z + new_velocity.z * dt);
     return Particle(alias, massa, qa, new_position, new_velocity, Force(0, 0, 0), Force(0, 0, 0));
 }

@@ -17,8 +17,8 @@ def plot_data(min_x, min_y, min_z, max_x, max_y, max_z):
     timestep = [[], [], [], [], []]  # timeStep, x, y, z, alias
 
     for line in data[:-1]:
-        if random.randint(1, 200) == 1 or ignore_random:
-            line_str = line.split(",")
+        line_str = line.split(",")
+        if random.randint(1, 2) == 1 or ignore_random:
             timestep[0].append(int(line_str[0]))
             timestep[1].append(float(line_str[1]))
             timestep[2].append(float(line_str[2]))
