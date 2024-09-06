@@ -5,15 +5,15 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include <gmpxx.h> // Include the gmpxx header for mpf_t
 
 /// Global Variables
-constexpr double PI = 3.14159265358979323846; 
-constexpr double K_B = 1.380649e-23; // Boltzmann constant in J/K
-constexpr double epsilon0 = 8.8541878188e-12; // Permittivity of free space in C^2/(N m^2)
-constexpr double mu0 = 4 * PI * 1e-7; // Permeability of free space in N/[(C/s)^2]
-constexpr double e = 1.602176634e-19 ; // Elementary charge in C
-
-constexpr double amu = 1.66053906660e-27; // Atomic mass unit in kg
+extern mpf_t PI;
+extern mpf_t K_B;
+extern mpf_t epsilon0;
+extern mpf_t mu0;
+extern mpf_t e;
+extern mpf_t amu;
 
 enum HotspotShape
 {
@@ -25,48 +25,61 @@ enum HotspotShape
 /// A structure that stores the x, y, and z components of a force. Units are in Newtons.
 struct Force
 {
-    double x, y, z;
+    mpf_t x, y, z;
 
     Force()
     {
-        x = std::numeric_limits<double>::quiet_NaN();
-        y = std::numeric_limits<double>::quiet_NaN();
-        z = std::numeric_limits<double>::quiet_NaN();
+        mpf_init(x);
+        mpf_init(y);
+        mpf_init(z);
     }
 
-    /// @brief Constructor for Force.
-    /// @param x x-component of the force in Newtons.
-    /// @param y y-component of the force in Newtons.
-    /// @param z z-component of the force in Newtons.
-    Force(double x, double y, double z)
+    /// @brief Destructor for Force.
+    ~Force()
     {
-        this->x = x;
-        this->y = y;
-        this->z = z;
+        // mpf_clear(x);
+        // mpf_clear(y);
+        // mpf_clear(z);
+    }
+
+    /// @brief Constructor for Force using double values.
+    /// @param x x-component of the force in Newtons (as double).
+    /// @param y y-component of the force in Newtons (as double).
+    /// @param z z-component of the force in Newtons (as double).
+    Force(double x_val, double y_val, double z_val)
+    {
+        mpf_init(x);
+        mpf_init(y);
+        mpf_init(z);
+        mpf_set_d(x, x_val); // Convert double to mpf_t
+        mpf_set_d(y, y_val); // Convert double to mpf_t
+        mpf_set_d(z, z_val); // Convert double to mpf_t
     }
 
     /// @brief Addition operator for Force.
-    /// @param f Force to add.
-    /// @return The sum of the two forces.
     Force operator+(const Force &f) const
     {
-        return Force(x + f.x, y + f.y, z + f.z);
+        Force result;
+        mpf_add(result.x, x, f.x);
+        mpf_add(result.y, y, f.y);
+        mpf_add(result.z, z, f.z);
+        return result;
     }
 
     /// @brief Subtraction operator for Force.
-    /// @param f Force to subtract.
-    /// @return The difference of the two forces.
     Force operator-(const Force &f) const
     {
-        return Force(x - f.x, y - f.y, z - f.z);
+        Force result;
+        mpf_sub(result.x, x, f.x);
+        mpf_sub(result.y, y, f.y);
+        mpf_sub(result.z, z, f.z);
+        return result;
     }
 
     /// @brief Equals operator for Force.
-    /// @param f Force to compare.
-    /// @return True if the two forces are equal, false otherwise.
     bool operator==(const Force &f) const
     {
-        return x == f.x && y == f.y && z == f.z;
+        return mpf_cmp(x, f.x) == 0 && mpf_cmp(y, f.y) == 0 && mpf_cmp(z, f.z) == 0;
     }
 };
 
@@ -75,48 +88,61 @@ struct Force
 /// A structure that stores the x, y, and z components of a velocity. Units are in meters per second.
 struct Velocity
 {
-    double x, y, z;
+    mpf_t x, y, z;
 
     Velocity()
     {
-        x = std::numeric_limits<double>::quiet_NaN();
-        y = std::numeric_limits<double>::quiet_NaN();
-        z = std::numeric_limits<double>::quiet_NaN();
+        mpf_init(x);
+        mpf_init(y);
+        mpf_init(z);
     }
 
-    /// @brief Constructor for Velocity.
-    /// @param x x-component of the velocity in m/s.
-    /// @param y y-component of the velocity in m/s.
-    /// @param z z-component of the velocity in m/s.
-    Velocity(double x, double y, double z)
+    /// @brief Destructor for Velocity.
+    ~Velocity()
     {
-        this->x = x;
-        this->y = y;
-        this->z = z;
+        // mpf_clear(x);
+        // mpf_clear(y);
+        // mpf_clear(z);
+    }
+
+    /// @brief Constructor for Velocity using double values.
+    /// @param x x-component of the velocity in m/s (as double).
+    /// @param y y-component of the velocity in m/s (as double).
+    /// @param z z-component of the velocity in m/s (as double).
+    Velocity(double x_val, double y_val, double z_val)
+    {
+        mpf_init(x);
+        mpf_init(y);
+        mpf_init(z);
+        mpf_set_d(x, x_val); // Convert double to mpf_t
+        mpf_set_d(y, y_val); // Convert double to mpf_t
+        mpf_set_d(z, z_val); // Convert double to mpf_t
     }
 
     /// @brief Addition operator for Velocity.
-    /// @param v Velocity to add.
-    /// @return The sum of the two velocities.
     Velocity operator+(const Velocity &v) const
     {
-        return Velocity(x + v.x, y + v.y, z + v.z);
+        Velocity result;
+        mpf_add(result.x, x, v.x);
+        mpf_add(result.y, y, v.y);
+        mpf_add(result.z, z, v.z);
+        return result;
     }
 
     /// @brief Subtraction operator for Velocity.
-    /// @param v Velocity to subtract.
-    /// @return The difference of the two velocities.
     Velocity operator-(const Velocity &v) const
     {
-        return Velocity(x - v.x, y - v.y, z - v.z);
+        Velocity result;
+        mpf_sub(result.x, x, v.x);
+        mpf_sub(result.y, y, v.y);
+        mpf_sub(result.z, z, v.z);
+        return result;
     }
 
     /// @brief Equals operator for Velocity.
-    /// @param v Velocity to compare.
-    /// @return True if the two velocities are equal, false otherwise.
     bool operator==(const Velocity &v) const
     {
-        return x == v.x && y == v.y && z == v.z;
+        return mpf_cmp(x, v.x) == 0 && mpf_cmp(y, v.y) == 0 && mpf_cmp(z, v.z) == 0;
     }
 };
 
@@ -125,81 +151,117 @@ struct Velocity
 /// A structure that stores the x, y, and z components of a position. Units are in meters.
 struct Point
 {
-    double x, y, z;
+    mpf_t x, y, z;
 
     Point()
     {
-        x = std::numeric_limits<double>::quiet_NaN();
-        y = std::numeric_limits<double>::quiet_NaN();
-        z = std::numeric_limits<double>::quiet_NaN();
+        mpf_init(x);
+        mpf_init(y);
+        mpf_init(z);
     }
 
-    /// @brief Constructor for Point.
-    /// @param x x-component of the position in meters.
-    /// @param y y-component of the position in meters.
-    /// @param z z-component of the position in meters.
-    Point(double x, double y, double z)
+    /// @brief Destructor for Point.
+    ~Point()
     {
-        this->x = x;
-        this->y = y;
-        this->z = z;
+        // mpf_clear(x);
+        // mpf_clear(y);
+        // mpf_clear(z);
+    }
+
+    /// @brief Constructor for Point using double values.
+    /// @param x x-component of the position in meters (as double).
+    /// @param y y-component of the position in meters (as double).
+    /// @param z z-component of the position in meters (as double).
+    Point(double x_val, double y_val, double z_val)
+    {
+        mpf_init(x);
+        mpf_init(y);
+        mpf_init(z);
+        mpf_set_d(x, x_val); // Convert double to mpf_t
+        mpf_set_d(y, y_val); // Convert double to mpf_t
+        mpf_set_d(z, z_val); // Convert double to mpf_t
+    }
+
+    Point(mpf_t x_val, mpf_t y_val, mpf_t z_val)
+    {
+        mpf_init_set(x, x_val);
+        mpf_init_set(y, y_val);
+        mpf_init_set(z, z_val);
     }
 
     /// @brief Subtraction operator for Point.
-    /// @param p Point to subtract.
-    /// @return The difference of the two points.
     Point operator-(const Point &p) const
     {
-        return Point(x - p.x, y - p.y, z - p.z);
+        Point result;
+        mpf_sub(result.x, x, p.x);
+        mpf_sub(result.y, y, p.y);
+        mpf_sub(result.z, z, p.z);
+        return result;
     }
 
     /// @brief Addition operator for Point.
-    /// @param p Point to add.
-    /// @return The sum of the two points.
     Point operator+(const Point &p) const
     {
-        return Point(x + p.x, y + p.y, z + p.z);
+        Point result;
+        mpf_add(result.x, x, p.x);
+        mpf_add(result.y, y, p.y);
+        mpf_add(result.z, z, p.z);
+        return result;
     }
 
     /// @brief Equals operator for Point.
-    /// @param p Point to compare.
-    /// @return True if the two points are equal, false otherwise.
     bool operator==(const Point &p) const
     {
-        return x == p.x && y == p.y && z == p.z;
+        return mpf_cmp(x, p.x) == 0 && mpf_cmp(y, p.y) == 0 && mpf_cmp(z, p.z) == 0;
     }
 
     /// @brief magnitude of the position vector
     /// @return magnitude of the position vector
-    double magnitude()
+    mpf_class magnitude()
     {
-        return sqrt(x * x + y * y + z * z);
+        mpf_class result;
+        mpf_class x_squared, y_squared, z_squared;
+
+        x_squared = mpf_class(x) * mpf_class(x);
+        y_squared = mpf_class(y) * mpf_class(y);
+        z_squared = mpf_class(z) * mpf_class(z);
+
+        result = x_squared + y_squared + z_squared;
+
+        result = sqrt(result);
+
+        return result;
     }
 };
 
-/// @brief A structure to store field components (in N/C).
-///
-/// A structure that stores the x, y, and z components of a field. Units are in Newtons per Coulomb.
 struct Field
 {
-    double x, y, z;
+    mpf_t x, y, z;
 
     Field()
     {
-        x = std::numeric_limits<double>::quiet_NaN();
-        y = std::numeric_limits<double>::quiet_NaN();
-        z = std::numeric_limits<double>::quiet_NaN();
+        mpf_init(x);
+        mpf_init(y);
+        mpf_init(z);
+    }
+
+    /// @brief Destructor for Field.
+    ~Field()
+    {
+        // mpf_clear(x);
+        // mpf_clear(y);
+        // mpf_clear(z);
     }
 
     /// @brief Constructor for Field.
-    /// @param x x-component of the field in Newtons per Coulomb.
-    /// @param y y-component of the field in Newtons per Coulomb.
-    /// @param z z-component of the field in Newtons per Coulomb.
-    Field(double x, double y, double z)
+    /// @param x x-component of the field in Newtons per Coulomb as double.
+    /// @param y y-component of the field in Newtons per Coulomb as double.
+    /// @param z z-component of the field in Newtons per Coulomb as double.
+    Field(double x_val, double y_val, double z_val)
     {
-        this->x = x;
-        this->y = y;
-        this->z = z;
+        mpf_init_set_d(x, x_val);
+        mpf_init_set_d(y, y_val);
+        mpf_init_set_d(z, z_val);
     }
 
     /// @brief Addition operator for Field.
@@ -207,7 +269,11 @@ struct Field
     /// @return The sum of the two fields.
     Field operator+(const Field &f) const
     {
-        return Field(x + f.x, y + f.y, z + f.z);
+        Field result;
+        mpf_add(result.x, x, f.x);
+        mpf_add(result.y, y, f.y);
+        mpf_add(result.z, z, f.z);
+        return result;
     }
 
     /// @brief Subtraction operator for Field.
@@ -215,7 +281,11 @@ struct Field
     /// @return The difference of the two fields.
     Field operator-(const Field &f) const
     {
-        return Field(x - f.x, y - f.y, z - f.z);
+        Field result;
+        mpf_sub(result.x, x, f.x);
+        mpf_sub(result.y, y, f.y);
+        mpf_sub(result.z, z, f.z);
+        return result;
     }
 
     /// @brief Equals operator for Field.
@@ -223,21 +293,36 @@ struct Field
     /// @return True if the two fields are equal, false otherwise.
     bool operator==(const Field &f) const
     {
-        return x == f.x && y == f.y && z == f.z;
+        return mpf_cmp(x, f.x) == 0 && mpf_cmp(y, f.y) == 0 && mpf_cmp(z, f.z) == 0;
+    }
+
+    /// @brief Convert internal mpf_t values back to doubles.
+    /// @return The field components as a tuple of doubles.
+    std::tuple<double, double, double> toDouble() const
+    {
+        return std::make_tuple(mpf_get_d(x), mpf_get_d(y), mpf_get_d(z));
     }
 };
+
 
 /// @brief A structure to store charge components (in C).
 ///
 /// A structure that stores the positive and negative charge of a particle. Units are in Coulombs.
 struct Charge
 {
-    double positive, negative;
+    mpf_t positive, negative;
 
     Charge()
     {
-        positive = std::numeric_limits<double>::quiet_NaN();
-        negative = std::numeric_limits<double>::quiet_NaN();
+        mpf_init(positive);
+        mpf_init(negative);
+    }
+
+    /// @brief Destructor for Charge.
+    ~Charge()
+    {
+        // mpf_clear(positive);
+        // mpf_clear(negative);
     }
 
     /// @brief Constructor for Charge.
@@ -245,8 +330,8 @@ struct Charge
     /// @param n Negative charge in Coulombs.
     Charge(double p, double n)
     {
-        positive = p;
-        negative = n;
+        mpf_init_set_d(positive, p);
+        mpf_init_set_d(negative, n);
     }
 
     /// @brief Addition operator for Charge.
@@ -254,7 +339,10 @@ struct Charge
     /// @return The sum of the two charges.
     Charge operator+(const Charge &c) const
     {
-        return Charge(positive + c.positive, negative + c.negative);
+        Charge result;
+        mpf_add(result.positive, positive, c.positive);
+        mpf_add(result.negative, negative, c.negative);
+        return result;
     }
 
     /// @brief Subtraction operator for Charge.
@@ -262,7 +350,10 @@ struct Charge
     /// @return The difference of the two charges.
     Charge operator-(const Charge &c) const
     {
-        return Charge(positive - c.positive, negative - c.negative);
+        Charge result;
+        mpf_sub(result.positive, positive, c.positive);
+        mpf_sub(result.negative, negative, c.negative);
+        return result;
     }
 
     /// @brief Plus-equals operator for Charge.
@@ -270,8 +361,8 @@ struct Charge
     /// @return Charge after addition.
     Charge operator+=(const Charge &c)
     {
-        positive += c.positive;
-        negative += c.negative;
+        mpf_add(positive, positive, c.positive);
+        mpf_add(negative, negative, c.negative);
         return *this;
     }
 
@@ -280,17 +371,17 @@ struct Charge
     /// @return Charge after subtraction.
     Charge operator-=(const Charge &c)
     {
-        positive -= c.positive;
-        negative -= c.negative;
+        mpf_sub(positive, positive, c.positive);
+        mpf_sub(negative, negative, c.negative);
         return *this;
     }
 
-    /// @brief equals operator for Charge.
+    /// @brief Equals operator for Charge.
     /// @param c Charge to compare.
     /// @return True if the two charges are equal, false otherwise.
     bool operator==(const Charge &c) const
     {
-        return positive == c.positive && negative == c.negative;
+        return mpf_cmp(positive, c.positive) == 0 && mpf_cmp(negative, c.negative) == 0;
     }
 };
 
@@ -302,6 +393,12 @@ struct Points {
     {
         positive = Point();
         negative = Point();
+    }
+
+    /// @brief Destructor for Points.
+    ~Points()
+    {
+        // Destructor for Point is called automatically
     }
 
     /// @brief Constructor for Points.

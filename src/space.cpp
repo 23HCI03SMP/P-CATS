@@ -9,6 +9,7 @@
 #include <fstream>
 #include <tuple>
 #include <iomanip>
+#include <gmpxx.h>
 
 
 #define o1 0 // top left back
@@ -71,7 +72,24 @@ Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
 
 Point Space::midpoint()
 {
-    return Point((minPoint.x + maxPoint.x) / 2, (minPoint.y + maxPoint.y) / 2, (minPoint.z + maxPoint.z) / 2);
+    mpf_t xSum, ySum, zSum;
+    mpf_t xMid, yMid, zMid;
+    mpf_init(xSum);
+    mpf_init(ySum);
+    mpf_init(zSum);
+    mpf_init(xMid);
+    mpf_init(yMid);
+    mpf_init(zMid);
+
+    mpf_add(xSum, minPoint.x, maxPoint.x);
+    mpf_add(ySum, minPoint.y, maxPoint.y);
+    mpf_add(zSum, minPoint.z, maxPoint.z);
+
+    mpf_div_ui(xMid, xSum, 2);
+    mpf_div_ui(yMid, ySum, 2);
+    mpf_div_ui(zMid, zSum, 2);
+
+    return Point(xMid, yMid, zMid);
 }
 
 // Logic for insertion:
@@ -89,9 +107,25 @@ void Space::insert(Particle *particle)
     }
 
     int octet;
-    double xMid = (this->minPoint.x + this->maxPoint.x) / 2;
-    double yMid = (this->minPoint.y + this->maxPoint.y) / 2;
-    double zMid = (this->minPoint.z + this->maxPoint.z) / 2;
+
+    mpf_t xMid, yMid, zMid;
+    mpf_init(xMid);
+    mpf_init(yMid);
+    mpf_init(zMid);
+
+    mpf_t xSum, ySum, zSum;
+    mpf_init(xSum);
+    mpf_init(ySum);
+    mpf_init(zSum);
+
+    mpf_add(xSum, minPoint.x, maxPoint.x);
+    mpf_add(ySum, minPoint.y, maxPoint.y);
+    mpf_add(zSum, minPoint.z, maxPoint.z);
+
+    mpf_div_ui(xMid, xSum, 2);
+    mpf_div_ui(yMid, ySum, 2);
+    mpf_div_ui(zMid, zSum, 2);
+
     if (particle->position.y >= yMid) // top
     {
         if (particle->position.x >= xMid) // right
@@ -105,7 +139,7 @@ void Space::insert(Particle *particle)
                 octet = o3; // top right front
             }
         }
-        else // left
+        else // left.
         {
             if (particle->position.z >= zMid) // back
             {
@@ -237,9 +271,25 @@ std::vector<Particle *> Space::generateParticles(double density,
         double percentage = std::get<1>(particles[i]);
         double mass = particle.mass;
         Charge charge = particle.charge;
-        double xMid = (this->minPoint.x + this->maxPoint.x) / 2;
-        double yMid = (this->minPoint.y + this->maxPoint.y) / 2;
-        double zMid = (this->minPoint.z + this->maxPoint.z) / 2;
+
+        // Calculate the midpoint of the space
+        mpf_t xMid, yMid, zMid;
+        mpf_init(xMid);
+        mpf_init(yMid);
+        mpf_init(zMid);
+
+        mpf_t xSum, ySum, zSum;
+        mpf_init(xSum);
+        mpf_init(ySum);
+        mpf_init(zSum);
+
+        mpf_add(xSum, minPoint.x, maxPoint.x);
+        mpf_add(ySum, minPoint.y, maxPoint.y);
+        mpf_add(zSum, minPoint.z, maxPoint.z);
+
+        mpf_div_ui(xMid, xSum, 2);
+        mpf_div_ui(yMid, ySum, 2);
+        mpf_div_ui(zMid, zSum, 2);
 
         gsl_rng *rng = gsl_rng_alloc(gsl_rng_mt19937);
         gsl_rng_set(rng, time(NULL));
@@ -249,20 +299,20 @@ std::vector<Particle *> Space::generateParticles(double density,
         case HotspotShape::SPHERE:
         {
             double radius = params.begin()[0];
-            int n = density * (4.0 / 3.0) * PI * pow(radius, 3) * percentage;
+            int n = density * (4.0 / 3.0) * mpf_get_d(PI) * pow(radius, 3) * percentage;
 
             // std::cout << n << std::endl;
 
             // generate n particles in the sphere
             for (int j = 0; j < n; j++)
             {
-                double x = gsl_ran_flat(rng, -radius, radius) + xMid;
-                double y = gsl_ran_flat(rng, -radius, radius) + yMid;
-                double z = gsl_ran_flat(rng, -radius, radius) + zMid;
+                double x = gsl_ran_flat(rng, -radius, radius) + mpf_get_d(xMid);
+                double y = gsl_ran_flat(rng, -radius, radius) + mpf_get_d(yMid);
+                double z = gsl_ran_flat(rng, -radius, radius) + mpf_get_d(zMid);
 
-                double vx = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
-                double vy = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
-                double vz = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
+                double vx = gsl_ran_gaussian(rng, sqrt(mpf_get_d(K_B) * temperature / mass));
+                double vy = gsl_ran_gaussian(rng, sqrt(mpf_get_d(K_B) * temperature / mass));
+                double vz = gsl_ran_gaussian(rng, sqrt(mpf_get_d(K_B) * temperature / mass));
 
                 Particle *newParticle = new Particle(particle.alias, mass, charge, Point(x, y, z), Velocity(vx, vy, vz));
 
@@ -284,13 +334,15 @@ std::vector<Particle *> Space::generateParticles(double density,
 void Space::recalculateCentreOfCharge()
 {
     Charge totalCharge = Charge(0, 0);
-    double xPositiveChargePositionProductSum = 0;
-    double yPositiveChargePositionProductSum = 0;
-    double zPositiveChargePositionProductSum = 0;
+    mpf_t xPositiveChargePositionProductSum, yPositiveChargePositionProductSum, zPositiveChargePositionProductSum;
+    mpf_init_set_ui(xPositiveChargePositionProductSum, 0);
+    mpf_init_set_ui(yPositiveChargePositionProductSum, 0);
+    mpf_init_set_ui(zPositiveChargePositionProductSum, 0);
 
-    double xNegativeChargePositionProductSum = 0;
-    double yNegativeChargePositionProductSum = 0;
-    double zNegativeChargePositionProductSum = 0;
+    mpf_t xNegativeChargePositionProductSum, yNegativeChargePositionProductSum, zNegativeChargePositionProductSum;
+    mpf_init_set_ui(xNegativeChargePositionProductSum, 0);
+    mpf_init_set_ui(yNegativeChargePositionProductSum, 0);
+    mpf_init_set_ui(zNegativeChargePositionProductSum, 0);
 
     for (Node *child : this->children)
     {
@@ -299,13 +351,31 @@ void Space::recalculateCentreOfCharge()
             Particle *particle = dynamic_cast<Particle *>(child);
             totalCharge += particle->charge;
 
-            xPositiveChargePositionProductSum += particle->charge.positive * particle->position.x;
-            yPositiveChargePositionProductSum += particle->charge.positive * particle->position.y;
-            zPositiveChargePositionProductSum += particle->charge.positive * particle->position.z;
+            mpf_t xPositiveChargePositionProduct, yPositiveChargePositionProduct, zPositiveChargePositionProduct;
+            mpf_init(xPositiveChargePositionProduct);
+            mpf_init(yPositiveChargePositionProduct);
+            mpf_init(zPositiveChargePositionProduct);
 
-            xNegativeChargePositionProductSum += particle->charge.negative * particle->position.x;
-            yNegativeChargePositionProductSum += particle->charge.negative * particle->position.y;
-            zNegativeChargePositionProductSum += particle->charge.negative * particle->position.z;
+            mpf_t xNegativeChargePositionProduct, yNegativeChargePositionProduct, zNegativeChargePositionProduct;
+            mpf_init(xNegativeChargePositionProduct);
+            mpf_init(yNegativeChargePositionProduct);
+            mpf_init(zNegativeChargePositionProduct);
+
+            mpf_mul(xPositiveChargePositionProduct, particle->charge.positive, particle->position.x);
+            mpf_mul(yPositiveChargePositionProduct, particle->charge.positive, particle->position.y);
+            mpf_mul(zPositiveChargePositionProduct, particle->charge.positive, particle->position.z);
+
+            mpf_mul(xNegativeChargePositionProduct, particle->charge.negative, particle->position.x);
+            mpf_mul(yNegativeChargePositionProduct, particle->charge.negative, particle->position.y);
+            mpf_mul(zNegativeChargePositionProduct, particle->charge.negative, particle->position.z);
+
+            mpf_add(xPositiveChargePositionProductSum, xPositiveChargePositionProductSum, xPositiveChargePositionProduct);
+            mpf_add(yPositiveChargePositionProductSum, yPositiveChargePositionProductSum, yPositiveChargePositionProduct);
+            mpf_add(zPositiveChargePositionProductSum, zPositiveChargePositionProductSum, zPositiveChargePositionProduct);
+
+            mpf_add(xNegativeChargePositionProductSum, xNegativeChargePositionProductSum, xNegativeChargePositionProduct);
+            mpf_add(yNegativeChargePositionProductSum, yNegativeChargePositionProductSum, yNegativeChargePositionProduct);
+            mpf_add(zNegativeChargePositionProductSum, zNegativeChargePositionProductSum, zNegativeChargePositionProduct);
         }
         else if (dynamic_cast<Space *>(child))
         {
@@ -313,28 +383,62 @@ void Space::recalculateCentreOfCharge()
             space->recalculateCentreOfCharge();
 
             totalCharge += space->charge;
-            xPositiveChargePositionProductSum += space->charge.positive * space->centreOfCharge.positive.x;
-            yPositiveChargePositionProductSum += space->charge.positive * space->centreOfCharge.positive.y;
-            zPositiveChargePositionProductSum += space->charge.positive * space->centreOfCharge.positive.z;
 
-            xNegativeChargePositionProductSum += space->charge.negative * space->centreOfCharge.negative.x;
-            yNegativeChargePositionProductSum += space->charge.negative * space->centreOfCharge.negative.y;
-            zNegativeChargePositionProductSum += space->charge.negative * space->centreOfCharge.negative.z;
+            mpf_t xPositiveChargePositionProduct, yPositiveChargePositionProduct, zPositiveChargePositionProduct;
+            mpf_init(xPositiveChargePositionProduct);
+            mpf_init(yPositiveChargePositionProduct);
+            mpf_init(zPositiveChargePositionProduct);
+
+            mpf_t xNegativeChargePositionProduct, yNegativeChargePositionProduct, zNegativeChargePositionProduct;
+            mpf_init(xNegativeChargePositionProduct);
+            mpf_init(yNegativeChargePositionProduct);
+            mpf_init(zNegativeChargePositionProduct);
+
+            mpf_mul(xPositiveChargePositionProduct, space->charge.positive, space->centreOfCharge.positive.x);
+            mpf_mul(yPositiveChargePositionProduct, space->charge.positive, space->centreOfCharge.positive.y);
+            mpf_mul(zPositiveChargePositionProduct, space->charge.positive, space->centreOfCharge.positive.z);
+
+            mpf_mul(xNegativeChargePositionProduct, space->charge.negative, space->centreOfCharge.negative.x);
+            mpf_mul(yNegativeChargePositionProduct, space->charge.negative, space->centreOfCharge.negative.y);
+            mpf_mul(zNegativeChargePositionProduct, space->charge.negative, space->centreOfCharge.negative.z);
+
+            mpf_add(xPositiveChargePositionProductSum, xPositiveChargePositionProductSum, xPositiveChargePositionProduct);
+            mpf_add(yPositiveChargePositionProductSum, yPositiveChargePositionProductSum, yPositiveChargePositionProduct);
+            mpf_add(zPositiveChargePositionProductSum, zPositiveChargePositionProductSum, zPositiveChargePositionProduct);
+
+            mpf_add(xNegativeChargePositionProductSum, xNegativeChargePositionProductSum, xNegativeChargePositionProduct);
+            mpf_add(yNegativeChargePositionProductSum, yNegativeChargePositionProductSum, yNegativeChargePositionProduct);
+            mpf_add(zNegativeChargePositionProductSum, zNegativeChargePositionProductSum, zNegativeChargePositionProduct);
         }
     }
 
     this->charge = totalCharge;
-    this->centreOfCharge = Points(Point(xPositiveChargePositionProductSum / totalCharge.positive,
-                                         yPositiveChargePositionProductSum / totalCharge.positive,
-                                         zPositiveChargePositionProductSum / totalCharge.positive),
-                                  Point(xNegativeChargePositionProductSum / totalCharge.negative,
-                                         yNegativeChargePositionProductSum / totalCharge.negative,
-                                         zNegativeChargePositionProductSum / totalCharge.negative));
+
+    mpf_t xPositiveCentreOfCharge, yPositiveCentreOfCharge, zPositiveCentreOfCharge;
+    mpf_init(xPositiveCentreOfCharge);
+    mpf_init(yPositiveCentreOfCharge);
+    mpf_init(zPositiveCentreOfCharge);
+
+    mpf_t xNegativeCentreOfCharge, yNegativeCentreOfCharge, zNegativeCentreOfCharge;
+    mpf_init(xNegativeCentreOfCharge);
+    mpf_init(yNegativeCentreOfCharge);
+    mpf_init(zNegativeCentreOfCharge);
+
+    mpf_div(xPositiveCentreOfCharge, xPositiveChargePositionProductSum, totalCharge.positive);
+    mpf_div(yPositiveCentreOfCharge, yPositiveChargePositionProductSum, totalCharge.positive);
+    mpf_div(zPositiveCentreOfCharge, zPositiveChargePositionProductSum, totalCharge.positive);
+
+    mpf_div(xNegativeCentreOfCharge, xNegativeChargePositionProductSum, totalCharge.negative);
+    mpf_div(yNegativeCentreOfCharge, yNegativeChargePositionProductSum, totalCharge.negative);
+    mpf_div(zNegativeCentreOfCharge, zNegativeChargePositionProductSum, totalCharge.negative);
+
+    this->centreOfCharge = Points(Point(xPositiveCentreOfCharge, yPositiveCentreOfCharge, zPositiveCentreOfCharge),
+                                  Point(xNegativeCentreOfCharge, yNegativeCentreOfCharge, zNegativeCentreOfCharge));
 }
 
 std::string Space::toString(std::string indent)
 {
-    std::string out = "\033[34mSpace (" + std::to_string(minPoint.x) + ", " + std::to_string(minPoint.y) + ", " + std::to_string(minPoint.z) + ") to (" + std::to_string(maxPoint.x) + ", " + std::to_string(maxPoint.y) + ", " + std::to_string(maxPoint.z) + ")\033[0m\n";
+    std::string out = "\033[34mSpace (" + std::to_string(mpf_get_d(minPoint.x)) + ", " + std::to_string(mpf_get_d(minPoint.y)) + ", " + std::to_string(mpf_get_d(minPoint.z)) + ") to (" + std::to_string(mpf_get_d(maxPoint.x)) + ", " + std::to_string(mpf_get_d(maxPoint.y)) + ", " + std::to_string(mpf_get_d(maxPoint.z)) + ")\033[0m\n";
     std::string branchSymbol = "├── ";
     std::string lastBranchSymbol = "└── ";
 
@@ -350,7 +454,7 @@ std::string Space::toString(std::string indent)
         {
             Particle *particle = dynamic_cast<Particle *>(children[i]);
 
-            out += indent + (isLast ? lastBranchSymbol : branchSymbol) + "\033[32m" + particle->alias + " (" + std::to_string(particle->position.x) + ", " + std::to_string(particle->position.y) + ", " + std::to_string(particle->position.z) + ")" + "\033[0m\n";
+            out += indent + (isLast ? lastBranchSymbol : branchSymbol) + "\033[32m" + particle->alias + " (" + std::to_string(mpf_get_d(particle->position.x)) + ", " + std::to_string(mpf_get_d(particle->position.y)) + ", " + std::to_string(mpf_get_d(particle->position.z)) + ")" + "\033[0m\n";
         }
         else if (dynamic_cast<Space *>(children[i]))
         {
