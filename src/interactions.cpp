@@ -9,13 +9,11 @@ Particle* Interactions::Interact(Particle p, Node *n, double theta, double dt) {
     double distance = (p.position - n->midpoint()).magnitude();
     double calcTheta = width/distance;
     
-    Particle* newParticle = new Particle();
-    
     if (calcTheta < theta || n->isExternalNode()) {
         // Node is sufficiently far away
         // Calculate the force on p from n
-        *newParticle = p.particleInNextTimeStep(p.alias, p.position, p.charge, p.velocity, p.mass, n->getCentreOfCharge(), n->charge, dt);
-        return newParticle;   
+        Particle newParticle = p.particleInNextTimeStep(p.alias, p.position, p.charge, p.velocity, p.mass, n->getCentreOfCharge(), n->charge, dt);
+        return new Particle(newParticle.alias, newParticle.mass, newParticle.charge, newParticle.position, newParticle.velocity, newParticle.bForce, newParticle.eForce);
     }
 
     else {
@@ -38,6 +36,7 @@ Particle* Interactions::Interact(Particle p, Node *n, double theta, double dt) {
                 vel_sum = vel_sum + (particle.velocity - p.velocity);
                 b_force_sum = b_force_sum + (particle.bForce - p.bForce);
                 e_force_sum = e_force_sum + (particle.eForce - p.eForce);
+                delete part;
             }
         }
 

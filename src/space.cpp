@@ -9,7 +9,6 @@
 #include <fstream>
 #include <tuple>
 
-
 #define o1 0 // top left back
 #define o2 1 // top right back
 #define o3 2 // top right front
@@ -56,6 +55,23 @@ std::vector<Particle *> Space::getAllParticles()
     return particles;
 }
 
+Space::~Space()
+{
+    for (auto child : children)
+    {
+        if (auto particle = dynamic_cast<Particle *>(child))
+        {
+            delete particle;
+        }
+        else if (auto space = dynamic_cast<Space *>(child))
+        {
+            delete space;
+        }
+    }
+
+    children.clear();
+}
+
 Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
 {
     this->minPoint = minPoint;
@@ -84,6 +100,7 @@ void Space::insert(Particle *particle)
         particle->position.y < minPoint.y || particle->position.y > maxPoint.y ||
         particle->position.z < minPoint.z || particle->position.z > maxPoint.z)
     {
+        delete particle; // free memory
         return;
     }
 
@@ -162,6 +179,7 @@ void Space::insert(Particle *particle)
             {
                 // std::cout << "Particle already exists in this position. Ignoring...\n"
                 //           << std::endl;
+                delete particle; // free memory
                 return;
             }
 
@@ -220,15 +238,13 @@ void Space::insert(Particle *particle)
     }
 }
 
-std::vector<Particle *> Space::generateParticles(double density,
-                                                 double temperature,
-                                                 std::vector<std::tuple<Particle, double>> &particles,
-                                                 HotspotShape hotspotShape,
-                                                 std::initializer_list<double> params)
+void Space::generateParticles(double density,
+                              double temperature,
+                              std::vector<std::tuple<Particle, double>> &particles,
+                              HotspotShape hotspotShape,
+                              std::initializer_list<double> params)
 {
     /// @todo Ensure that percentage sums to 1
-
-    std::vector<Particle *> generatedParticles;
 
     for (int i = 0; i < particles.size(); i++)
     {
@@ -266,18 +282,17 @@ std::vector<Particle *> Space::generateParticles(double density,
                 Particle *newParticle = new Particle(particle.alias, mass, charge, Point(x, y, z), Velocity(vx, vy, vz));
 
                 this->insert(newParticle);
-                generatedParticles.push_back(newParticle);
             }
             break;
         }
         default:
             break;
         }
+
+        gsl_rng_free(rng);
     }
 
     this->recalculateCentreOfCharge();
-
-    return generatedParticles;
 }
 
 void Space::recalculateCentreOfCharge()
@@ -324,11 +339,11 @@ void Space::recalculateCentreOfCharge()
 
     this->charge = totalCharge;
     this->centreOfCharge = Points(Point(xPositiveChargePositionProductSum / totalCharge.positive,
-                                         yPositiveChargePositionProductSum / totalCharge.positive,
-                                         zPositiveChargePositionProductSum / totalCharge.positive),
+                                        yPositiveChargePositionProductSum / totalCharge.positive,
+                                        zPositiveChargePositionProductSum / totalCharge.positive),
                                   Point(xNegativeChargePositionProductSum / totalCharge.negative,
-                                         yNegativeChargePositionProductSum / totalCharge.negative,
-                                         zNegativeChargePositionProductSum / totalCharge.negative));
+                                        yNegativeChargePositionProductSum / totalCharge.negative,
+                                        zNegativeChargePositionProductSum / totalCharge.negative));
 }
 
 std::string Space::toString(std::string indent)
@@ -373,13 +388,8 @@ void Space::toFile(int timeStep, std::string path, std::ios_base::openmode openM
 
     auto particles = this->getAllParticles();
     std::cout << "Writing ~" << particles.size() << " particles to file..." << std::endl;
-    for(auto particle : particles)
+    for (auto particle : particles)
     {
-        file <<
-        timeStep << "," <<
-        particle->position.x << "," <<
-        particle->position.y << "," <<
-        particle->position.z << "," <<
-        particle->alias << "\n";
+        file << timeStep << "," << particle->position.x << "," << particle->position.y << "," << particle->position.z << "," << particle->alias << "\n";
     }
 }

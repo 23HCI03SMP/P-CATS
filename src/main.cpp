@@ -8,7 +8,6 @@
 #include <chrono>
 #include <tuple>
 
-
 class Timer
 {
 public:
@@ -22,7 +21,8 @@ public:
         end_time = std::chrono::high_resolution_clock::now();
         duration = end_time - start;
         float ms = duration.count();
-        std::cout << "Elapsed Time: " << ms << "ms" << std::endl << std::endl;
+        std::cout << "Elapsed Time: " << ms << "ms" << std::endl
+                  << std::endl;
     }
 
     ~Timer()
@@ -35,7 +35,6 @@ private:
     std::chrono::time_point<std::chrono::system_clock> end_time;
     std::chrono::duration<float, std::milli> duration = end_time - start;
 };
-
 
 int main()
 {
@@ -63,7 +62,8 @@ int main()
     generationTimer.end();
 
     Interactions interactions;
-    for (int i = 0; i < timeSteps; i++) {
+    for (int i = 0; i < timeSteps; i++)
+    {
         Timer timer;
         std::cout << "Time step: " << i + 1 << std::endl;
         Space *newSpace = new Space(Point(0, 0, 0), Point(10, 10, 10));
@@ -73,15 +73,17 @@ int main()
         }
         newSpace->recalculateCentreOfCharge();
         delete space;
-        space = newSpace;
+        space = std::move(newSpace);
         space->toFile(i, "./viewer/positions.csv");
     }
+
+    delete space;
 
     std::cout << "Simulation complete." << std::endl;
     overallTimer.end();
 
     // Run viewer
     system("cd viewer && python viewer.py runserver -d");
-    
+
     return 0;
 }
