@@ -50,7 +50,6 @@ public:
     /// @param particles Vector of particles to be generated. Takes in a tuple of a particle and a double. Particle is the particle to be generated, and the double is the percentage of the particle being generated.
     /// @param hotspotShape Shape of the hotspot.
     /// @param params Parameters for the hotspot shape.
-    /// @return Vector of particles generated.
     void generateParticles(double density,
                            double temperature,
                            std::vector<std::tuple<Particle, double>> &particles,
