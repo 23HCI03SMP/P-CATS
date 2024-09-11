@@ -16,6 +16,9 @@ public:
     /// @param charge Charge of the node.
     Node(Charge charge);
 
+    /// @brief Destructor for Node.
+    virtual ~Node() = default;
+
     /// @brief Polymporphic function to calculate the midpoint of the node.
     /// @return Midpoint of the node.
     virtual Point midpoint();

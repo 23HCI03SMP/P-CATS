@@ -29,8 +29,8 @@ public:
     /// @param charge total charge of the space.
     Space(Point minPoint, Point maxPoint, Charge charge = Charge());
 
-    /// @brief Function to delete all the children of the space.
-    void clear();
+    /// @brief Destructor for Space.
+    ~Space();
 
     /// @brief Polymporphic function to calculate the midpoint of the space.
     /// @return Midpoint of the space.

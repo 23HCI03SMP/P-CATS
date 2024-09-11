@@ -18,26 +18,6 @@
 #define o7 6 // bottom right front
 #define o8 7 // bottom left front
 
-void Space::clear()
-{
-    for (auto child : children)
-    {
-        if (dynamic_cast<Particle *>(child))
-        {
-            Particle *particle = dynamic_cast<Particle *>(child);
-            delete particle;
-        }
-        else if (dynamic_cast<Space *>(child))
-        {
-            Space *space = dynamic_cast<Space *>(child);
-            space->clear();
-            delete space;
-        }
-    }
-
-    children.clear();
-}
-
 bool Space::isExternalNode()
 {
     return false;
@@ -75,6 +55,23 @@ std::vector<Particle *> Space::getAllParticles()
     return particles;
 }
 
+Space::~Space()
+{
+    for (auto child : children)
+    {
+        if (auto particle = dynamic_cast<Particle *>(child))
+        {
+            delete particle;
+        }
+        else if (auto space = dynamic_cast<Space *>(child))
+        {
+            delete space;
+        }
+    }
+
+    children.clear();
+}
+
 Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
 {
     this->minPoint = minPoint;
@@ -103,6 +100,7 @@ void Space::insert(Particle *particle)
         particle->position.y < minPoint.y || particle->position.y > maxPoint.y ||
         particle->position.z < minPoint.z || particle->position.z > maxPoint.z)
     {
+        delete particle; // free memory
         return;
     }
 
@@ -164,7 +162,7 @@ void Space::insert(Particle *particle)
     if (this->children[octet] == nullptr)
     {
         particle->parent = this;
-        this->children[octet] = std::move(particle);
+        this->children[octet] = particle;
     }
     else
     {
@@ -181,6 +179,7 @@ void Space::insert(Particle *particle)
             {
                 // std::cout << "Particle already exists in this position. Ignoring...\n"
                 //           << std::endl;
+                delete particle; // free memory
                 return;
             }
 
