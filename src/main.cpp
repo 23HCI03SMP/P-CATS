@@ -3,38 +3,10 @@
 #include "include/particle.h"
 #include "include/space.h"
 #include "include/node.h"
-#include "include/interactions.h"
 #include "include/tests.h"
+#include "include/utils.h"
 #include <chrono>
 #include <tuple>
-
-class Timer
-{
-public:
-    Timer()
-    {
-        start = std::chrono::high_resolution_clock::now();
-    }
-
-    void end()
-    {
-        end_time = std::chrono::high_resolution_clock::now();
-        duration = end_time - start;
-        float ms = duration.count();
-        std::cout << "Elapsed Time: " << ms << "ms" << std::endl
-                  << std::endl;
-    }
-
-    ~Timer()
-    {
-        end();
-    }
-
-private:
-    std::chrono::time_point<std::chrono::system_clock> start;
-    std::chrono::time_point<std::chrono::system_clock> end_time;
-    std::chrono::duration<float, std::milli> duration = end_time - start;
-};
 
 int main()
 {
@@ -61,7 +33,6 @@ int main()
     space->toFile(0, "./viewer/positions.csv");
     generationTimer.end();
 
-    Interactions interactions;
     for (int i = 0; i < timeSteps; i++)
     {
         Timer timer;
@@ -69,7 +40,7 @@ int main()
         Space *newSpace = new Space(Point(0, 0, 0), Point(10, 10, 10));
         for (auto part : space->getAllParticles())
         {
-            newSpace->insert(interactions.Interact(*part, space, theta, dt));
+            newSpace->insert(Interact(*part, space, theta, dt));
         }
         newSpace->recalculateCentreOfCharge();
         delete space;
