@@ -3,7 +3,6 @@ var annotated_dup =
     [ "Charge", "structCharge.html", "structCharge" ],
     [ "Field", "structField.html", "structField" ],
     [ "Force", "structForce.html", "structForce" ],
-    [ "Interactions", "classInteractions.html", "classInteractions" ],
     [ "Node", "classNode.html", "classNode" ],
     [ "Particle", "classParticle.html", "classParticle" ],
     [ "Point", "structPoint.html", "structPoint" ],
