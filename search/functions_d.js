@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['velocity_75',['Velocity',['../structVelocity.html#adb5f7fd7a3e1811b44c9b4020c31987c',1,'Velocity']]]
+  ['_7enode_78',['~Node',['../classNode.html#abce703f211f6a577085b4b8ad68cbb19',1,'Node']]],
+  ['_7espace_79',['~Space',['../classSpace.html#a06d440a35bcb4b1554b69e8b18d53705',1,'Space']]]
 ];
