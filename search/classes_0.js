@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['charge_40',['Charge',['../structCharge.html',1,'']]]
+  ['charge_38',['Charge',['../structCharge.html',1,'']]]
 ];
