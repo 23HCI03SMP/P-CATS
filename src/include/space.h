@@ -39,7 +39,7 @@ public:
     /// @brief Function to insert a node into the space.
     /// @param node Node to be inserted.
     void insert(Particle *particle);
-    
+
     /// @brief Function to check if the space is an external node.
     /// @return True if the space is an external node, false otherwise.
     bool isExternalNode() override;
@@ -49,13 +49,13 @@ public:
     /// @param temperature Temperature of the particles, in Kelvin.
     /// @param particles Vector of particles to be generated. Takes in a tuple of a particle and a double. Particle is the particle to be generated, and the double is the percentage of the particle being generated.
     /// @param hotspotShape Shape of the hotspot.
-    /// @param params Parameters for the hotspot shape. 
+    /// @param params Parameters for the hotspot shape.
     /// @return Vector of particles generated.
     void generateParticles(double density,
-                                                   double temperature,
-                                                   std::vector<std::tuple<Particle, double>> &particles,
-                                                   HotspotShape hotspotShape,
-                                                   std::initializer_list<double> params);
+                           double temperature,
+                           std::vector<std::tuple<Particle, double>> &particles,
+                           HotspotShape hotspotShape,
+                           std::initializer_list<double> params);
 
     void recalculateCentreOfCharge();
 

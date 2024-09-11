@@ -3,7 +3,6 @@
 #include "include/particle.h"
 #include "include/space.h"
 #include "include/node.h"
-#include "include/interactions.h"
 #include "include/tests.h"
 #include "include/utils.h"
 #include <chrono>
@@ -34,7 +33,6 @@ int main()
     space->toFile(0, "./viewer/positions.csv");
     generationTimer.end();
 
-    Interactions interactions;
     for (int i = 0; i < timeSteps; i++)
     {
         Timer timer;
@@ -42,7 +40,7 @@ int main()
         Space *newSpace = new Space(Point(0, 0, 0), Point(10, 10, 10));
         for (auto part : space->getAllParticles())
         {
-            newSpace->insert(interactions.Interact(*part, space, theta, dt));
+            newSpace->insert(Interact(*part, space, theta, dt));
         }
         newSpace->recalculateCentreOfCharge();
         delete space;
