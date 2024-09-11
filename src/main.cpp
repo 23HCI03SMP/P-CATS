@@ -5,36 +5,9 @@
 #include "include/node.h"
 #include "include/interactions.h"
 #include "include/tests.h"
+#include "include/utils.h"
 #include <chrono>
 #include <tuple>
-
-class Timer
-{
-public:
-    Timer()
-    {
-        start = std::chrono::high_resolution_clock::now();
-    }
-
-    void end()
-    {
-        end_time = std::chrono::high_resolution_clock::now();
-        duration = end_time - start;
-        float ms = duration.count();
-        std::cout << "Elapsed Time: " << ms << "ms" << std::endl
-                  << std::endl;
-    }
-
-    ~Timer()
-    {
-        end();
-    }
-
-private:
-    std::chrono::time_point<std::chrono::system_clock> start;
-    std::chrono::time_point<std::chrono::system_clock> end_time;
-    std::chrono::duration<float, std::milli> duration = end_time - start;
-};
 
 int main()
 {
