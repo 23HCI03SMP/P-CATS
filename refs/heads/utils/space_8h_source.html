@@ -119,20 +119,20 @@ $(document).ready(function(){initNavTree('space_8h_source.html',''); initResizab
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classSpace.html#a074f2eb24bccb836bc0f12168d9e03e9">isExternalNode</a>() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classSpace.html#a17a84c45780bc120fb1a0270e82571b6">generateParticles</a>(<span class="keywordtype">double</span> density,</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                           <span class="keywordtype">double</span> temperature,</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                           std::vector&lt;std::tuple&lt;Particle, double&gt;&gt; &amp;particles,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                           HotspotShape hotspotShape,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                           std::initializer_list&lt;double&gt; params);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> recalculateCentreOfCharge();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    std::string <a class="code" href="classSpace.html#abc45afc23875a6b8e95b7d90912109be">toString</a>(std::string indent = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classSpace.html#a406a7eef4ae024d2cbb1bca3d90bef99">toFile</a>(<span class="keywordtype">int</span> timeStep, std::string path, std::ios_base::openmode mode = std::ios_base::app);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;};</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classSpace.html#a17a84c45780bc120fb1a0270e82571b6">generateParticles</a>(<span class="keywordtype">double</span> density,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                           <span class="keywordtype">double</span> temperature,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                           std::vector&lt;std::tuple&lt;Particle, double&gt;&gt; &amp;particles,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                           HotspotShape hotspotShape,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                           std::initializer_list&lt;double&gt; params);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> recalculateCentreOfCharge();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    std::string <a class="code" href="classSpace.html#abc45afc23875a6b8e95b7d90912109be">toString</a>(std::string indent = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classSpace.html#a406a7eef4ae024d2cbb1bca3d90bef99">toFile</a>(<span class="keywordtype">int</span> timeStep, std::string path, std::ios_base::openmode mode = std::ios_base::app);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;};</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassNode_html"><div class="ttname"><a href="classNode.html">Node</a></div><div class="ttdoc">A structure to store a node in the tree.</div><div class="ttdef"><b>Definition:</b> node.h:11</div></div>
 <div class="ttc" id="aclassParticle_html"><div class="ttname"><a href="classParticle.html">Particle</a></div><div class="ttdoc">A structure to store a particle node in the tree.</div><div class="ttdef"><b>Definition:</b> particle.h:14</div></div>
 <div class="ttc" id="aclassSpace_html"><div class="ttname"><a href="classSpace.html">Space</a></div><div class="ttdoc">A structure to store a space node in the tree.</div><div class="ttdef"><b>Definition:</b> space.h:15</div></div>
