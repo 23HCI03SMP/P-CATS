@@ -8,6 +8,7 @@
 #include <gsl/gsl_randist.h>
 #include <fstream>
 #include <tuple>
+#include <math.h>
 
 #define o1 0 // top left back
 #define o2 1 // top right back
@@ -271,10 +272,18 @@ void Space::generateParticles(double density,
             // generate n particles in the sphere
             for (int j = 0; j < n; j++)
             {
-                double x = gsl_ran_flat(rng, -radius, radius) + xMid;
-                double y = gsl_ran_flat(rng, -radius, radius) + yMid;
-                double z = gsl_ran_flat(rng, -radius, radius) + zMid;
+                // Generate random points in a sphere in spherical coordinates
+                double u = gsl_rng_uniform(rng);
+                double theta = gsl_rng_uniform(rng) * 2 * PI;
+                double phi = acos(2.0 * gsl_rng_uniform(rng) - 1.0);
 
+                // spherical to cartesian
+                double r = radius * cbrt(u);
+                double x = r * sin(phi) * cos(theta) + xMid;
+                double y = r * sin(phi) * sin(theta) + yMid;
+                double z = r * cos(phi) + zMid;
+
+                // generate velocity
                 double vx = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
                 double vy = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
                 double vz = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
