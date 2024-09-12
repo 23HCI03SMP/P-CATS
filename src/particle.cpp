@@ -1,6 +1,8 @@
 #include "include/p_cats.h"
 #include "include/particle.h"
 #include <eigen3/Eigen/Dense>
+#include <iostream>
+#include <utility>
 
 Particle::Particle(std::string alias, double mass, Charge charge, Point position, Velocity velocity, Force bForce, Force eForce) : Node(charge)
 {
@@ -42,17 +44,32 @@ Force Particle::coulombLaw(Point pa, Charge qa, Points pb, Charge qb) {
     double k_e = 1/(4*PI*epsilon0);
     double q = qa.positive - qa.negative; // charge of a
 
-    Force negative_force = Force(k_e * q * qb.negative / pow((pb.negative - pa).magnitude(), 3) * (pb.negative.x - pa.x), k_e * q * qb.negative / pow((pb.negative - pa).magnitude(), 3) * (pb.negative.y - pa.y), k_e * q * qb.negative / pow((pb.negative - pa).magnitude(), 3) * (pb.negative.z - pa.z));
-    Force positive_force = Force(k_e * q * qb.positive / pow((pb.positive - pa).magnitude(), 3) * (pb.positive.x - pa.x), k_e * q * qb.positive / pow((pb.positive - pa).magnitude(), 3) * (pb.positive.y - pa.y), k_e * q * qb.positive / pow((pb.positive - pa).magnitude(), 3) * (pb.positive.z - pa.z));
+    if (pa - pb.negative == Point(0,0,0) or pa - pb.positive == Point(0,0,0)) {
+        // if the two points are the same, return 0
+        return Force(0, 0, 0);
+    }
 
-    return negative_force + positive_force;
+    Force negative_force = (qb.negative != 0) ? Force(k_e * q * qb.negative / pow((pb.negative - pa).magnitude(), 3) * (pb.negative.x - pa.x), k_e * q * qb.negative / pow((pb.negative - pa).magnitude(), 3) * (pb.negative.y - pa.y), k_e * q * qb.negative / pow((pb.negative - pa).magnitude(), 3) * (pb.negative.z - pa.z)) : Force(0, 0, 0);
+    Force positive_force = (qb.positive != 0) ? Force(k_e * q * qb.positive / pow((pb.positive - pa).magnitude(), 3) * (pb.positive.x - pa.x), k_e * q * qb.positive / pow((pb.positive - pa).magnitude(), 3) * (pb.positive.y - pa.y), k_e * q * qb.positive / pow((pb.positive - pa).magnitude(), 3) * (pb.positive.z - pa.z)) : Force(0, 0, 0);
+
+    Force electric_force = negative_force + positive_force;
+
+    return electric_force;
 }
 
 Field Particle::biotSavart(Point pa, Velocity va, Points pb, Charge qb, Velocity vb) {
-    Field positive_field = Field((mu0/(4 * PI)) * (qb.positive * ((vb.y - va.y)*(pb.positive.z - pa.z) - (vb.z - va.z)*(pb.positive.y - pa.y)) / pow((pb.positive - pa).magnitude(), 3)), (mu0/(4 * PI)) * (qb.positive * ((vb.z - va.z)*(pb.positive.x - pa.x) - (vb.x - va.x)*(pb.positive.z - pa.z)) / pow((pb.positive - pa).magnitude(), 3)), (mu0/(4 * PI)) * (qb.positive * ((vb.x - va.x)*(pb.positive.y - pa.y) - (vb.y - va.y)*(pb.positive.x - pa.x)) / pow((pb.positive - pa).magnitude(), 3)));
-    Field negative_field = Field((mu0/(4 * PI)) * (qb.negative * ((vb.y - va.y)*(pb.negative.z - pa.z) - (vb.z - va.z)*(pb.negative.y - pa.y)) / pow((pb.negative - pa).magnitude(), 3)), (mu0/(4 * PI)) * (qb.negative * ((vb.z - va.z)*(pb.negative.x - pa.x) - (vb.x - va.x)*(pb.negative.z - pa.z)) / pow((pb.negative - pa).magnitude(), 3)), (mu0/(4 * PI)) * (qb.negative * ((vb.x - va.x)*(pb.negative.y - pa.y) - (vb.y - va.y)*(pb.negative.x - pa.x)) / pow((pb.negative - pa).magnitude(), 3)));
+
+    if (pa - pb.negative == Point(0,0,0) or pa - pb.positive == Point(0,0,0)) {
+        // if the two points are the same, return 0
+        return Field(0, 0, 0);
+    }
+
+    Field positive_field = (qb.positive != 0) ? Field((mu0/(4 * PI)) * (qb.positive * ((vb.y - va.y)*(pb.positive.z - pa.z) - (vb.z - va.z)*(pb.positive.y - pa.y)) / pow((pb.positive - pa).magnitude(), 3)), (mu0/(4 * PI)) * (qb.positive * ((vb.z - va.z)*(pb.positive.x - pa.x) - (vb.x - va.x)*(pb.positive.z - pa.z)) / pow((pb.positive - pa).magnitude(), 3)), (mu0/(4 * PI)) * (qb.positive * ((vb.x - va.x)*(pb.positive.y - pa.y) - (vb.y - va.y)*(pb.positive.x - pa.x)) / pow((pb.positive - pa).magnitude(), 3))) : Field(0, 0, 0);
+    Field negative_field = (qb.negative != 0) ? Field((mu0/(4 * PI)) * (qb.negative * ((vb.y - va.y)*(pb.negative.z - pa.z) - (vb.z - va.z)*(pb.negative.y - pa.y)) / pow((pb.negative - pa).magnitude(), 3)), (mu0/(4 * PI)) * (qb.negative * ((vb.z - va.z)*(pb.negative.x - pa.x) - (vb.x - va.x)*(pb.negative.z - pa.z)) / pow((pb.negative - pa).magnitude(), 3)), (mu0/(4 * PI)) * (qb.negative * ((vb.x - va.x)*(pb.negative.y - pa.y) - (vb.y - va.y)*(pb.negative.x - pa.x)) / pow((pb.negative - pa).magnitude(), 3))) : Field(0, 0, 0);
     
-    return positive_field + negative_field;
+    Field magnetic_field = positive_field + negative_field;
+
+    return magnetic_field;
 }
 
 Velocity Particle::updateVelocity(Point pa, Charge qa, Velocity va, double massa, Points pb, Charge qb, Velocity vb, double dt) {
@@ -81,6 +98,11 @@ Velocity Particle::updateVelocity(Point pa, Charge qa, Velocity va, double massa
 
 Particle Particle::particleInNextTimeStep(std::string alias, Point pa, Charge qa, Velocity va, double massa, Points pb, Charge qb, double dt, Velocity vb) {
     Velocity new_velocity = updateVelocity(pa, qa, va, massa, pb, qb, vb, dt);
+    // std::cout << "General Info: " << alias << " " << massa << " " << qa.positive << " " << qa.negative << " " << pa.x << " " << pa.y << " " << pa.z << " " << va.x << " " << va.y << " " << va.z << " " << pb.positive.x << " " << pb.positive.y << " " << pb.positive.z << " " << pb.negative.x << " " << pb.negative.y << " " << pb.negative.z << " " << qb.positive << " " << qb.negative << " " << dt << " " << vb.x << " " << vb.y << " " << vb.z << std::endl;
+    // std::cout << "New velocity: " << new_velocity.x << " " << new_velocity.y << " " << new_velocity.z << std::endl;
+    // std::cout << "Vel * dt: " << new_velocity.x * dt << " " << new_velocity.y * dt << " " << new_velocity.z * dt << std::endl;
+    // std::cout << "Old Position: " << pa.x << " " << pa.y << " " << pa.z << std::endl;
+    // std::cout << "New Position: " << pa.x + new_velocity.x * dt << " " << pa.y + new_velocity.y * dt << " " << pa.z + new_velocity.z * dt << std::endl;
     Point new_position = Point(pa.x + new_velocity.x * dt, pa.y + new_velocity.y * dt, pa.z + new_velocity.z * dt);
-    return Particle(alias, massa, Charge(), new_position, new_velocity, Force(0, 0, 0), Force(0, 0, 0));
+    return Particle(alias, massa, qa, new_position, new_velocity, Force(0, 0, 0), Force(0, 0, 0));
 }
