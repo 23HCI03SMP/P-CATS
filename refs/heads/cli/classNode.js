@@ -1,6 +1,7 @@
 var classNode =
 [
     [ "Node", "classNode.html#a7361885463844ef82eb8866b18429074", null ],
+    [ "~Node", "classNode.html#abce703f211f6a577085b4b8ad68cbb19", null ],
     [ "getCentreOfCharge", "classNode.html#a06cedbd715b80ab334a6b757815eae50", null ],
     [ "getChildren", "classNode.html#a17e90a43495d1a0347bb90c06c4c55b1", null ],
     [ "isExternalNode", "classNode.html#a4b3c5066770b79482133d84a5810bc4c", null ],
