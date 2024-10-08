@@ -1,0 +1,31 @@
+name: Valgrind Tests Deploy Action
+'on': [push, pull_request, workflow_dispatch]
+jobs:
+    deploy:
+        permissions:
+            contents: write
+        runs-on: ubuntu-latest
+        steps:
+        -   name: Checkout repository
+            uses: actions/checkout@v2
+
+        -   name: Install Valgrind
+            run: sudo apt-get update && sudo apt-get install -y valgrind
+
+        -   name: Install g++
+            run: sudo apt-get install -y g++
+        
+        -   name: Install libs for g++
+            run: sudo apt-get install -y libstdc++6
+        
+        -   name: Install Eigen
+            run: sudo apt-get install -y libeigen3-dev
+        
+        -   name: Install GSL
+            run: sudo apt-get install -y libgsl-dev
+        
+        -   name: Compile code
+            run: g++ src/*.cpp -o output -I/usr/include -lgsl 
+
+        -   name: Run Valgrind tests
+            run: valgrind --leak-check=full --error-exitcode=1 ./output

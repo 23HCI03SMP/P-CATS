@@ -7,6 +7,8 @@
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_randist.h>
 #include <fstream>
+#include <tuple>
+#include <math.h>
 
 #define o1 0 // top left back
 #define o2 1 // top right back
@@ -54,6 +56,23 @@ std::vector<Particle *> Space::getAllParticles()
     return particles;
 }
 
+Space::~Space()
+{
+    for (auto child : children)
+    {
+        if (auto particle = dynamic_cast<Particle *>(child))
+        {
+            delete particle;
+        }
+        else if (auto space = dynamic_cast<Space *>(child))
+        {
+            delete space;
+        }
+    }
+
+    children.clear();
+}
+
 Space::Space(Point minPoint, Point maxPoint, Charge charge) : Node(charge)
 {
     this->minPoint = minPoint;
@@ -82,6 +101,7 @@ void Space::insert(Particle *particle)
         particle->position.y < minPoint.y || particle->position.y > maxPoint.y ||
         particle->position.z < minPoint.z || particle->position.z > maxPoint.z)
     {
+        delete particle; // free memory
         return;
     }
 
@@ -160,6 +180,7 @@ void Space::insert(Particle *particle)
             {
                 // std::cout << "Particle already exists in this position. Ignoring...\n"
                 //           << std::endl;
+                delete particle; // free memory
                 return;
             }
 
@@ -218,15 +239,13 @@ void Space::insert(Particle *particle)
     }
 }
 
-std::vector<Particle *> Space::generateParticles(double density,
-                                                 double temperature,
-                                                 std::vector<std::tuple<Particle, double>> &particles,
-                                                 HotspotShape hotspotShape,
-                                                 std::initializer_list<double> params)
+void Space::generateParticles(double density,
+                              double temperature,
+                              std::vector<std::tuple<Particle, double>> &particles,
+                              HotspotShape hotspotShape,
+                              std::initializer_list<double> params)
 {
     /// @todo Ensure that percentage sums to 1
-
-    std::vector<Particle *> generatedParticles;
 
     for (int i = 0; i < particles.size(); i++)
     {
@@ -248,15 +267,23 @@ std::vector<Particle *> Space::generateParticles(double density,
             double radius = params.begin()[0];
             int n = density * (4.0 / 3.0) * PI * pow(radius, 3) * percentage;
 
-            std::cout << n << std::endl;
+            // std::cout << n << std::endl;
 
             // generate n particles in the sphere
             for (int j = 0; j < n; j++)
             {
-                double x = gsl_ran_flat(rng, -radius, radius) + xMid;
-                double y = gsl_ran_flat(rng, -radius, radius) + yMid;
-                double z = gsl_ran_flat(rng, -radius, radius) + zMid;
+                // Generate random points in a sphere in spherical coordinates
+                double u = gsl_rng_uniform(rng);
+                double theta = gsl_rng_uniform(rng) * 2 * PI;
+                double phi = acos(2.0 * gsl_rng_uniform(rng) - 1.0);
 
+                // spherical to cartesian
+                double r = radius * cbrt(u);
+                double x = r * sin(phi) * cos(theta) + xMid;
+                double y = r * sin(phi) * sin(theta) + yMid;
+                double z = r * cos(phi) + zMid;
+
+                // generate velocity
                 double vx = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
                 double vy = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
                 double vz = gsl_ran_gaussian(rng, sqrt(K_B * temperature / mass));
@@ -264,18 +291,17 @@ std::vector<Particle *> Space::generateParticles(double density,
                 Particle *newParticle = new Particle(particle.alias, mass, charge, Point(x, y, z), Velocity(vx, vy, vz));
 
                 this->insert(newParticle);
-                generatedParticles.push_back(newParticle);
             }
             break;
         }
         default:
             break;
         }
+
+        gsl_rng_free(rng);
     }
 
     this->recalculateCentreOfCharge();
-
-    return generatedParticles;
 }
 
 void Space::recalculateCentreOfCharge()
@@ -322,11 +348,11 @@ void Space::recalculateCentreOfCharge()
 
     this->charge = totalCharge;
     this->centreOfCharge = Points(Point(xPositiveChargePositionProductSum / totalCharge.positive,
-                                         yPositiveChargePositionProductSum / totalCharge.positive,
-                                         zPositiveChargePositionProductSum / totalCharge.positive),
+                                        yPositiveChargePositionProductSum / totalCharge.positive,
+                                        zPositiveChargePositionProductSum / totalCharge.positive),
                                   Point(xNegativeChargePositionProductSum / totalCharge.negative,
-                                         yNegativeChargePositionProductSum / totalCharge.negative,
-                                         zNegativeChargePositionProductSum / totalCharge.negative));
+                                        yNegativeChargePositionProductSum / totalCharge.negative,
+                                        zNegativeChargePositionProductSum / totalCharge.negative));
 }
 
 std::string Space::toString(std::string indent)
@@ -370,13 +396,9 @@ void Space::toFile(int timeStep, std::string path, std::ios_base::openmode openM
     file.open(path, openMode);
 
     auto particles = this->getAllParticles();
-    for(auto particle : particles)
+    std::cout << "Writing ~" << particles.size() << " particles to file..." << std::endl;
+    for (auto particle : particles)
     {
-        file <<
-        timeStep << "," <<
-        particle->alias << "," <<
-        particle->position.x << "," <<
-        particle->position.y << "," <<
-        particle->position.z << ",";
+        file << timeStep << "," << particle->position.x << "," << particle->position.y << "," << particle->position.z << "," << particle->alias << "\n";
     }
 }
