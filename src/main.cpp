@@ -14,9 +14,7 @@
 /// This structure is used to store the components of a force in Newtons.
 int main(int argc, char const *argv[])
 {
-    double baseSpaceSizeX = 10;
-    double baseSpaceSizeY = 10;
-    double baseSpaceSizeZ = 10;
+    double baseSpaceSizeX, baseSpaceSizeY, baseSpaceSizeZ;
 
     if (argc == 1)
     {
@@ -28,23 +26,32 @@ int main(int argc, char const *argv[])
         return 0;
     }
 
-    for (int i = 0; i <= argc; i++)
-    {
-        i++;
-
-        if (strcmp(argv[i], "-sx") || strcmp(argv[i], "--sizex"))
-        {
-            baseSpaceSizeX = std::stod(argv[i + 1]);
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-sx") == 0 || strcmp(argv[i], "--sizex") == 0) {
+            if (i + 1 < argc) {
+                baseSpaceSizeX = std::stod(argv[++i]);
+            } else {
+                std::cerr << "Error: Missing value for " << argv[i] << std::endl;
+                return 1;
+            }
+        } else if (strcmp(argv[i], "-sy") == 0 || strcmp(argv[i], "--sizey") == 0) {
+            if (i + 1 < argc) {
+                baseSpaceSizeY = std::stod(argv[++i]);
+            } else {
+                std::cerr << "Error: Missing value for " << argv[i] << std::endl;
+                return 1;
+            }
+        } else if (strcmp(argv[i], "-sz") == 0 || strcmp(argv[i], "--sizez") == 0) {
+            if (i + 1 < argc) {
+                baseSpaceSizeZ = std::stod(argv[++i]);
+            } else {
+                std::cerr << "Error: Missing value for " << argv[i] << std::endl;
+                return 1;
+            }
+        } else {
+            std::cerr << "Unknown option: " << argv[i] << std::endl;
+            return 1;
         }
-        else if (strcmp(argv[i], "-sy") || strcmp(argv[i], "--sizey"))
-        {
-            baseSpaceSizeY = std::stod(argv[i + 1]);
-        }
-        else if (strcmp(argv[i], "-sz") || strcmp(argv[i], "--sizez"))
-        {
-            baseSpaceSizeZ = std::stod(argv[i + 1]);
-        }
-        std::cout << "Base Space Size: " << baseSpaceSizeX << " " << baseSpaceSizeY << " " << baseSpaceSizeZ << std::endl;
     }
 
     Timer overallTimer;
