@@ -77,6 +77,8 @@ def choose_directory():
         to_console(f"Working directory set to: {working_directory}\n")
         save_working_directory()
 
+        build_button.config(state=tk.NORMAL)
+
 def run_pcats():
     console_output.insert(tk.END, f"Running P-CATS.\n")
     # Save size parameters
@@ -137,6 +139,8 @@ def build_pcats():
         elapsed_time = end_time - start_time
 
         to_console(f"Build completed ({elapsed_time:.2f}s).\n")
+        
+        run_button.config(state=tk.NORMAL)
 
     to_console("Building P-CATS.\n")
 
@@ -182,5 +186,14 @@ console_output.config(state=tk.DISABLED)
 m.title("P-CATS Console")
 
 load_cache()
-to_console(f"Current directory: {os.path.dirname(os.path.abspath(__file__))}\n")
+to_console(f"Current program directory: {os.path.dirname(os.path.abspath(__file__))}\n")
+
+# If no working directory, disable build and run buttons
+if not working_directory:
+    build_button.config(state=tk.DISABLED)
+    run_button.config(state=tk.DISABLED)
+
+if working_directory and not os.path.exists(f"{working_directory}/P-CATS.exe"):
+    run_button.config(state=tk.DISABLED)
+
 m.mainloop()
