@@ -12,6 +12,8 @@ CACHE_FILE = f"{CURRENT_DIRECTORY}/cache.json"
 SIZE_X_HEADER = "size_x"
 SIZE_Y_HEADER = "size_y"
 SIZE_Z_HEADER = "size_z"
+DENSITY_HEADER = "density"
+TEMPERATURE_HEADER = "temperature"
 WORKING_DIRECTORY_HEADER = "working_directory"
 
 working_directory = ""
@@ -49,6 +51,8 @@ def load_cache():
             sizex = data.get(SIZE_X_HEADER)
             sizey = data.get(SIZE_Y_HEADER)
             sizez = data.get(SIZE_Z_HEADER)
+            temperature = data.get(TEMPERATURE_HEADER)
+            density = data.get(DENSITY_HEADER)
 
             if sizex and sizey and sizez:
                 sizex_entry.insert(0, sizex)
@@ -57,6 +61,18 @@ def load_cache():
                 to_console(f"Loaded cached size parameters (x: {sizex}, y: {sizey}, z: {sizez}).\n")
             else:
                 to_console("No cached size parameters found.\n")
+
+            if temperature:
+                temperature_entry.insert(0, temperature)
+                to_console(f"Loaded cached temperature parameter: {temperature}\n")
+            else:
+                to_console("No cached temperature parameter found.\n")
+
+            if density:
+                density_entry.insert(0, density)
+                to_console(f"Loaded cached density parameter: {density}\n")
+            else:
+                to_console("No cached density parameter found.\n")
     else:
         to_console("No cache file found.\n")
 
@@ -76,6 +92,20 @@ def save_size_parameters(x, y, z):
         with open(CACHE_FILE, 'w') as f:
             json.dump({SIZE_X_HEADER: x, SIZE_Y_HEADER: y, SIZE_Z_HEADER: z}, f)
 
+def save_density_parameter(density):
+    if os.path.exists(CACHE_FILE):
+        update_json(CACHE_FILE, DENSITY_HEADER, density)
+    else:
+        with open(CACHE_FILE, 'w') as f:
+            json.dump({DENSITY_HEADER: density}, f)
+
+def save_temperature_parameter(temperature):
+    if os.path.exists(CACHE_FILE):
+        update_json(CACHE_FILE, TEMPERATURE_HEADER, temperature)
+    else:
+        with open(CACHE_FILE, 'w') as f:
+            json.dump({TEMPERATURE_HEADER: temperature}, f)
+
 def choose_directory():
     global working_directory
     working_directory = filedialog.askdirectory()
@@ -88,32 +118,58 @@ def choose_directory():
 def run_pcats():
     command = [f"{CURRENT_DIRECTORY}/P-CATS.exe", "--output", f"{CURRENT_DIRECTORY}/positions.csv"]
 
-    # command = [f"{CURRENT_DIRECTORY}/P-CATS.exe"]
+    to_console("Running P-CATS.\n")
 
-    console_output.insert(tk.END, f"Running P-CATS.\n")
-    # Save size parameters
+    # Size parameters
     sizex = sizex_entry.get()
     sizey = sizey_entry.get()
     sizez = sizez_entry.get()
+    # Density parameter
+    density = density_entry.get()
+    # Temperature parameter
+    temperature = temperature_entry.get()
 
     if not sizex or not sizey or not sizez:
-        to_console("Complete size parameters not provided. Defaulting to 10x10x10.\n")
+        to_console("Complete size parameters not provided, using default option.\n")
     else:
         save_size_parameters(sizex, sizey, sizez)
         to_console(f"Size parameters saved (x: {sizex}, y: {sizey}, z: {sizez}).\n")
-
         command.extend(["--sizex", sizex, "--sizey", sizey, "--sizez", sizez])
+    
+    if not density:
+        to_console("Density parameter not provided, using default option.\n")
+    else:
+        save_density_parameter(density)
+        to_console(f"Density parameter saved: {density}\n")
+        command.extend(["--density", density])
 
-    # command.extend(["--output", f"{CURRENT_DIRECTORY}/positions.csv"])
-    print(" ".join(command))
+    if not temperature:
+        to_console("Temperature parameter not provided, using default option.\n")
+    else:
+        save_temperature_parameter(temperature)
+        to_console(f"Temperature parameter saved: {temperature}\n")
+        command.extend(["--temperature", temperature])
 
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    def run_command():
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-    def read_output():
-        for line in process.stdout:
-            to_console(line)
+        def read_output(pipe, tag):
+            for line in iter(pipe.readline, ''):
+                to_console(f"{tag}: {line}")
+            pipe.close()
 
-    threading.Thread(target=read_output).start()
+        stdout_thread = threading.Thread(target=read_output, args=(process.stdout, "STDOUT"))
+        stderr_thread = threading.Thread(target=read_output, args=(process.stderr, "STDERR"))
+
+        stdout_thread.start()
+        stderr_thread.start()
+
+        stdout_thread.join()
+        stderr_thread.join()
+
+        process.wait()
+
+    threading.Thread(target=run_command).start()
 
 def build_pcats():
     def run_build():
@@ -186,6 +242,18 @@ sizez_label = tk.Label(button_frame, text="Base space size (z)")
 sizez_label.pack(fill=tk.X)
 sizez_entry = tk.Entry(button_frame)
 sizez_entry.pack(fill=tk.X)
+
+# Text field for density parameter
+density_label = tk.Label(button_frame, text="Density (fill in units)")
+density_label.pack(fill=tk.X)
+density_entry = tk.Entry(button_frame)
+density_entry.pack(fill=tk.X)
+
+# Text field for temperature parameter
+temperature_label = tk.Label(button_frame, text="Temperature (K)")
+temperature_label.pack(fill=tk.X)
+temperature_entry = tk.Entry(button_frame)
+temperature_entry.pack(fill=tk.X)
 
 # Clear console button, put at bottom of left side
 clear_console_button = tk.Button(button_frame, text="Clear Console", command=lambda: clear_console())

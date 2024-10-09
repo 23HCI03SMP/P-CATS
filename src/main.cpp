@@ -25,6 +25,8 @@ void OutputInputError()
 int main(int argc, char const *argv[])
 {
     double baseSpaceSizeX, baseSpaceSizeY, baseSpaceSizeZ = 10;
+    double density = 4; // density in (idk the units rn)
+    double temperature = 300; // temperature in K
     std::string outputFile = "./viewer/positions.csv";
 
     for (int i = 1; i < argc; i++)
@@ -77,6 +79,30 @@ int main(int argc, char const *argv[])
                 return 1;
             }
         }
+        else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--density") == 0)
+        {
+            if (i + 1 < argc)
+            {
+                density = std::stod(argv[++i]);
+            }
+            else
+            {
+                OutputInputError();
+                return 1;
+            }
+        }
+        else if (strcmp(argv[i], "-t") == 0 || strcmp(argv[i], "--temperature") == 0)
+        {
+            if (i + 1 < argc)
+            {
+                temperature = std::stod(argv[++i]);
+            }
+            else
+            {
+                OutputInputError();
+                return 1;
+            }
+        }
         else
         {
             std::cerr << "Unknown option: " << argv[i] << std::endl;
@@ -96,7 +122,7 @@ int main(int argc, char const *argv[])
     std::tuple<Particle, double> p2 = std::make_tuple(Particle("Electron", 9.11e-31, Charge(0, -1.602e-19)), 0.1);
 
     std::vector<std::tuple<Particle, double>> particles = {p1, p2};
-    space->generateParticles(4, 300, particles, HotspotShape::SPHERE, {4});
+    space->generateParticles(density, temperature, particles, HotspotShape::SPHERE, {4});
 
     // Create main loop
     double dt = 1e-5;
