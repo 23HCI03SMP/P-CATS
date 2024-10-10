@@ -3,6 +3,9 @@
 !*/
 !*.*
 
+# Cache files
+**/cache.json
+
 #deoxyribonucleic acid
 doc/
 # doxygen-awesome-css/
