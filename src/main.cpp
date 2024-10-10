@@ -24,8 +24,24 @@ void OutputInputError()
 /// This structure is used to store the components of a force in Newtons.
 int main(int argc, char const *argv[])
 {
+    std::string nameLogo = R"(    ____          ______ ___   ______ _____
+   / __ \        / ____//   | /_  __// ___/
+  / /_/ /______ / /    / /| |  / /   \__ \ 
+ / ____//_____// /___ / ___ | / /   ___/ / 
+/_/            \____//_/  |_|/_/   /____/ 
+)";
+
+    std::string imageLogo = R"(             　／|、     
+            （ﾟ､ ｡ ７ 　
+            　|、~ ヽ   
+            　ししと ）ノ
+)";
+
+    std::cout << nameLogo << std::endl;
+    std::cout << imageLogo << std::endl;
+
     double baseSpaceSizeX, baseSpaceSizeY, baseSpaceSizeZ = 10;
-    double density = 4; // density in (idk the units rn)
+    double density = 4;       // density in (idk the units rn)
     double temperature = 300; // temperature in K
     std::string outputFile = "./viewer/positions.csv";
 

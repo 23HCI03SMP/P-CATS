@@ -152,7 +152,7 @@ def run_pcats():
         command.extend(["--temperature", temperature])
 
     def run_command():
-        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8')
 
         stdout_thread = threading.Thread(target=read_cli_output, args=(process.stdout, "STDOUT"))
         stderr_thread = threading.Thread(target=read_cli_output, args=(process.stderr, "STDERR"))
@@ -177,7 +177,7 @@ def build_pcats():
                                     "-o",
                                     f"{CURRENT_DIRECTORY}/P-CATS.exe",
                                     "-lgsl"],
-                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8')
 
         stdout_thread = threading.Thread(target=read_cli_output, args=(process.stdout, "STDOUT"))
         stderr_thread = threading.Thread(target=read_cli_output, args=(process.stderr, "STDERR"))
