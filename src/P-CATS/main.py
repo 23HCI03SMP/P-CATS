@@ -8,13 +8,14 @@ import time
 
 CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 CACHE_FILE = f"{CURRENT_DIRECTORY}/cache.json"
+EXE_NAME = "P-CATS.exe"
 
 SIZE_X_HEADER = "size_x"
 SIZE_Y_HEADER = "size_y"
 SIZE_Z_HEADER = "size_z"
 DENSITY_HEADER = "density"
 TEMPERATURE_HEADER = "temperature"
-WORKING_DIRECTORY_HEADER = "working_directory"
+SOURCE_DIRECTORY_HEADER = "source_directory"
 
 working_directory = ""
 
@@ -37,16 +38,35 @@ def clear_console():
     console_output.delete(1.0, tk.END)
     console_output.config(state=tk.DISABLED)
 
+def enable_buttons_with_valid_conditions():
+    # If no working directory, disable build and run buttons
+    if not working_directory:
+        build_button.config(state=tk.DISABLED)
+        run_button.config(state=tk.DISABLED)
+        return
+
+    if working_directory and not os.path.exists(f"{CURRENT_DIRECTORY}/{EXE_NAME}"):
+        run_button.config(state=tk.DISABLED)
+        return
+    
+    build_button.config(state=tk.NORMAL)
+    run_button.config(state=tk.NORMAL)
+
+def read_cli_output(pipe, tag):
+    for line in iter(pipe.readline, ''):
+        to_console(f"[{tag}] {line}")
+    pipe.close()
+
 def load_cache():
     global working_directory
     if os.path.exists(CACHE_FILE):
         with open(CACHE_FILE, 'r') as f:
             data = json.load(f)
-            working_directory = data.get(WORKING_DIRECTORY_HEADER)
+            working_directory = data.get(SOURCE_DIRECTORY_HEADER)
             if working_directory:
-                to_console(f"Loaded cached directory: {working_directory}\n")
+                to_console(f"Loaded cached source directory: {working_directory}\n")
             else:
-                to_console("No working directory found. Please choose a working directory.\n")
+                to_console("No source directory found. Please choose a working directory.\n")
 
             sizex = data.get(SIZE_X_HEADER)
             sizey = data.get(SIZE_Y_HEADER)
@@ -76,44 +96,23 @@ def load_cache():
     else:
         to_console("No cache file found.\n")
 
-def save_working_directory():
-    if os.path.exists(CACHE_FILE):
-        update_json(CACHE_FILE, WORKING_DIRECTORY_HEADER, working_directory)
-    else:
-        with open(CACHE_FILE, 'w') as f:
-            json.dump({WORKING_DIRECTORY_HEADER: working_directory}, f)
+    enable_buttons_with_valid_conditions()
 
-def save_size_parameters(x, y, z):
+def save_json_parameter(key, value):
     if os.path.exists(CACHE_FILE):
-        update_json(CACHE_FILE, SIZE_X_HEADER, x)
-        update_json(CACHE_FILE, SIZE_Y_HEADER, y)
-        update_json(CACHE_FILE, SIZE_Z_HEADER, z)
+        update_json(CACHE_FILE, key, value)
     else:
         with open(CACHE_FILE, 'w') as f:
-            json.dump({SIZE_X_HEADER: x, SIZE_Y_HEADER: y, SIZE_Z_HEADER: z}, f)
-
-def save_density_parameter(density):
-    if os.path.exists(CACHE_FILE):
-        update_json(CACHE_FILE, DENSITY_HEADER, density)
-    else:
-        with open(CACHE_FILE, 'w') as f:
-            json.dump({DENSITY_HEADER: density}, f)
-
-def save_temperature_parameter(temperature):
-    if os.path.exists(CACHE_FILE):
-        update_json(CACHE_FILE, TEMPERATURE_HEADER, temperature)
-    else:
-        with open(CACHE_FILE, 'w') as f:
-            json.dump({TEMPERATURE_HEADER: temperature}, f)
+            json.dump({key: value}, f)
 
 def choose_directory():
     global working_directory
     working_directory = filedialog.askdirectory()
     if working_directory:
-        to_console(f"Working directory set to: {working_directory}\n")
-        save_working_directory()
+        to_console(f"Source directory set to: {working_directory}\n")
+        save_json_parameter(SOURCE_DIRECTORY_HEADER, working_directory)
 
-        build_button.config(state=tk.NORMAL)
+        enable_buttons_with_valid_conditions()
 
 def run_pcats():
     command = [f"{CURRENT_DIRECTORY}/P-CATS.exe", "--output", f"{CURRENT_DIRECTORY}/positions.csv"]
@@ -132,34 +131,31 @@ def run_pcats():
     if not sizex or not sizey or not sizez:
         to_console("Complete size parameters not provided, using default option.\n")
     else:
-        save_size_parameters(sizex, sizey, sizez)
+        save_json_parameter(SIZE_X_HEADER, sizex)
+        save_json_parameter(SIZE_Y_HEADER, sizey)
+        save_json_parameter(SIZE_Z_HEADER, sizez)
         to_console(f"Size parameters saved (x: {sizex}, y: {sizey}, z: {sizez}).\n")
         command.extend(["--sizex", sizex, "--sizey", sizey, "--sizez", sizez])
     
     if not density:
         to_console("Density parameter not provided, using default option.\n")
     else:
-        save_density_parameter(density)
+        save_json_parameter(DENSITY_HEADER, density)
         to_console(f"Density parameter saved: {density}\n")
         command.extend(["--density", density])
 
     if not temperature:
         to_console("Temperature parameter not provided, using default option.\n")
     else:
-        save_temperature_parameter(temperature)
+        save_json_parameter(TEMPERATURE_HEADER, temperature)
         to_console(f"Temperature parameter saved: {temperature}\n")
         command.extend(["--temperature", temperature])
 
     def run_command():
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-        def read_output(pipe, tag):
-            for line in iter(pipe.readline, ''):
-                to_console(f"{tag}: {line}")
-            pipe.close()
-
-        stdout_thread = threading.Thread(target=read_output, args=(process.stdout, "STDOUT"))
-        stderr_thread = threading.Thread(target=read_output, args=(process.stderr, "STDERR"))
+        stdout_thread = threading.Thread(target=read_cli_output, args=(process.stdout, "STDOUT"))
+        stderr_thread = threading.Thread(target=read_cli_output, args=(process.stderr, "STDERR"))
 
         stdout_thread.start()
         stderr_thread.start()
@@ -183,13 +179,8 @@ def build_pcats():
                                     "-lgsl"],
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-        def read_output(pipe, tag):
-            for line in iter(pipe.readline, ''):
-                to_console(f"[{tag}] {line}")
-            pipe.close()
-
-        stdout_thread = threading.Thread(target=read_output, args=(process.stdout, "STDOUT"))
-        stderr_thread = threading.Thread(target=read_output, args=(process.stderr, "STDERR"))
+        stdout_thread = threading.Thread(target=read_cli_output, args=(process.stdout, "STDOUT"))
+        stderr_thread = threading.Thread(target=read_cli_output, args=(process.stderr, "STDERR"))
 
         stdout_thread.start()
         stderr_thread.start()
@@ -204,7 +195,7 @@ def build_pcats():
 
         to_console(f"Build completed ({elapsed_time:.2f}s).\n")
         
-        run_button.config(state=tk.NORMAL)
+        enable_buttons_with_valid_conditions()
 
     to_console("Building P-CATS.\n")
 
@@ -216,7 +207,7 @@ button_frame = tk.Frame(m)
 button_frame.pack(side=tk.LEFT, fill=tk.Y)
 
 # Button to choose working directory
-choose_dir_button = tk.Button(button_frame, text="Choose Working Directory", command=choose_directory)
+choose_dir_button = tk.Button(button_frame, text="Choose Source Directory", command=choose_directory)
 choose_dir_button.pack(fill=tk.X)
 
 # Buttons to build P-CATS
@@ -267,13 +258,5 @@ m.title("P-CATS Console")
 
 load_cache()
 to_console(f"Current program directory: {CURRENT_DIRECTORY}\n")
-
-# If no working directory, disable build and run buttons
-if not working_directory:
-    build_button.config(state=tk.DISABLED)
-    run_button.config(state=tk.DISABLED)
-
-if working_directory and not os.path.exists(f"{CURRENT_DIRECTORY}/P-CATS.exe"):
-    run_button.config(state=tk.DISABLED)
 
 m.mainloop()
