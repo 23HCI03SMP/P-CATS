@@ -1,0 +1,1 @@
+C:\\msys64\\mingw64\\bin\\g++.exe *.cpp -o main.exe -lgsl
