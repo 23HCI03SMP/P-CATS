@@ -15,6 +15,7 @@ SIZE_Y_HEADER = "size_y"
 SIZE_Z_HEADER = "size_z"
 DENSITY_HEADER = "density"
 TEMPERATURE_HEADER = "temperature"
+AUTO_LAUNCH_VISUALIZER_HEADER = "auto_launch_visualizer"
 SOURCE_DIRECTORY_HEADER = "source_directory"
 
 working_directory = ""
@@ -73,6 +74,7 @@ def load_cache():
             sizez = data.get(SIZE_Z_HEADER)
             temperature = data.get(TEMPERATURE_HEADER)
             density = data.get(DENSITY_HEADER)
+            auto_launch_visualizer = data.get(AUTO_LAUNCH_VISUALIZER_HEADER)
 
             if sizex and sizey and sizez:
                 sizex_entry.insert(0, sizex)
@@ -93,6 +95,12 @@ def load_cache():
                 to_console(f"Loaded cached density parameter: {density}\n")
             else:
                 to_console("No cached density parameter found.\n")
+
+            if auto_launch_visualizer:
+                auto_visualization_var.set(1)
+                to_console("Loaded cached auto-launch visualizer option.\n")
+            else:
+                to_console("No cached auto-launch visualizer option found.\n")
     else:
         to_console("No cache file found.\n")
 
@@ -115,7 +123,7 @@ def choose_directory():
         enable_buttons_with_valid_conditions()
 
 def run_pcats():
-    command = [f"{CURRENT_DIRECTORY}/P-CATS.exe", "--output", f"{CURRENT_DIRECTORY}/positions.csv"]
+    command = [f"{CURRENT_DIRECTORY}/P-CATS.exe", "--output", f"{CURRENT_DIRECTORY}/viewer/positions.csv"]
 
     to_console("Running P-CATS.\n")
 
@@ -151,6 +159,13 @@ def run_pcats():
         to_console(f"Temperature parameter saved: {temperature}\n")
         command.extend(["--temperature", temperature])
 
+    if auto_visualization_var.get():
+        save_json_parameter(AUTO_LAUNCH_VISUALIZER_HEADER, 1)
+        to_console("Auto-launch visualizer option enabled.\n")
+    else:
+        save_json_parameter(AUTO_LAUNCH_VISUALIZER_HEADER, 0)
+        to_console("Auto-launch visualizer option disabled.\n")
+
     def run_command():
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8')
 
@@ -164,6 +179,14 @@ def run_pcats():
         stderr_thread.join()
 
         process.wait()
+
+        if auto_visualization_var.get():
+            # run viewer on separate thread
+            def run_viewer():
+                escaped_path = os.path.join(CURRENT_DIRECTORY, "viewer", "viewer.py").replace("\\", "/")
+                os.system(f'python "{escaped_path}"')
+
+            threading.Thread(target=run_viewer).start()
 
     threading.Thread(target=run_command).start()
 
@@ -245,6 +268,15 @@ temperature_label = tk.Label(button_frame, text="Temperature (K)")
 temperature_label.pack(fill=tk.X)
 temperature_entry = tk.Entry(button_frame)
 temperature_entry.pack(fill=tk.X)
+
+# Open visualizer button, put at left side
+open_visualizer_button = tk.Button(button_frame, text="Open Visualizer", command=lambda: threading.Thread(target=lambda: os.system(f'python "{CURRENT_DIRECTORY}/viewer/viewer.py"')).start())
+open_visualizer_button.pack(fill=tk.X)
+
+# Checkbox for auto visualization
+auto_visualization_var = tk.IntVar()
+auto_visualization_checkbox = tk.Checkbutton(button_frame, text="Auto-Launch Visualizer", variable=auto_visualization_var)
+auto_visualization_checkbox.pack(fill=tk.X)
 
 # Clear console button, put at bottom of left side
 clear_console_button = tk.Button(button_frame, text="Clear Console", command=lambda: clear_console())

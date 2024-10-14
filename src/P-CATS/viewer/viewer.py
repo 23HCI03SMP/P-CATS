@@ -55,13 +55,13 @@ def plot_data(max_x, max_y, max_z):
     fig.write_html(file_path, auto_open=False)
 
 #client
+if __name__ == "__main__":  
+    app = Flask(__name__)
+    ui = FlaskUI(app = app, server = 'flask')
 
-app = Flask(__name__)
-ui = FlaskUI(app = app, server = 'flask')
+    @app.route('/')
+    def index():
+        plot_data(10, 10, 10)
+        return render_template('plot.html')
 
-@app.route('/')
-def index():
-    plot_data(10, 10, 10)
-    return render_template('plot.html')
-
-ui.run()
+    ui.run()

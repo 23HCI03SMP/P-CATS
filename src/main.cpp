@@ -40,10 +40,13 @@ int main(int argc, char const *argv[])
     std::cout << nameLogo << std::endl;
     std::cout << imageLogo << std::endl;
 
-    double baseSpaceSizeX, baseSpaceSizeY, baseSpaceSizeZ = 10;
+    double baseSpaceSizeX = 10;
+    double baseSpaceSizeY = 10;
+    double baseSpaceSizeZ = 10;
     double density = 4;       // density in (idk the units rn)
     double temperature = 300; // temperature in K
-    std::string outputFile = "./viewer/positions.csv";
+    std::string outputFile = "./P-CATS/viewer/positions.csv";
+    bool autoVisualise = true; /// @todo: Implement this feature in the future
 
     for (int i = 1; i < argc; i++)
     {
@@ -119,6 +122,10 @@ int main(int argc, char const *argv[])
                 return 1;
             }
         }
+        else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--visualise") == 0)
+        {
+            autoVisualise = true;
+        }
         else
         {
             std::cerr << "Unknown option: " << argv[i] << std::endl;
@@ -169,8 +176,10 @@ int main(int argc, char const *argv[])
     std::cout << "Simulation complete." << std::endl;
     overallTimer.end();
 
-    // Run viewer
-    system("cd viewer && python viewer.py runserver -d");
+    if (autoVisualise)
+    {
+        system("cd P-CATS/viewer && python viewer.py runserver -d");
+    }
 
     return 0;
 }
